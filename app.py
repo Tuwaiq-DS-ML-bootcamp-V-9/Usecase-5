@@ -30,12 +30,16 @@ st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحل�
 # Analyzing Salary Distribution for Fresh Graduates
 fresh_grads = Jadarat_data[Jadarat_data['exper'] == 0]
 st.markdown('<h3 style="text-align: right; direction: rtl;">🔍 توزيع الرواتب للخريجين الجدد</h3>', unsafe_allow_html=True)
-plt.figure(figsize=(6, 4))
-sns.histplot(fresh_grads['Salary'], bins=30, kde=True)
-plt.title('توزيع الرواتب للخريجين الجدد')
-plt.xlabel('الراتب')
-plt.ylabel('التكرار')
-st.pyplot()
+
+# Create a figure and plot the histogram
+fig, ax = plt.subplots(figsize=(6, 4))
+sns.histplot(fresh_grads['Salary'], bins=30, kde=True, ax=ax)
+ax.set_title('توزيع الرواتب للخريجين الجدد')
+ax.set_xlabel('الراتب')
+ax.set_ylabel('التكرار')
+
+# Display the plot using st.pyplot()
+st.pyplot(fig)
 
 # Show Outliers in Salary (Values above 15000)
 outliers = Jadarat_data[Jadarat_data['Salary'] > 15000]
