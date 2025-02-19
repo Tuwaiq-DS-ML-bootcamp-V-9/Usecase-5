@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import ast
 from st_vizzu import create_vizzu_obj, vizzu_animate
-from chartipyvizzu import Chart
+
 
 # Load the dataset
 data_path = 'Jadarat_data.csv'  # Adjust this if needed for your environment
