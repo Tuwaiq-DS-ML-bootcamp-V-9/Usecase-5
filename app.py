@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import ast
 from st_vizzu import create_vizzu_obj, vizzu_animate
+from chartipyvizzu import Chart
 
 # Load the dataset
 data_path = 'Jadarat_data.csv'  # Adjust this if needed for your environment
@@ -75,8 +76,8 @@ anim_obj = vizzu_animate(
     }
 )
 
-# Display the animated object
-st.write(anim_obj)
+# Render the animation chart using Chartipyvizzu
+st.write(anim_obj)  # This renders the Vizzu animation on the Streamlit page
 
 # Final Conclusion
 st.markdown('''<h3 style="text-align: right; direction: rtl;">في النهاية، التحليل يكشف عن بعض الاتجاهات المهمة مثل توزيع الرواتب بشكل غير متساوي في بعض المناطق، والفرص المتاحة للخريجين الجدد. باستخدام هذا التحليل، يمكننا اتخاذ قرارات أكثر فاعلية في اختيار الوظائف أو حتى تحديد الوظائف التي تناسب مهاراتنا واهتماماتنا.</h3>''', unsafe_allow_html=True)
