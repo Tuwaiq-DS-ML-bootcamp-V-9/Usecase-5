@@ -1,6 +1,5 @@
+streamlit
 pandas
 seaborn
 matplotlib
-st-vizzu
 st-pages
-
