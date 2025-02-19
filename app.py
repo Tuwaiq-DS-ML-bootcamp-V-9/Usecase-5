@@ -3,7 +3,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from st_vizzu import create_vizzu_obj, vizzu_animate
-from st_pages import Page, show_pages
 
 # Load the dataset
 data_path = '/mnt/data/Jadarat_data.csv'
@@ -12,17 +11,6 @@ Jadarat_data = pd.read_csv(data_path)
 # Display the title and introduction
 st.markdown('<h1 style="text-align: right; direction: rtl;">📰 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
 st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية، ونهدف إلى الكشف عن معلومات مهمة حول الرواتب، الخبرات المطلوبة، والفرص المتاحة في مختلف المناطق.</h3>''', unsafe_allow_html=True)
-
-# Sidebar navigation
-show_pages(
-    [
-        Page("app.py", "تحليل البيانات الوظيفية", "📊"),
-        Page("pages/Salary-Analysis.py", "تحليل الرواتب", "💸"),
-        Page("pages/Experience-Levels.py", "مستويات الخبرة", "👨‍💻"),
-        Page("pages/Region-Analysis.py", "تحليل المناطق", "🌍"),
-        Page("pages/Outliers.py", "الكشف عن القيم الشاذة", "🚨")
-    ]
-)
 
 # Data Cleaning & Preprocessing
 Jadarat_data['Salary'] = pd.to_numeric(Jadarat_data['Salary'], errors='coerce')
