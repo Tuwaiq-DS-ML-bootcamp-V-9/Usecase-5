@@ -18,7 +18,7 @@ st.image("images/1.png", caption="Proportion of Job Postings by Region in Saudi 
 st.markdown('''<h3 style="text-align: right; direction: rtl;">👨‍💻 توزيع الإعلانات الوظيفية حسب الجنس</h3>''', unsafe_allow_html=True)
 st.markdown('''<h4 style="text-align: right; direction: rtl;">هناك تفضيل واضح في بعض الإعلانات الوظيفية لاستقطاب جميع الأجناس (كلا الجنسين)، 
             بينما هناك بعض الوظائف المخصصة فقط للذكور أو الإناث. لكن بشكل عام، تهيمن الإعلانات التي تقبل كلا الجنسين.</h4>''', unsafe_allow_html=True)
-st.image("images/2png", caption="Gender Preference in Job Postings")
+st.image("images/2.png", caption="Gender Preference in Job Postings")
 
 # Salary Distribution for Fresh Graduates
 st.markdown('''<h3 style="text-align: right; direction: rtl;">💼 توزيع الرواتب للخريجين الجدد</h3>''', unsafe_allow_html=True)
