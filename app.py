@@ -6,7 +6,7 @@ import ast
 from st_vizzu import create_vizzu_obj, vizzu_animate
 
 # Load the dataset
-data_path = '/mnt/data/Jadarat_data.csv'  # Adjust this if needed for your environment
+data_path = 'Jadarat_data.csv'  # Adjust this if needed for your environment
 Jadarat_data = pd.read_csv(data_path)
 
 # Data Cleaning & Preprocessing
