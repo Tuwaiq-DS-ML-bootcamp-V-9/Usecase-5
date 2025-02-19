@@ -81,5 +81,43 @@ anim_obj = vizzu_animate(
 # Render the animation chart using Chartipyvizzu
 st.write(anim_obj)  # This renders the Vizzu animation on the Streamlit page
 
+# Salary Distribution by Region
+st.markdown('<h3 style="text-align: right; direction: rtl;">🌐 توزيع الرواتب حسب المنطقة</h3>', unsafe_allow_html=True)
+fig, ax = plt.subplots(figsize=(12, 8))
+sns.boxplot(x='region', y='Salary', data=Jadarat_data, ax=ax, palette='viridis')
+ax.set_title('توزيع الرواتب حسب المنطقة', fontsize=16)
+ax.set_xlabel('المنطقة', fontsize=14)
+ax.set_ylabel('الراتب', fontsize=14)
+st.pyplot(fig)
+
+# Experience vs. Salary
+st.markdown('<h3 style="text-align: right; direction: rtl;">📅 العلاقة بين الخبرة والراتب</h3>', unsafe_allow_html=True)
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.scatterplot(x='exper', y='Salary', data=Jadarat_data, ax=ax, hue='region', palette='coolwarm')
+ax.set_title('العلاقة بين الخبرة والراتب', fontsize=16)
+ax.set_xlabel('الخبرة (سنوات)', fontsize=14)
+ax.set_ylabel('الراتب', fontsize=14)
+st.pyplot(fig)
+
+# Top Job Titles by Salary
+st.markdown('<h3 style="text-align: right; direction: rtl;">🏆 أعلى المسميات الوظيفية من حيث الراتب</h3>', unsafe_allow_html=True)
+top_job_titles = Jadarat_data.groupby('job_title')['Salary'].mean().sort_values(ascending=False).head(10)
+fig, ax = plt.subplots(figsize=(12, 8))
+sns.barplot(x=top_job_titles.values, y=top_job_titles.index, ax=ax, palette='magma')
+ax.set_title('أعلى المسميات الوظيفية من حيث الراتب', fontsize=16)
+ax.set_xlabel('متوسط الراتب', fontsize=14)
+ax.set_ylabel('المسمى الوظيفي', fontsize=14)
+st.pyplot(fig)
+
+# Benefits Analysis
+st.markdown('<h3 style="text-align: right; direction: rtl;">🎁 تحليل المزايا الوظيفية</h3>', unsafe_allow_html=True)
+benefits_counts = Jadarat_data['Benefits'].str.split(', ', expand=True).stack().value_counts()
+fig, ax = plt.subplots(figsize=(12, 8))
+sns.barplot(x=benefits_counts.values, y=benefits_counts.index, ax=ax, palette='husl')
+ax.set_title('تحليل المزايا الوظيفية', fontsize=16)
+ax.set_xlabel('عدد الإعلانات', fontsize=14)
+ax.set_ylabel('المزايا', fontsize=14)
+st.pyplot(fig)
+
 # Final Conclusion
 st.markdown('''<h3 style="text-align: right; direction: rtl;">في النهاية، التحليل يكشف عن بعض الاتجاهات المهمة مثل توزيع الرواتب بشكل غير متساوي في بعض المناطق، والفرص المتاحة للخريجين الجدد. باستخدام هذا التحليل، يمكننا اتخاذ قرارات أكثر فاعلية في اختيار الوظائف أو حتى تحديد الوظائف التي تناسب مهاراتنا واهتماماتنا.</h3>''', unsafe_allow_html=True)
