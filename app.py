@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import ast
 from st_vizzu import create_vizzu_obj, vizzu_animate
 
-
 # Load the dataset
 data_path = 'Jadarat_data.csv'  # Adjust this if needed for your environment
 Jadarat_data = pd.read_csv(data_path)
@@ -24,15 +23,18 @@ Jadarat_data['Benefits'] = Jadarat_data['benefits'].apply(
     lambda x: ', '.join(x[2:]) if isinstance(x, list) and len(x) > 2 else None
 )
 
-# Step 1: Split the 'positions' column into 'filling_positions' and 'required_positions' by the '/' separator
+# Split the 'positions' column into 'filling_positions' and 'required_positions' by the '/' separator
 Jadarat_data[['filling_positions', 'required_positions']] = Jadarat_data['positions'].str.split('/', expand=True)
 
-# Step 2: Clean up any extra spaces around the values (if any)
+# Clean up any extra spaces around the values (if any)
 Jadarat_data['filling_positions'] = Jadarat_data['filling_positions'].str.strip()
 Jadarat_data['required_positions'] = Jadarat_data['required_positions'].str.strip()
 
+# Set up the Streamlit page configuration
+st.set_page_config(page_title="تحليل بيانات الوظائف في السعودية", layout="wide")
+
 # Display the title and introduction
-st.markdown('<h1 style="text-align: right; direction: rtl;">📰 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="text-align: right; direction: rtl;">📊 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
 st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية، ونهدف إلى الكشف عن معلومات مهمة حول الرواتب، الخبرات المطلوبة، والفرص المتاحة في مختلف المناطق.</h3>''', unsafe_allow_html=True)
 
 # Analyzing Salary Distribution for Fresh Graduates
@@ -40,11 +42,11 @@ fresh_grads = Jadarat_data[Jadarat_data['exper'] == 0]
 st.markdown('<h3 style="text-align: right; direction: rtl;">🔍 توزيع الرواتب للخريجين الجدد</h3>', unsafe_allow_html=True)
 
 # Create a figure and plot the histogram
-fig, ax = plt.subplots(figsize=(6, 4))
-sns.histplot(fresh_grads['Salary'], bins=30, kde=True, ax=ax)
-ax.set_title('توزيع الرواتب للخريجين الجدد')
-ax.set_xlabel('الراتب')
-ax.set_ylabel('التكرار')
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.histplot(fresh_grads['Salary'], bins=30, kde=True, ax=ax, color='skyblue')
+ax.set_title('توزيع الرواتب للخريجين الجدد', fontsize=16)
+ax.set_xlabel('الراتب', fontsize=14)
+ax.set_ylabel('التكرار', fontsize=14)
 
 # Display the plot using st.pyplot()
 st.pyplot(fig)
