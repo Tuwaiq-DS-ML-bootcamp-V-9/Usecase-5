@@ -1,82 +1,47 @@
 import streamlit as st
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import arabic_reshaper
-from bidi.algorithm import get_display
-import ast
-from st_vizzu import create_vizzu_obj, vizzu_animate
 
-# Load the dataset
-data_path = 'Jadarat_data.csv'  # Adjust this if needed for your environment
-Jadarat_data = pd.read_csv(data_path)
+# Display the main title
+st.markdown('<h2 style="text-align: right; direction: rtl;">📊 تحليل بيانات الوظائف في المملكة العربية السعودية</h2>', unsafe_allow_html=True)
 
-# Data Cleaning & Preprocessing
-# Convert the string representation of the list into an actual list
-Jadarat_data['benefits'] = Jadarat_data['benefits'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+# Introduction
+st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية، 
+            وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي في المملكة من خلال تحليلات تتعلق بالرواتب، توزيع الوظائف حسب المناطق، 
+            توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>''', unsafe_allow_html=True)
 
-# Create the 'Salary' column by extracting the salary value
-Jadarat_data['Salary'] = Jadarat_data['benefits'].apply(
-    lambda x: float(x[1]) if isinstance(x, list) and len(x) > 1 and 'Salary' in str(x[0]) else None
-)
+# Proportion of Job Postings by Region
+st.markdown('''<h3 style="text-align: right; direction: rtl;">🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
+st.markdown('''<h4 style="text-align: right; direction: rtl;">من خلال تحليل بيانات الوظائف، نلاحظ أن معظم الإعلانات الوظيفية تأتي من منطقة الرياض،
+            تليها مكة المكرمة والمنطقة الشرقية. بينما تكون المناطق الأخرى مثل عسير وتبوك وغيرها تساهم بنسب أقل بكثير في الإعلانات.</h4>''', unsafe_allow_html=True)
+st.image("images/1.png", caption="Proportion of Job Postings by Region in Saudi Arabia")
 
-# Create the 'Benefits' column by extracting the remaining items in the list (if any)
-Jadarat_data['Benefits'] = Jadarat_data['benefits'].apply(
-    lambda x: ', '.join(x[2:]) if isinstance(x, list) and len(x) > 2 else None
-)
+# Gender Preference in Job Postings
+st.markdown('''<h3 style="text-align: right; direction: rtl;">👨‍💻 توزيع الإعلانات الوظيفية حسب الجنس</h3>''', unsafe_allow_html=True)
+st.markdown('''<h4 style="text-align: right; direction: rtl;">هناك تفضيل واضح في بعض الإعلانات الوظيفية لاستقطاب جميع الأجناس (كلا الجنسين)، 
+            بينما هناك بعض الوظائف المخصصة فقط للذكور أو الإناث. لكن بشكل عام، تهيمن الإعلانات التي تقبل كلا الجنسين.</h4>''', unsafe_allow_html=True)
+st.image("images/2png", caption="Gender Preference in Job Postings")
 
-# Split the 'positions' column into 'filling_positions' and 'required_positions' by the '/' separator
-Jadarat_data[['filling_positions', 'required_positions']] = Jadarat_data['positions'].str.split('/', expand=True)
+# Salary Distribution for Fresh Graduates
+st.markdown('''<h3 style="text-align: right; direction: rtl;">💼 توزيع الرواتب للخريجين الجدد</h3>''', unsafe_allow_html=True)
+st.markdown('''<h4 style="text-align: right; direction: rtl;">توزيع الرواتب يظهر أن الغالبية العظمى من الخريجين الجدد يتقاضون رواتب تتراوح بين 5000 و 10000 ريال، 
+            مع بعض الحالات التي تتجاوز هذا المدى. لكن تظل الرواتب بشكل عام منخفضة مقارنة ببقية الخبرات.</h4>''', unsafe_allow_html=True)
+st.image("images/3.png", caption="Salary Distribution for Fresh Graduates")
 
-# Clean up any extra spaces around the values (if any)
-Jadarat_data['filling_positions'] = Jadarat_data['filling_positions'].str.strip()
-Jadarat_data['required_positions'] = Jadarat_data['required_positions'].str.strip()
+# Proportion of Job Postings for Fresh Graduates vs Experienced Candidates
+st.markdown('''<h3 style="text-align: right; direction: rtl;">👩‍🎓 الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة</h3>''', unsafe_allow_html=True)
+st.markdown('''<h4 style="text-align: right; direction: rtl;">الوظائف الموجهة للخريجين الجدد هي الأكثر انتشارًا، حيث تشكل أكثر من نصف الإعلانات الوظيفية،
+            مقارنة بالإعلانات التي تطلب خبرات متعددة التي تشكل نسبة أقل بكثير.</h4>''', unsafe_allow_html=True)
+st.image("images/4.png", caption="Proportion of Job Postings for Fresh Graduates vs Experienced Candidates")
 
-# Set up the Streamlit page configuration
-st.set_page_config(page_title="تحليل بيانات الوظائف في السعودية", layout="wide")
+# Contract Type Distribution
+st.markdown('''<h3 style="text-align: right; direction: rtl;">📝 توزيع نوع العقد في الإعلانات الوظيفية</h3>''', unsafe_allow_html=True)
+st.markdown('''<h4 style="text-align: right; direction: rtl;">فيما يتعلق بنوع العقد، نجد أن غالبية الوظائف المعروضة هي بعقود دوام كامل، 
+            بينما هناك عدد قليل من الوظائف التي تقدم عقودًا للعمل عن بعد.</h4>''', unsafe_allow_html=True)
+st.image("images/5.png", caption="Contract Type Distribution in Job Postings")
 
-# Set the font to support Arabic characters
-plt.rcParams['font.family'] = 'DejaVu Sans'
+# Conclusion
+st.markdown('''<h3 style="text-align: right; direction: rtl;">💬 الخاتمة</h3>''', unsafe_allow_html=True)
+st.markdown('''<h4 style="text-align: right; direction: rtl;">باستخدام هذا التحليل، يمكننا ملاحظة توجهات مهمة مثل التوزيع غير المتكافئ للإعلانات 
+            الوظيفية بين المناطق في المملكة، بالإضافة إلى الرواتب التي تهيمن عليها الرواتب الأقل للخريجين الجدد.
+            كما أن تحليل الخبرات المطلوبة يبرز التحديات التي يواجهها الباحثون عن وظائف ذوي الخبرة. هذه الرؤية توفر لنا معطيات تساعدنا 
+            في اتخاذ قرارات أكثر استراتيجية حول مستقبلنا المهني أو نوع الوظائف التي نرغب في التقديم لها.</h4>''', unsafe_allow_html=True)
 
-# Display the title and introduction
-st.markdown('<h1 style="text-align: right; direction: rtl; font-family: DejaVu Sans;">📊 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
-st.markdown('''<h3 style="text-align: right; direction: rtl; font-family: DejaVu Sans;">مرحبًا بكم في تحليل شامل لبيانات الوظائف المتاحة في السعودية. سنستعرض معًا توزيع الرواتب، الخبرات المطلوبة، وأكثر الوظائف طلبًا. هدفنا هو تقديم رؤى عملية تُساعد الباحثين عن وظائف وصنّاع القرار.</h3>''', unsafe_allow_html=True)
-
-# Salary Distribution by Region
-st.markdown('<h3 style="text-align: right; direction: rtl; font-family: DejaVu Sans;">🌐 توزيع الرواتب حسب المنطقة</h3>', unsafe_allow_html=True)
-
-# Prepare data for the plot
-region_counts = Jadarat_data.groupby('region')['Salary'].mean().sort_values(ascending=False)
-
-# Reshape and apply BiDi algorithm to Arabic text
-reshaped_labels = [get_display(arabic_reshaper.reshape(label)) for label in region_counts.index]
-
-# Create a boxplot of salaries by region
-fig, ax = plt.subplots(figsize=(12, 8))
-sns.barplot(x=region_counts.values, y=region_counts.index, ax=ax, palette='viridis')
-
-# Apply reshaped Arabic labels to the y-axis
-ax.set_yticks(range(len(reshaped_labels)))
-ax.set_yticklabels(reshaped_labels, fontsize=12)
-
-# Add title and axis labels
-ax.set_title('توزيع الرواتب حسب المنطقة', fontsize=16, fontname='DejaVu Sans')
-ax.set_xlabel('متوسط الراتب', fontsize=14, fontname='DejaVu Sans')
-ax.set_ylabel('المنطقة', fontsize=14, fontname='DejaVu Sans')
-
-# Display the plot
-st.pyplot(fig)
-
-# Optionally, render another visualization (example: benefits analysis)
-st.markdown('<h3 style="text-align: right; direction: rtl; font-family: DejaVu Sans;">🎁 تحليل المزايا الوظيفية</h3>', unsafe_allow_html=True)
-benefits_counts = Jadarat_data['Benefits'].str.split(', ', expand=True).stack().value_counts()
-fig, ax = plt.subplots(figsize=(12, 8))
-sns.barplot(x=benefits_counts.values, y=benefits_counts.index, ax=ax, palette='husl')
-ax.set_title('تحليل المزايا الوظيفية', fontsize=16, fontname='DejaVu Sans')
-ax.set_xlabel('عدد الإعلانات', fontsize=14, fontname='DejaVu Sans')
-ax.set_ylabel('المزايا', fontsize=14, fontname='DejaVu Sans')
-st.pyplot(fig)
-
-# Final Conclusion
-st.markdown('<h3 style="text-align: right; direction: rtl; font-family: DejaVu Sans;">🔎 خلاصة التحليل</h3>', unsafe_allow_html=True)
-st.markdown('''<p style="text-align: right; direction: rtl; font-family: DejaVu Sans;">هذا التحليل يُظهر معلومات قيّمة حول سوق العمل في السعودية. من توزيع الرواتب إلى المزايا الوظيفية، نأمل أن تُساعدك هذه البيانات في اتخاذ قرارات مدروسة سواء كنت باحثًا عن عمل أو جهة توظيف.</p>''', unsafe_allow_html=True)
