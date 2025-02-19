@@ -23,6 +23,13 @@ Jadarat_data['Benefits'] = Jadarat_data['benefits'].apply(
     lambda x: ', '.join(x[2:]) if isinstance(x, list) and len(x) > 2 else None
 )
 
+# Step 1: Split the 'positions' column into 'filling_positions' and 'required_positions' by the '/' separator
+Jadarat_data[['filling_positions', 'required_positions']] = Jadarat_data['positions'].str.split('/', expand=True)
+
+# Step 2: Clean up any extra spaces around the values (if any)
+Jadarat_data['filling_positions'] = Jadarat_data['filling_positions'].str.strip()
+Jadarat_data['required_positions'] = Jadarat_data['required_positions'].str.strip()
+
 # Display the title and introduction
 st.markdown('<h1 style="text-align: right; direction: rtl;">📰 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
 st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية، ونهدف إلى الكشف عن معلومات مهمة حول الرواتب، الخبرات المطلوبة، والفرص المتاحة في مختلف المناطق.</h3>''', unsafe_allow_html=True)
