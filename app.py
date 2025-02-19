@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from st_vizzu import create_vizzu_obj, vizzu_animate
 
 # Load the dataset
-data_path = '/mnt/data/Jadarat_data.csv'
+data_path = 'Jadarat_data.csv'
 Jadarat_data = pd.read_csv(data_path)
 
 # Display the title and introduction
