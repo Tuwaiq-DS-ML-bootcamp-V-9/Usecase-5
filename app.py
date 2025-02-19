@@ -8,6 +8,12 @@ from st_vizzu import create_vizzu_obj, vizzu_animate
 data_path = 'Jadarat_data.csv'
 Jadarat_data = pd.read_csv(data_path)
 
+# Clean column names by stripping any extra spaces
+Jadarat_data.columns = Jadarat_data.columns.str.strip()
+
+# Check the column names to ensure 'Salary' exists
+st.write(Jadarat_data.columns)
+
 # Display the title and introduction
 st.markdown('<h1 style="text-align: right; direction: rtl;">📰 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
 st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية، ونهدف إلى الكشف عن معلومات مهمة حول الرواتب، الخبرات المطلوبة، والفرص المتاحة في مختلف المناطق.</h3>''', unsafe_allow_html=True)
