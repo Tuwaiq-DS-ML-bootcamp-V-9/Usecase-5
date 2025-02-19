@@ -2,26 +2,30 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import ast
 from st_vizzu import create_vizzu_obj, vizzu_animate
 
 # Load the dataset
-data_path = 'Jadarat_data.csv'
+data_path = '/mnt/data/Jadarat_data.csv'  # Adjust this if needed for your environment
 Jadarat_data = pd.read_csv(data_path)
 
-# Clean column names by stripping any extra spaces
-Jadarat_data.columns = Jadarat_data.columns.str.strip()
+# Data Cleaning & Preprocessing
+# Convert the string representation of the list into an actual list
+Jadarat_data['benefits'] = Jadarat_data['benefits'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
 
-# Check the column names to ensure 'Salary' exists
-st.write(Jadarat_data.columns)
+# Create the 'Salary' column by extracting the salary value
+Jadarat_data['Salary'] = Jadarat_data['benefits'].apply(
+    lambda x: float(x[1]) if isinstance(x, list) and len(x) > 1 and 'Salary' in str(x[0]) else None
+)
+
+# Create the 'Benefits' column by extracting the remaining items in the list (if any)
+Jadarat_data['Benefits'] = Jadarat_data['benefits'].apply(
+    lambda x: ', '.join(x[2:]) if isinstance(x, list) and len(x) > 2 else None
+)
 
 # Display the title and introduction
 st.markdown('<h1 style="text-align: right; direction: rtl;">📰 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
 st.markdown('''<h3 style="text-align: right; direction: rtl;">قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية، ونهدف إلى الكشف عن معلومات مهمة حول الرواتب، الخبرات المطلوبة، والفرص المتاحة في مختلف المناطق.</h3>''', unsafe_allow_html=True)
-
-# Data Cleaning & Preprocessing
-Jadarat_data['Salary'] = pd.to_numeric(Jadarat_data['Salary'], errors='coerce')
-Jadarat_data['exper'] = Jadarat_data['exper'].str.extract('(\d+)').astype(int)
-Jadarat_data['job_date'] = pd.to_datetime(Jadarat_data['job_date'], errors='coerce')
 
 # Analyzing Salary Distribution for Fresh Graduates
 fresh_grads = Jadarat_data[Jadarat_data['exper'] == 0]
