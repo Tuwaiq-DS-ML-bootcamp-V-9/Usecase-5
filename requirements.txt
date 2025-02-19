@@ -3,3 +3,5 @@ pandas
 seaborn
 matplotlib
 st-pages
+arabic-reshaper
+python-bidi
