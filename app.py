@@ -60,13 +60,23 @@ st.markdown('<h3 style="text-align: right; direction: rtl;">📈 التوزيع 
 Jadarat_data['Salary'] = pd.to_numeric(Jadarat_data['Salary'], errors='coerce')
 Jadarat_data['required_positions'] = pd.to_numeric(Jadarat_data['required_positions'], errors='coerce')
 
-# Now create the vizzu object and animate
-try:
-    vizzu_obj = create_vizzu_obj(Jadarat_data)
-    vizzu_obj = vizzu_animate(vizzu_obj, x="Salary", y="required_positions", color="region", title="الراتب مقابل المناصب المطلوبة")
-    st.write(vizzu_obj)
-except Exception as e:
-    st.error(f"Error during animation: {e}")
+# Now create the vizzu object and animate using correct syntax
+vizzu_obj = create_vizzu_obj(Jadarat_data)
+
+# Use a dictionary-based argument to animate the graph
+anim_obj = vizzu_animate(
+    vizzu_obj,
+    {
+        "x": "Salary",  # Salary column on the x-axis
+        "y": "required_positions",  # Required Positions column on the y-axis
+        "color": "region",  # Color by region
+        "title": "الراتب مقابل المناصب المطلوبة",  # Title of the chart
+        "label": "job_title"  # Adding labels as the job title
+    }
+)
+
+# Display the animated object
+st.write(anim_obj)
 
 # Final Conclusion
 st.markdown('''<h3 style="text-align: right; direction: rtl;">في النهاية، التحليل يكشف عن بعض الاتجاهات المهمة مثل توزيع الرواتب بشكل غير متساوي في بعض المناطق، والفرص المتاحة للخريجين الجدد. باستخدام هذا التحليل، يمكننا اتخاذ قرارات أكثر فاعلية في اختيار الوظائف أو حتى تحديد الوظائف التي تناسب مهاراتنا واهتماماتنا.</h3>''', unsafe_allow_html=True)
