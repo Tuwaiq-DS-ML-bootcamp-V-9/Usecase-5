@@ -86,7 +86,6 @@ st.markdown("""
             }
         }
     </style>
-st.image('images/im.png', caption='Job Search', use_column_width=True) 
 """, unsafe_allow_html=True)
 
 # Display the main title
@@ -150,4 +149,3 @@ st.markdown('''<div class="content-container animate-content">
 
 # Footer
 st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
-
