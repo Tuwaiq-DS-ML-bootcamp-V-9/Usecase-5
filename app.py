@@ -88,6 +88,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Display the header image
+st.image('images/im.png', caption='Job Search', use_column_width=True)
+
 # Display the main title
 st.markdown('<h1 class="animate-content">📊 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>', unsafe_allow_html=True)
 
