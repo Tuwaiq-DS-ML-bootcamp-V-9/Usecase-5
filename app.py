@@ -86,7 +86,7 @@ st.markdown("""
             }
         }
     </style>
-st.image('data/im.png', caption='Job Search', use_column_width=True) 
+st.image('images/im.png', caption='Job Search', use_column_width=True) 
 """, unsafe_allow_html=True)
 
 # Display the main title
