@@ -151,5 +151,3 @@ st.markdown('''<div class="content-container animate-content">
 # Footer
 st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
 
-
-good? 
