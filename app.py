@@ -16,7 +16,7 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load enhanced custom CSS with modern styling."""
+    """Load enhanced custom CSS with modern styling and updated filter-result-box."""
     custom_css = f"""
     <style>
         /* Global App Styling */
@@ -69,28 +69,31 @@ def load_css(theme):
         .stSelectbox:hover, .stNumberInput:hover {{
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }}
-        /* Filter Result Box */
+        /* Filter Result Box - Smaller and Better Colors */
         .filter-result-box {{
-            background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 70%, {theme['accent3']} 100%);
+            background: linear-gradient(135deg, {theme['accent1']} 0%, rgba(52, 152, 219, 0.8) 50%, rgba(46, 204, 113, 0.6) 100%);
             color: white;
-            padding: 2.5rem;
-            border-radius: 25px;
-            margin: 2rem 1rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            padding: 1.5rem;  /* Reduced padding */
+            border-radius: 20px;  /* Slightly smaller radius */
+            margin: 1.5rem 1rem;  /* Reduced margin */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 600px;  /* Added max-width to constrain size */
+            margin-left: auto;
+            margin-right: auto;
         }}
         .filter-result-box:hover {{
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            transform: translateY(-3px);  /* Subtler hover effect */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
         }}
         .filter-result-box h3 {{
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem;  /* Reduced font size */
+            margin-bottom: 1rem;  /* Reduced margin */
             text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }}
         .filter-result-box p {{
-            font-size: 1.6rem;
-            margin: 0.8rem 0;
+            font-size: 1.2rem;  /* Reduced font size */
+            margin: 0.5rem 0;  /* Reduced margin */
             font-weight: 400;
         }}
         /* Chart Containers */
@@ -221,7 +224,7 @@ def main():
         ''', unsafe_allow_html=True)
 
     # Footer
-    st.markdown(f'''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
+    st.markdown(f'''<div class="filter-result-box">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
