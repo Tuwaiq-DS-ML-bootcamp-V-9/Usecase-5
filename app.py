@@ -5,12 +5,16 @@ import plotly.express as px
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
 
-# Display the column names (for debugging purposes)
-st.write("Columns in dataset:", list(jadarat_data.columns))
+# Display dataset info for debugging (you can remove this in production)
+st.write("Dataset Info:")
+st.write(jadarat_data.info())
 
-# Clean data: strip extra spaces and convert 'exper' to numeric
+# Data Cleaning
+# Strip any extra whitespace from textual columns
 jadarat_data['job_title'] = jadarat_data['job_title'].str.strip()
 jadarat_data['gender'] = jadarat_data['gender'].str.strip()
+
+# Convert 'exper' column to numeric (this is necessary since it's an object type)
 jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')
 
 def load_css(theme):
@@ -45,74 +49,7 @@ def load_css(theme):
         .hero h1, .hero h3 {{
             animation: fadeIn 2s;
         }}
-        /* Price Card Styling */
-        .price-card {{
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-right: 5px solid;
-            color: {theme['text_color']};
-            transition: transform 0.3s;
-        }}
-        .price-card:hover {{
-            transform: scale(1.05);
-        }}
-        .price-card.apartment {{ border-color: {theme['accent1']}; }}
-        .price-card.villa {{ border-color: {theme['accent2']}; }}
-        .price-card.land {{ border-color: {theme['accent3']}; }}
-        /* Comparison Box Styling */
-        .comparison-box {{
-            background: linear-gradient(135deg, #ffffff 0%, {theme['background']} 100%);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid #e9ecef;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }}
-        /* Recommendation Box Styling */
-        .recommendation-box {{
-            background: {theme['recommendation_bg']};
-            color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }}
-        /* Example Section Styling */
-        .example-section {{
-            margin-top: 3rem;
-            font-size: 1.8rem;
-            line-height: 1.7;
-        }}
-        .example-section h2 {{
-            font-size: 2.4rem;
-            margin-bottom: 1rem;
-            color: {theme['text_color']};
-        }}
-        .highlight {{
-            font-weight: bold;
-            color: {theme['accent1']};
-            font-size: 1.9rem;
-        }}
-        /* Footer Styling */
-        .footer {{
-            text-align: center;
-            padding: 2rem;
-            background: {theme['background']};
-            color: {theme['text_color']};
-            font-size: 1.2rem;
-        }}
-        /* Filter Box Styling */
-        .filter-box {{
-            background: {theme['recommendation_bg']};
-            color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }}
-        /* Amazing Filter Result Styling */
+        /* Filter Result Box Styling */
         .filter-result-box {{
             background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 100%);
             color: white;
@@ -129,6 +66,14 @@ def load_css(theme):
         .filter-result-box p {{
             font-size: 1.8rem;
             margin: 0.5rem 0;
+        }}
+        /* Footer Styling */
+        .footer {{
+            text-align: center;
+            padding: 2rem;
+            background: {theme['background']};
+            color: {theme['text_color']};
+            font-size: 1.2rem;
         }}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -151,54 +96,32 @@ def info_sections():
     """Show information sections with interactive graphs based on dataset columns."""
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
-    st.markdown('''<div class="content-container animate-content">
+    st.markdown('''<div>
                     <h3>قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية،
                     وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي من خلال تحليلات تتعلق بالرواتب،
-                    توزيع الوظائف حسب المناطق والمهارات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
+                    توزيع الوظائف حسب المناطق ومستويات الخبرة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
-    # Job Postings by Region
-    st.markdown('''<h3 class="animate-content">🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
+    # Example: Job Postings by Region
+    st.markdown('''<h3>🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
     region_distribution = jadarat_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
-    fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات الوظيفية حسب المناطق')
+    fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
 
-    # Job Postings by Gender
-    st.markdown('''<h3 class="animate-content">👨‍💻 توزيع الإعلانات الوظيفية حسب الجنس</h3>''', unsafe_allow_html=True)
+    # Example: Job Postings by Gender
+    st.markdown('''<h3>👨‍💻 توزيع الإعلانات حسب الجنس</h3>''', unsafe_allow_html=True)
     gender_distribution = jadarat_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
-    fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
+    fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
 
-    # Average Salary by Job Title
-    st.markdown('''<h3 class="animate-content">💼 متوسط الرواتب حسب العناوين الوظيفية</h3>''', unsafe_allow_html=True)
+    # Example: Average Salary by Job Title
+    st.markdown('''<h3>💼 متوسط الرواتب حسب العناوين الوظيفية</h3>''', unsafe_allow_html=True)
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
-
-    # Job Postings by Experience
-    st.markdown('''<h3 class="animate-content">👩‍🎓 الوظائف حسب سنوات الخبرة</h3>''', unsafe_allow_html=True)
-    experience_distribution = jadarat_data['exper'].value_counts().reset_index()
-    experience_distribution.columns = ['experience', 'count']
-    fig4 = px.bar(experience_distribution, x='experience', y='count', title='توزيع الوظائف حسب سنوات الخبرة')
-    st.plotly_chart(fig4, use_container_width=True)
-
-    # Contract Type Distribution
-    st.markdown('''<h3 class="animate-content">📝 توزيع نوع العقد</h3>''', unsafe_allow_html=True)
-    contract_distribution = jadarat_data['contract'].value_counts().reset_index()
-    contract_distribution.columns = ['contract_type', 'count']
-    fig5 = px.pie(contract_distribution, values='count', names='contract_type', title='توزيع نوع العقد')
-    st.plotly_chart(fig5, use_container_width=True)
-
-    # Conclusion Section
-    st.markdown('''<h3 class="animate-content">💬 الخاتمة</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>من خلال هذا التحليل، يظهر أن هناك تفاوتًا في توزيع الإعلانات الوظيفية بين المناطق،
-                    وتبرز البيانات تحديات معينة مثل اختلاف الرواتب ومستويات الخبرة المطلوبة.
-                    يمكن لهذه الرؤى أن تساعد الباحثين عن عمل وأصحاب العمل على اتخاذ قرارات أفضل.</h4>
-                </div>''', unsafe_allow_html=True)
 
 def main():
     st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
