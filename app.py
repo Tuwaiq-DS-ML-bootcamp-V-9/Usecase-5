@@ -1,6 +1,8 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
@@ -27,52 +29,51 @@ def load_css(theme):
             border-radius: 30px;
             margin: 2rem 0;
         }}
-        /* Price Card Styling */
-        .price-card {{
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-right: 5px solid;
-            color: {theme['text_color']};
+        /* Content container */
+        .content-container {{
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3em;
+            transition: all 0.3s ease;
         }}
-        .price-card.apartment {{ border-color: {theme['accent1']}; }}
-        .price-card.villa {{ border-color: {theme['accent2']}; }}
-        .price-card.land {{ border-color: {theme['accent3']}; }}
-        /* Comparison Box Styling */
-        .comparison-box {{
-            background: linear-gradient(135deg, #ffffff 0%, {theme['background']} 100%);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid #e9ecef;
+        /* Hover effect on content container */
+        .content-container:hover {{
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
         }}
-        /* Recommendation Box Styling */
-        .recommendation-box {{
-            background: {theme['recommendation_bg']};
+        /* Footer */
+        .footer {{
+            text-align: center;
+            padding: 1em;
+            background-color: #0056b3;
             color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
+            font-size: 1rem;
+            border-radius: 8px;
+            margin-top: 3em;
         }}
-        /* Example Section Styling */
-        .example-section {{
-            margin-top: 3rem;
-            font-size: 1.8rem;
-            line-height: 1.7;
+        /* Image styling */
+        img {{
+            border-radius: 8px;
+            max-width: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 1em;
         }}
-        .example-section h2 {{
-            font-size: 2.4rem;
-            margin-bottom: 1rem;
-            color: {theme['text_color']};
+        /* Animation for the elements */
+        .animate-content {{
+            opacity: 0;
+            animation: fadeIn 2s forwards;
         }}
-        .highlight {{
-            font-weight: bold;
-            color: {theme['accent1']};
-            font-size: 1.9rem;
+        @keyframes fadeIn {{
+            from {{
+                opacity: 0;
+            }}
+            to {{
+                opacity: 1;
+            }}
         }}
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     """
     st.markdown(custom_css, unsafe_allow_html=True)
 
@@ -126,7 +127,8 @@ def info_sections():
                     <h4>توزيع الرواتب يظهر أن الغالبية العظمى من الخريجين الجدد يتقاضون رواتب تتراوح بين 5000 و 10000 ريال،
                     مع بعض الحالات التي تتجاوز هذا المدى. لكن تظل الرواتب بشكل عام منخفضة مقارنة ببقية الخبرات.</h4>
                 </div>''', unsafe_allow_html=True)
-    salary_distribution = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate']['Salary']
+    fresh_grads = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate']
+    salary_distribution = fresh_grads['Salary'].dropna()
     fig3 = px.histogram(salary_distribution, nbins=20, title='توزيع الرواتب للخريجين الجدد')
     st.plotly_chart(fig3, use_container_width=True)
 
