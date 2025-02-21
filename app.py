@@ -16,7 +16,7 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load futuristic CSS with glassmorphism and neon effects."""
+    """Load enhanced custom CSS with modern styling."""
     custom_css = f"""
     <style>
         /* Global App Styling */
@@ -26,110 +26,90 @@ def load_css(theme):
             direction: rtl;
             color: {theme['text_color']};
             font-family: 'Tajawal', sans-serif;
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
             color: {theme['text_color']};
             font-weight: 700;
-            letter-spacing: 1px;
         }}
-        /* Hero Section with Glassmorphism */
+        /* Hero Section */
         .hero {{
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)),
+            background: linear-gradient(135deg, {theme['hero_overlay']} 0%, rgba(0,0,0,0.5) 100%), 
                         url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover no-repeat;
-            backdrop-filter: blur(10px);
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             border-radius: 20px;
             margin: 2rem 1rem;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
         }}
         .hero:hover {{
-            transform: scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(-5px);
         }}
         .hero h1 {{
-            color: {theme['accent1']};
-            text-shadow: 0 0 10px {theme['accent1']}, 0 0 20px {theme['accent2']};
-            font-size: 3.2rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            font-size: 3rem;
             margin-bottom: 1rem;
         }}
         .hero h3 {{
-            color: {theme['text_color']};
-            font-size: 1.6rem;
-            opacity: 0.9;
+            color: #e0e0e0;
+            font-size: 1.5rem;
         }}
-        /* Filter Inputs with Neon Glow */
+        /* Filter Section */
         .stSelectbox, .stNumberInput {{
-            background: rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 0.8rem;
-            border: 1px solid {theme['accent3']};
-            box-shadow: 0 0 10px {theme['accent3']};
-            transition: all 0.3s ease;
-            color: {theme['text_color']};
+            background: white;
+            border-radius: 15px;
+            padding: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
         }}
         .stSelectbox:hover, .stNumberInput:hover {{
-            box-shadow: 0 0 15px {theme['accent3']}, 0 0 25px {theme['accent2']};
-            border-color: {theme['accent2']};
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }}
-        /* Filter Result Box with Glass Effect */
+        /* Filter Result Box */
         .filter-result-box {{
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: {theme['text_color']};
+            background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 70%, {theme['accent3']} 100%);
+            color: white;
             padding: 2.5rem;
-            border-radius: 20px;
+            border-radius: 25px;
             margin: 2rem 1rem;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 0 10px rgba(255,255,255,0.1);
-            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }}
         .filter-result-box:hover {{
-            transform: scale(1.03);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
         }}
         .filter-result-box h3 {{
-            font-size: 2.6rem;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            color: {theme['accent1']};
-            text-shadow: 0 0 8px {theme['accent1']};
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }}
         .filter-result-box p {{
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             margin: 0.8rem 0;
             font-weight: 400;
-            color: {theme['text_color']};
-        }}
-        .filter-result-box p strong {{
-            color: {theme['accent2']};
         }}
         /* Chart Containers */
         .plotly-chart {{
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }}
         /* Footer */
         .footer {{
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(to top, {theme['background']}, rgba(0,0,0,0.2));
+            background: {theme['background']};
             color: {theme['text_color']};
-            font-size: 1.3rem;
-            margin-top: 3rem;
+            font-size: 1.2rem;
             border-top: 1px solid {theme['accent3']};
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+            margin-top: 2rem;
         }}
-        /* Smooth Transitions */
-        * {{
-            transition: all 0.2s ease-out;
-        }}
+        /* Smooth Scroll */
         html {{
             scroll-behavior: smooth;
         }}
@@ -139,11 +119,11 @@ def load_css(theme):
     st.markdown(custom_css, unsafe_allow_html=True)
 
 def hero_section(theme):
-    """Display a futuristic hero section."""
+    """Display an enhanced hero section."""
     hero_html = f"""
     <div class="hero">
         <h1>📊 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>
-        <h3>استكشف المستقبل الوظيفي بأسلوب مبتكر</h3>
+        <h3>اكتشف التوجهات الوظيفية في المملكة بأسلوب حديث</h3>
     </div>
     """
     st.markdown(hero_html, unsafe_allow_html=True)
@@ -153,8 +133,8 @@ def info_sections():
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
     st.markdown('''<div>
-                    <h3>تحليل متقدم لإعلانات الوظائف في السعودية مع رؤى حول الرواتب، التوزيع الجغرافي،
-                    مستويات الخبرة، وأنماط العقود.</h3>
+                    <h3>نقدم تحليلًا شاملًا لإعلانات الوظائف في السعودية، مع التركيز على الرواتب،
+                    توزيع الوظائف حسب المناطق ومستويات الخبرة، وأنواع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
     # Job Postings by Region
@@ -162,7 +142,7 @@ def info_sections():
     region_distribution = jadarat_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
     fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات حسب المناطق',
-                  color='count', color_continuous_scale='Plasma')
+                  color='count', color_continuous_scale='Blues')
     st.plotly_chart(fig1, use_container_width=True)
 
     # Job Postings by Gender
@@ -170,7 +150,7 @@ def info_sections():
     gender_distribution = jadarat_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات حسب الجنس',
-                  color_discrete_sequence=px.colors.sequential.Magma)
+                  color_discrete_sequence=px.colors.sequential.Teal)
     st.plotly_chart(fig2, use_container_width=True)
 
     # Average Salary by Job Title
@@ -178,22 +158,22 @@ def info_sections():
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية',
-                  color='Salary', color_continuous_scale='Inferno')
+                  color='Salary', color_continuous_scale='Viridis')
     st.plotly_chart(fig3, use_container_width=True)
 
 def main():
-    # Futuristic theme configuration
-    futuristic_theme = {
-        "background": "#1a1a2e",   # Deep dark blue
-        "text_color": "#e0e0e0",   # Light gray for contrast
-        "accent1": "#00d4ff",      # Neon cyan
-        "accent2": "#ff007a",      # Neon pink
-        "accent3": "#39ff14",      # Neon green
-        "hero_overlay": "rgba(0, 212, 255, 0.5)",
+    # Enhanced theme configuration
+    modern_theme = {
+        "background": "#f4f7fa",  # Softer light gray-blue
+        "text_color": "#2c3e50",  # Darker slate for contrast
+        "accent1": "#3498db",    # Vibrant blue
+        "accent2": "#e67e22",    # Warm orange
+        "accent3": "#2ecc71",    # Fresh green
+        "hero_overlay": "rgba(52, 152, 219, 0.7)",
         "header_font": "'Tajawal', sans-serif",
-        "recommendation_bg": "#16213e",
+        "recommendation_bg": "#34495e",
     }
-    theme = futuristic_theme
+    theme = modern_theme
 
     load_css(theme)
     hero_section(theme)
@@ -202,15 +182,15 @@ def main():
     # Filters Section
     st.header('تصفية البيانات')
     
-    col1, col2, col3 = st.columns([1.2, 1, 1])  # Slightly wider first column for job titles
+    col1, col2, col3 = st.columns(3)
     with col1:
         job_titles = jadarat_data['job_title'].unique()
-        job_title = st.selectbox('اختر عنوان الوظيفة', job_titles, key='job_title')
+        job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
     with col2:
-        years_of_experience = st.number_input('عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0, key='exper')
+        years_of_experience = st.number_input('عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0)
     with col3:
         unique_genders = jadarat_data['gender'].unique()
-        gender = st.selectbox('اختر الجنس', unique_genders, key='gender')
+        gender = st.selectbox('اختر الجنس', unique_genders)
 
     # Filter data
     filtered_data = jadarat_data[
