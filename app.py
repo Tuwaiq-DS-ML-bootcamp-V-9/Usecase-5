@@ -126,7 +126,7 @@ def info_sections():
                     <h4>توزيع الرواتب يظهر أن الغالبية العظمى من الخريجين الجدد يتقاضون رواتب تتراوح بين 5000 و 10000 ريال،
                     مع بعض الحالات التي تتجاوز هذا المدى. لكن تظل الرواتب بشكل عام منخفضة مقارنة ببقية الخبرات.</h4>
                 </div>''', unsafe_allow_html=True)
-    salary_distribution = jadarat_data[jadarat_data['experience'] == 'Fresh Graduate']['salary']
+    salary_distribution = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate']['Salary']
     fig3 = px.histogram(salary_distribution, nbins=20, title='توزيع الرواتب للخريجين الجدد')
     st.plotly_chart(fig3, use_container_width=True)
 
@@ -136,7 +136,7 @@ def info_sections():
                     <h4>الوظائف الموجهة للخريجين الجدد هي الأكثر انتشارًا، حيث تشكل أكثر من نصف الإعلانات الوظيفية،
                     مقارنة بالإعلانات التي تطلب خبرات متعددة التي تشكل نسبة أقل بكثير.</h4>
                 </div>''', unsafe_allow_html=True)
-    experience_distribution = jadarat_data['experience'].value_counts().reset_index()
+    experience_distribution = jadarat_data['exper'].value_counts().reset_index()
     experience_distribution.columns = ['experience', 'count']
     fig4 = px.bar(experience_distribution, x='experience', y='count', title='الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة')
     st.plotly_chart(fig4, use_container_width=True)
@@ -147,7 +147,7 @@ def info_sections():
                     <h4>فيما يتعلق بنوع العقد، نجد أن غالبية الوظائف المعروضة هي بعقود دوام كامل،
                     بينما هناك عدد قليل من الوظائف التي تقدم عقودًا للعمل عن بعد.</h4>
                 </div>''', unsafe_allow_html=True)
-    contract_distribution = jadarat_data['contract_type'].value_counts().reset_index()
+    contract_distribution = jadarat_data['contract'].value_counts().reset_index()
     contract_distribution.columns = ['contract_type', 'count']
     fig5 = px.pie(contract_distribution, values='count', names='contract_type', title='توزيع نوع العقد في الإعلانات الوظيفية')
     st.plotly_chart(fig5, use_container_width=True)
