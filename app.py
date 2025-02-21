@@ -130,19 +130,20 @@ def info_sections():
                 </div>''', unsafe_allow_html=True)
     
     # Filter fresh graduates and clean salary data
-    fresh_grads = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate'].copy()
-    fresh_grads['Salary'] = pd.to_numeric(fresh_grads['Salary'], errors='coerce')
-    fresh_grads = fresh_grads.dropna(subset=['Salary'])  # Drop rows with invalid salary values
+fresh_grads = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate'].copy()
+fresh_grads['Salary'] = pd.to_numeric(fresh_grads['Salary'], errors='coerce')  # Convert to numeric, invalid values will become NaN
+fresh_grads = fresh_grads.dropna(subset=['Salary'])  # Drop rows with NaN Salary values
 
-    # Plot using Seaborn and Matplotlib
-    plt.figure(figsize=(10, 6))
-    sns.histplot(fresh_grads['Salary'], bins=30, kde=True, color=theme['accent1'])
-    plt.title('توزيع الرواتب للخريجين الجدد', fontsize=16, fontweight='bold', color=theme['text_color'])
-    plt.xlabel('الراتب (ريال سعودي)', fontsize=14, color=theme['text_color'])
-    plt.ylabel('التكرار', fontsize=14, color=theme['text_color'])
-    plt.xticks(fontsize=12, color=theme['text_color'])
-    plt.yticks(fontsize=12, color=theme['text_color'])
-    st.pyplot(plt)
+# Plot using Seaborn and Matplotlib
+plt.figure(figsize=(10, 6))
+sns.histplot(fresh_grads['Salary'], bins=30, kde=True, color=theme['accent1'])
+plt.title('توزيع الرواتب للخريجين الجدد', fontsize=16, fontweight='bold', color=theme['text_color'])
+plt.xlabel('الراتب (ريال سعودي)', fontsize=14, color=theme['text_color'])
+plt.ylabel('التكرار', fontsize=14, color=theme['text_color'])
+plt.xticks(fontsize=12, color=theme['text_color'])
+plt.yticks(fontsize=12, color=theme['text_color'])
+st.pyplot(plt)
+
 
     # Proportion of Job Postings for Fresh Graduates vs Experienced Candidates
     st.markdown('''<h3 class="animate-content">👩‍🎓 الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة</h3>''', unsafe_allow_html=True)
