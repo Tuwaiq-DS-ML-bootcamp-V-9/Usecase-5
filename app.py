@@ -104,6 +104,24 @@ def load_css(theme):
             margin: 2rem 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }}
+        /* Amazing Filter Result Styling */
+        .filter-result-box {{
+            background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }}
+        .filter-result-box h3 {{
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+        }}
+        .filter-result-box p {{
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+        }}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     """
@@ -201,9 +219,6 @@ def info_sections():
                     <h4>بعد مراجعة الرسوم البيانية، يمكنك الآن التحقق من تفاصيل وظيفتك المحددة. استخدم الفلاتر أدناه لاختيار عنوان الوظيفة، سنوات الخبرة، والجنس لعرض المعلومات المتعلقة بالوظيفة التي تهمك.</h4>
                 </div>''', unsafe_allow_html=True)
 
-    # Footer
-    st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
-
 def main():
     st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
 
@@ -240,10 +255,10 @@ def main():
         (jadarat_data['gender'] == gender)
     ]
 
-    # Display filtered information in a modern box
+    # Display filtered information in an amazing style
     if not filtered_data.empty:
         st.markdown(f'''
-        <div class="filter-box">
+        <div class="filter-result-box">
             <h3>معلومات الوظيفة المختارة</h3>
             <p><strong>عنوان الوظيفة:</strong> {job_title}</p>
             <p><strong>سنوات الخبرة:</strong> {years_of_experience}</p>
@@ -252,6 +267,9 @@ def main():
             <p><strong>الراتب:</strong> {filtered_data['Salary'].values[0]}</p>
         </div>
         ''', unsafe_allow_html=True)
+
+    # Footer
+    st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
