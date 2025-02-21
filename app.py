@@ -29,51 +29,52 @@ def load_css(theme):
             border-radius: 30px;
             margin: 2rem 0;
         }}
-        /* Content container */
-        .content-container {{
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 3em;
-            transition: all 0.3s ease;
+        /* Price Card Styling */
+        .price-card {{
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-right: 5px solid;
+            color: {theme['text_color']};
         }}
-        /* Hover effect on content container */
-        .content-container:hover {{
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            transform: scale(1.02);
+        .price-card.apartment {{ border-color: {theme['accent1']}; }}
+        .price-card.villa {{ border-color: {theme['accent2']}; }}
+        .price-card.land {{ border-color: {theme['accent3']}; }}
+        /* Comparison Box Styling */
+        .comparison-box {{
+            background: linear-gradient(135deg, #ffffff 0%, {theme['background']} 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #e9ecef;
         }}
-        /* Footer */
-        .footer {{
-            text-align: center;
-            padding: 1em;
-            background-color: #0056b3;
+        /* Recommendation Box Styling */
+        .recommendation-box {{
+            background: {theme['recommendation_bg']};
             color: white;
-            font-size: 1rem;
-            border-radius: 8px;
-            margin-top: 3em;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
         }}
-        /* Image styling */
-        img {{
-            border-radius: 8px;
-            max-width: 100%;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            margin-top: 1em;
+        /* Example Section Styling */
+        .example-section {{
+            margin-top: 3rem;
+            font-size: 1.8rem;
+            line-height: 1.7;
         }}
-        /* Animation for the elements */
-        .animate-content {{
-            opacity: 0;
-            animation: fadeIn 2s forwards;
+        .example-section h2 {{
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            color: {theme['text_color']};
         }}
-        @keyframes fadeIn {{
-            from {{
-                opacity: 0;
-            }}
-            to {{
-                opacity: 1;
-            }}
+        .highlight {{
+            font-weight: bold;
+            color: {theme['accent1']};
+            font-size: 1.9rem;
         }}
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     """
     st.markdown(custom_css, unsafe_allow_html=True)
 
@@ -121,28 +122,27 @@ def info_sections():
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
 
-    # Proportion of Job Postings for Fresh Graduates
+    # Salary Distribution for Fresh Graduates
     st.markdown('''<h3 class="animate-content">💼 توزيع الرواتب للخريجين الجدد</h3>''', unsafe_allow_html=True)
     st.markdown('''<div class="content-container animate-content">
                     <h4>توزيع الرواتب يظهر أن الغالبية العظمى من الخريجين الجدد يتقاضون رواتب تتراوح بين 5000 و 10000 ريال،
                     مع بعض الحالات التي تتجاوز هذا المدى. لكن تظل الرواتب بشكل عام منخفضة مقارنة ببقية الخبرات.</h4>
                 </div>''', unsafe_allow_html=True)
-
-    # Check if 'Fresh Graduate' exists in 'exper' column and filter data
-    fresh_grads = jadarat_data[jadarat_data['exper'].str.contains('Fresh Graduate', na=False, case=False)]
     
-    # Ensure the Salary column is numeric, forcing errors to NaN
+    # Filter fresh graduates and clean salary data
+    fresh_grads = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate'].copy()
     fresh_grads['Salary'] = pd.to_numeric(fresh_grads['Salary'], errors='coerce')
-    
-    # Drop NaN values to prevent plotting errors
-    salary_distribution = fresh_grads['Salary'].dropna()
+    fresh_grads = fresh_grads.dropna(subset=['Salary'])  # Drop rows with invalid salary values
 
-    if len(salary_distribution) > 0:
-        # Plot the histogram of salary distribution for fresh graduates
-        fig3 = px.histogram(salary_distribution, nbins=20, title='توزيع الرواتب للخريجين الجدد')
-        st.plotly_chart(fig3, use_container_width=True)
-    else:
-        st.write("لا توجد بيانات لرواتب الخريجين الجدد.")
+    # Plot using Seaborn and Matplotlib
+    plt.figure(figsize=(10, 6))
+    sns.histplot(fresh_grads['Salary'], bins=30, kde=True, color=theme['accent1'])
+    plt.title('توزيع الرواتب للخريجين الجدد', fontsize=16, fontweight='bold', color=theme['text_color'])
+    plt.xlabel('الراتب (ريال سعودي)', fontsize=14, color=theme['text_color'])
+    plt.ylabel('التكرار', fontsize=14, color=theme['text_color'])
+    plt.xticks(fontsize=12, color=theme['text_color'])
+    plt.yticks(fontsize=12, color=theme['text_color'])
+    st.pyplot(plt)
 
     # Proportion of Job Postings for Fresh Graduates vs Experienced Candidates
     st.markdown('''<h3 class="animate-content">👩‍🎓 الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة</h3>''', unsafe_allow_html=True)
