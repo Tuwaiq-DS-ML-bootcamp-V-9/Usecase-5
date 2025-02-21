@@ -6,4 +6,4 @@ st-pages
 arabic-reshaper
 python-bidi
 plotly
-
+folium
