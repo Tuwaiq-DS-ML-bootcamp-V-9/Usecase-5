@@ -16,7 +16,7 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with updated filter-result-box styling."""
+    """Load custom CSS with a wider filter-result-box."""
     custom_css = f"""
     <style>
         .stApp {{
@@ -46,16 +46,17 @@ def load_css(theme):
         .hero h1, .hero h3 {{
             animation: fadeIn 2s;
         }}
-        /* Updated Filter Result Box */
+        /* Updated Filter Result Box - Wider */
         .filter-result-box {{
             background: linear-gradient(135deg, {theme['accent3']} 0%, rgba(38, 139, 210, 0.8) 100%);  /* Blue gradient */
             color: white;
-            padding: 1.5rem;  /* Reduced padding for compactness */
+            padding: 1.5rem 2rem;  /* Adjusted padding for wider look */
             border-radius: 15px;  /* Softer corners */
-            margin: 1.5rem auto;  /* Centered with reduced margin */
+            margin: 1.5rem 1rem;  /* Slightly wider margins */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Softer shadow */
             text-align: center;
-            max-width: 450px;  /* Smaller constrained width */
+            width: 90%;  /* Set to 90% of container width */
+            max-width: none;  /* Remove max-width constraint */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }}
         .filter-result-box:hover {{
