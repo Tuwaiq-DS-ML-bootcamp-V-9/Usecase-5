@@ -154,13 +154,6 @@ def main():
         (jadarat_data['gender'] == gender)
     ]
 
-    # Debugging Output
-    st.write("### معلومات التصحيح")
-    st.write(f"عنوان الوظيفة المختار: '{job_title}'")
-    st.write(f"سنوات الخبرة المختارة: {years_of_experience}")
-    st.write(f"الجنس المختار: '{gender}'")
-    st.write("عدد النتائج المطابقة:", len(filtered_data))
-
     # Display filtered results
     if not filtered_data.empty:
         st.markdown(f'''
@@ -171,6 +164,7 @@ def main():
             <p><strong>الجنس:</strong> {gender}</p>
             <p><strong>المنطقة:</strong> {filtered_data['region'].values[0]}</p>
             <p><strong>الراتب:</strong> {filtered_data['Salary'].values[0]}</p>
+            <p><strong>عدد النتائج المطابقة:</strong> {len(filtered_data)}</p>
         </div>
         ''', unsafe_allow_html=True)
     else:
@@ -180,7 +174,6 @@ def main():
             <p>لم يتم العثور على وظائف تطابق المعايير المحددة. يرجى التحقق من الفلاتر وإعادة المحاولة.</p>
         </div>
         ''', unsafe_allow_html=True)
-        st.write("البيانات المصفاة (للتصحيح):", filtered_data)
 
     # Footer
     st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
