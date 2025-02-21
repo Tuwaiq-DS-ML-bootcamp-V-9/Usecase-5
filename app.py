@@ -4,8 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-st.set_page_config(layout="wide")
-
+st.set_page_config(page_title="وظايف لحديثين التخرج",  layout="wide")
 
 st.markdown("""
     <style>
@@ -200,7 +199,7 @@ st.plotly_chart(fig, use_container_width=True)
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
      <p style="color: #0B67B7; font-size: 25px;">
-     الحد الأدنى: 4,000 ريال – بداية معقولة للدخول لسوق العمل 🔹
+     الحد الأدنى: 4,000 ريال – بداية معقولة تدخل بسوق العمل 🔹
           </p>
      <p style="color: #0B67B7; font-size: 25px;">
         الحد الأعلى: 8,500 ريال – يعتمد على التخصص والمهارات المطلوبة 🔹 
@@ -275,7 +274,7 @@ st.markdown("""
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
     <p style="color: #0B67B7; font-size: 30px; font-weight: bold; margin-bottom: 20px;">
-  وطبعًا حنا عارفين بعض المجالات فيها فرص اكثر من غيرها  
+  وطبعًا حنا عارفين بعض المجالات فيها فرص اكثر من غيرها هذي اكثر المجالات الي فيها وظايف
 </div>
 """, unsafe_allow_html=True)
 
@@ -315,7 +314,7 @@ st.plotly_chart(fig, use_container_width=True)
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
             <p style="color: #0B67B7; font-size: 25px;">  
-أكثر الوظايف أخصائيين، مدراء، ومهندسين، وأقلها المهن اليدوية. الطلب عالي على الإداريين والتخصصيين 🔹
+أكثر الوظايف أخصائيين، مدراء، ومهندسين، وأقلها المهن اليدوية يوضح ان الطلب عالي على الإداريين والتخصصيين 🔹
         </p>
 </div>
 """, unsafe_allow_html=True)
@@ -326,7 +325,7 @@ st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
     <p style="color: #0B67B7; font-size: 30px; font-weight: bold; margin-bottom: 20px;">
     الفرص كثيرة، والشركات متنوعة عندك القطاع الخاص ، وعندك الشبه حكومي
-ومن هنا يجي السؤال : مين اللي يعرض وظايف أكثر؟
+ومن هنا يجي السؤال مين اللي يعرض وظايف أكثر؟
 </div>
 """, unsafe_allow_html=True)
 
@@ -360,7 +359,15 @@ fig.update_layout(
     template="plotly_white",  
 )
 
+
 st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("""
+<div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
+     <p style="color: #0B67B7; font-size: 25px;"> 
+  أغلب الفرص في القطاع الخاص، بالمقابل شبه الحكومية نادره 🔹 
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
@@ -419,6 +426,14 @@ fig.update_layout(
 
 st.plotly_chart(fig, use_container_width=True)
 
+
+st.markdown("""
+<div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
+     <p style="color: #0B67B7; font-size: 25px;"> 
+  الرواتب في شبه الحكومي أعلى بالمتوسط، لكن الحد الأدنى والأعلى متساوي 🔹 
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
     <p style="color: #0B67B7; font-size: 30px; font-weight: bold; margin-bottom: 20px;">
@@ -472,8 +487,16 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
+             <p style="color: #0B67B7; font-size: 25px;"> 
+لو تلاحظ الوظايف للذكور أكثر بشوي من الإناث، والجزء الأكبر مو محدد الجنس يعني الفرص متاحة للجميع 🔹 
+</div>
+""", unsafe_allow_html=True)
+
+
+st.markdown("""
+<div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
     <p style="color: #0B67B7; font-size: 30px; font-weight: bold; margin-bottom: 20px;">
-حلوين ؟ الحين جاء دورك، استعرض الوظايف زي ما تبي حسب تصنيف الوظيفة والمنطقة، وابدأ رحلتك الوظيفية
+حلوييين الحين جاء دورك، استعرض الوظايف زي ما تبي حسب تصنيف الوظيفة الي تبيه والمنطقة 
 </div>
 """, unsafe_allow_html=True)
 
