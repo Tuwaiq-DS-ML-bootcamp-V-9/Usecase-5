@@ -121,16 +121,28 @@ def info_sections():
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
 
-    # Salary Distribution for Fresh Graduates
+    # Proportion of Job Postings for Fresh Graduates
     st.markdown('''<h3 class="animate-content">💼 توزيع الرواتب للخريجين الجدد</h3>''', unsafe_allow_html=True)
     st.markdown('''<div class="content-container animate-content">
                     <h4>توزيع الرواتب يظهر أن الغالبية العظمى من الخريجين الجدد يتقاضون رواتب تتراوح بين 5000 و 10000 ريال،
                     مع بعض الحالات التي تتجاوز هذا المدى. لكن تظل الرواتب بشكل عام منخفضة مقارنة ببقية الخبرات.</h4>
                 </div>''', unsafe_allow_html=True)
-    fresh_grads = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate']
+
+    # Check if 'Fresh Graduate' exists in 'exper' column and filter data
+    fresh_grads = jadarat_data[jadarat_data['exper'].str.contains('Fresh Graduate', na=False, case=False)]
+    
+    # Ensure the Salary column is numeric, forcing errors to NaN
+    fresh_grads['Salary'] = pd.to_numeric(fresh_grads['Salary'], errors='coerce')
+    
+    # Drop NaN values to prevent plotting errors
     salary_distribution = fresh_grads['Salary'].dropna()
-    fig3 = px.histogram(salary_distribution, nbins=20, title='توزيع الرواتب للخريجين الجدد')
-    st.plotly_chart(fig3, use_container_width=True)
+
+    if len(salary_distribution) > 0:
+        # Plot the histogram of salary distribution for fresh graduates
+        fig3 = px.histogram(salary_distribution, nbins=20, title='توزيع الرواتب للخريجين الجدد')
+        st.plotly_chart(fig3, use_container_width=True)
+    else:
+        st.write("لا توجد بيانات لرواتب الخريجين الجدد.")
 
     # Proportion of Job Postings for Fresh Graduates vs Experienced Candidates
     st.markdown('''<h3 class="animate-content">👩‍🎓 الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة</h3>''', unsafe_allow_html=True)
