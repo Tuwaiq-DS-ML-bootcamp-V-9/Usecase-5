@@ -16,102 +16,59 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load enhanced custom CSS with modern styling and updated filter-result-box."""
+    """Load custom CSS with colors defined by the chosen theme."""
     custom_css = f"""
     <style>
-        /* Global App Styling */
         .stApp {{
             background: {theme['background']};
             text-align: right;
             direction: rtl;
             color: {theme['text_color']};
             font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            padding: 0;
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
             color: {theme['text_color']};
-            font-weight: 700;
         }}
-        /* Hero Section */
         .hero {{
-            background: linear-gradient(135deg, {theme['hero_overlay']} 0%, rgba(0,0,0,0.5) 100%), 
-                        url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover no-repeat;
-            padding: 5rem 2rem;
-            border-radius: 20px;
-            margin: 2rem 1rem;
+            background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}),
+                        url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover;
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            margin: 2rem 0;
             text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
+            animation: fadeIn 2s;
         }}
-        .hero:hover {{
-            transform: translateY(-5px);
+        @keyframes fadeIn {{
+            from {{ opacity: 0; }}
+            to {{ opacity: 1; }}
         }}
-        .hero h1 {{
-            color: white;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .hero h1, .hero h3 {{
+            animation: fadeIn 2s;
         }}
-        .hero h3 {{
-            color: #e0e0e0;
-            font-size: 1.5rem;
-        }}
-        /* Filter Section */
-        .stSelectbox, .stNumberInput {{
-            background: white;
-            border-radius: 15px;
-            padding: 0.5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
-        }}
-        .stSelectbox:hover, .stNumberInput:hover {{
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }}
-        /* Filter Result Box - Exact Styling as Provided */
         .filter-result-box {{
-            background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 70%, {theme['accent3']} 100%);
+            background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 100%);
             color: white;
-            padding: 2.5rem;
-            border-radius: 25px;
-            margin: 2rem 1rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }}
-        .filter-result-box:hover {{
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }}
         .filter-result-box h3 {{
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
         }}
         .filter-result-box p {{
-            font-size: 1.6rem;
-            margin: 0.8rem 0;
-            font-weight: 400;
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
         }}
-        /* Chart Containers */
-        .plotly-chart {{
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }}
-        /* Footer */
         .footer {{
             text-align: center;
             padding: 2rem;
             background: {theme['background']};
             color: {theme['text_color']};
             font-size: 1.2rem;
-            border-top: 1px solid {theme['accent3']};
-            margin-top: 2rem;
-        }}
-        /* Smooth Scroll */
-        html {{
-            scroll-behavior: smooth;
         }}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -119,61 +76,61 @@ def load_css(theme):
     st.markdown(custom_css, unsafe_allow_html=True)
 
 def hero_section(theme):
-    """Display an enhanced hero section."""
+    """Display the hero section with background image and title."""
     hero_html = f"""
     <div class="hero">
-        <h1>📊 تحليل بيانات الوظائف في المملكة العربية السعودية</h1>
-        <h3>اكتشف التوجهات الوظيفية في المملكة بأسلوب حديث</h3>
+        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+            📊 تحليل بيانات الوظائف في المملكة العربية السعودية
+        </h1>
+        <h3 style="color: white;">اكتشف التوجهات الوظيفية في المملكة</h3>
     </div>
     """
     st.markdown(hero_html, unsafe_allow_html=True)
 
 def info_sections():
-    """Show information sections with styled interactive graphs."""
+    """Show information sections with interactive graphs."""
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
     st.markdown('''<div>
-                    <h3>نقدم تحليلًا شاملًا لإعلانات الوظائف في السعودية، مع التركيز على الرواتب،
-                    توزيع الوظائف حسب المناطق ومستويات الخبرة، وأنواع عقود العمل.</h3>
+                    <h3>قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية،
+                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي من خلال تحليلات تتعلق بالرواتب،
+                    توزيع الوظائف حسب المناطق ومستويات الخبرة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
     # Job Postings by Region
     st.markdown('''<h3>🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
     region_distribution = jadarat_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
-    fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات حسب المناطق',
-                  color='count', color_continuous_scale='Blues')
+    fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
 
     # Job Postings by Gender
     st.markdown('''<h3>👨‍💻 توزيع الإعلانات حسب الجنس</h3>''', unsafe_allow_html=True)
     gender_distribution = jadarat_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
-    fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات حسب الجنس',
-                  color_discrete_sequence=px.colors.sequential.Teal)
+    fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
 
     # Average Salary by Job Title
     st.markdown('''<h3>💼 متوسط الرواتب حسب العناوين الوظيفية</h3>''', unsafe_allow_html=True)
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
-    fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية',
-                  color='Salary', color_continuous_scale='Viridis')
+    fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
 
 def main():
-    # Enhanced theme configuration
-    modern_theme = {
-        "background": "#f4f7fa",  # Softer light gray-blue
-        "text_color": "#2c3e50",  # Darker slate for contrast
-        "accent1": "#3498db",    # Vibrant blue
-        "accent2": "#e67e22",    # Warm orange
-        "accent3": "#2ecc71",    # Fresh green
-        "hero_overlay": "rgba(52, 152, 219, 0.7)",
+    # Pastel theme configuration
+    pastel_theme = {
+        "background": "#fdf6e3",
+        "text_color": "#657b83",
+        "accent1": "#b58900",
+        "accent2": "#cb4b16",
+        "accent3": "#268bd2",
+        "hero_overlay": "rgba(38, 139, 210, 0.4)",
         "header_font": "'Tajawal', sans-serif",
-        "recommendation_bg": "#34495e",
+        "recommendation_bg": "#657b83",
     }
-    theme = modern_theme
+    theme = pastel_theme
 
     load_css(theme)
     hero_section(theme)
@@ -182,15 +139,13 @@ def main():
     # Filters Section
     st.header('تصفية البيانات')
     
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        job_titles = jadarat_data['job_title'].unique()
-        job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
-    with col2:
-        years_of_experience = st.number_input('عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0)
-    with col3:
-        unique_genders = jadarat_data['gender'].unique()
-        gender = st.selectbox('اختر الجنس', unique_genders)
+    job_titles = jadarat_data['job_title'].unique()
+    job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
+    
+    years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0)
+    
+    unique_genders = jadarat_data['gender'].unique()
+    gender = st.selectbox('اختر الجنس', unique_genders)
 
     # Filter data
     filtered_data = jadarat_data[
@@ -221,7 +176,7 @@ def main():
         ''', unsafe_allow_html=True)
 
     # Footer
-    st.markdown(f'''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
+    st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
