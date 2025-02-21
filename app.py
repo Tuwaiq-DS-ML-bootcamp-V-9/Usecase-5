@@ -1,8 +1,6 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import folium
-from streamlit_folium import folium_static
 
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
@@ -124,26 +122,29 @@ def info_sections():
                     توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
+    # Filters
+    st.sidebar.header('تصفية البيانات')
+    job_title = st.sidebar.text_input('ادخل عنوان الوظيفة')
+    years_of_experience = st.sidebar.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
+    gender = st.sidebar.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
+
+    # Filter data based on user input
+    filtered_data = jadarat_data[
+        (jadarat_data['job_title'].str.contains(job_title, case=False)) &
+        (jadarat_data['exper'] == years_of_experience) &
+        (jadarat_data['gender'] == gender)
+    ]
+
     # Proportion of Job Postings by Region
     st.markdown('''<h3 class="animate-content">🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
     st.markdown('''<div class="content-container animate-content">
                     <h4>من خلال تحليل بيانات الوظائف، نلاحظ أن معظم الإعلانات الوظيفية تأتي من منطقة الرياض،
                     تليها مكة المكرمة والمنطقة الشرقية. بينما تكون المناطق الأخرى مثل عسير وتبوك وغيرها تساهم بنسب أقل بكثير في الإعلانات.</h4>
                 </div>''', unsafe_allow_html=True)
-    region_distribution = jadarat_data['region'].value_counts().reset_index()
+    region_distribution = filtered_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
     fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات الوظيفية حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
-
-    # Interactive Map
-    st.markdown('''<h3 class="animate-content">🌐 خريطة توزيع الوظائف في المملكة</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>استكشف توزيع الوظائف عبر المملكة من خلال هذه الخريطة التفاعلية.</h4>
-                </div>''', unsafe_allow_html=True)
-    m = folium.Map(location=[23.8859, 45.0792], zoom_start=5)
-    for _, row in region_distribution.iterrows():
-        folium.Marker([23.8859, 45.0792], popup=f"{row['region']}: {row['count']} وظيفة").add_to(m)
-    folium_static(m)
 
     # Gender Preference in Job Postings
     st.markdown('''<h3 class="animate-content">👨‍💻 توزيع الإعلانات الوظيفية حسب الجنس</h3>''', unsafe_allow_html=True)
@@ -151,7 +152,7 @@ def info_sections():
                     <h4>هناك تفضيل واضح في بعض الإعلانات الوظيفية لاستقطاب جميع الأجناس (كلا الجنسين)،
                     بينما هناك بعض الوظائف المخصصة فقط للذكور أو الإناث. لكن بشكل عام، تهيمن الإعلانات التي تقبل كلا الجنسين.</h4>
                 </div>''', unsafe_allow_html=True)
-    gender_distribution = jadarat_data['gender'].value_counts().reset_index()
+    gender_distribution = filtered_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
@@ -162,7 +163,7 @@ def info_sections():
                     <h4>نقوم هنا بعرض متوسط الرواتب لكل عنوان وظيفي في المملكة العربية السعودية.</h4>
                 </div>''', unsafe_allow_html=True)
 
-    avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
+    avg_salary_by_job = filtered_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)  # Show top 10 job titles
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
@@ -173,7 +174,7 @@ def info_sections():
                     <h4>الوظائف الموجهة للخريجين الجدد هي الأكثر انتشارًا، حيث تشكل أكثر من نصف الإعلانات الوظيفية،
                     مقارنة بالإعلانات التي تطلب خبرات متعددة التي تشكل نسبة أقل بكثير.</h4>
                 </div>''', unsafe_allow_html=True)
-    experience_distribution = jadarat_data['exper'].value_counts().reset_index()
+    experience_distribution = filtered_data['exper'].value_counts().reset_index()
     experience_distribution.columns = ['experience', 'count']
     fig4 = px.bar(experience_distribution, x='experience', y='count', title='الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة')
     st.plotly_chart(fig4, use_container_width=True)
@@ -184,7 +185,7 @@ def info_sections():
                     <h4>فيما يتعلق بنوع العقد، نجد أن غالبية الوظائف المعروضة هي بعقود دوام كامل،
                     بينما هناك عدد قليل من الوظائف التي تقدم عقودًا للعمل عن بعد.</h4>
                 </div>''', unsafe_allow_html=True)
-    contract_distribution = jadarat_data['contract'].value_counts().reset_index()
+    contract_distribution = filtered_data['contract'].value_counts().reset_index()
     contract_distribution.columns = ['contract_type', 'count']
     fig5 = px.pie(contract_distribution, values='count', names='contract_type', title='توزيع نوع العقد في الإعلانات الوظيفية')
     st.plotly_chart(fig5, use_container_width=True)
