@@ -1,6 +1,8 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import folium
+from streamlit_folium import folium_static
 
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
@@ -28,13 +30,14 @@ def load_css(theme):
             border-radius: 30px;
             margin: 2rem 0;
             text-align: center;
-        }}
-        .hero h1, .hero h3 {{
             animation: fadeIn 2s;
         }}
         @keyframes fadeIn {{
             from {{ opacity: 0; }}
             to {{ opacity: 1; }}
+        }}
+        .hero h1, .hero h3 {{
+            animation: fadeIn 2s;
         }}
         /* Price Card Styling */
         .price-card {{
@@ -131,6 +134,16 @@ def info_sections():
     region_distribution.columns = ['region', 'count']
     fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات الوظيفية حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
+
+    # Interactive Map
+    st.markdown('''<h3 class="animate-content">🌐 خريطة توزيع الوظائف في المملكة</h3>''', unsafe_allow_html=True)
+    st.markdown('''<div class="content-container animate-content">
+                    <h4>استكشف توزيع الوظائف عبر المملكة من خلال هذه الخريطة التفاعلية.</h4>
+                </div>''', unsafe_allow_html=True)
+    m = folium.Map(location=[23.8859, 45.0792], zoom_start=5)
+    for _, row in region_distribution.iterrows():
+        folium.Marker([23.8859, 45.0792], popup=f"{row['region']}: {row['count']} وظيفة").add_to(m)
+    folium_static(m)
 
     # Gender Preference in Job Postings
     st.markdown('''<h3 class="animate-content">👨‍💻 توزيع الإعلانات الوظيفية حسب الجنس</h3>''', unsafe_allow_html=True)
