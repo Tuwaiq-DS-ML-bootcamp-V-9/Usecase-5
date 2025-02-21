@@ -5,10 +5,11 @@ import plotly.express as px
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
 
-# Normalize data: trim whitespace and convert to consistent case
-jadarat_data['job_title'] = jadarat_data['job_title'].str.strip().str.lower()
-jadarat_data['gender'] = jadarat_data['gender'].str.strip().str.lower()
-jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')  # Ensure 'exper' is numeric
+# Clean data
+jadarat_data['job_title'] = jadarat_data['job_title'].str.strip()
+jadarat_data['gender'] = jadarat_data['gender'].str.strip()
+# Convert 'exper' to numeric (if it isn't already)
+jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')
 
 def load_css(theme):
     """Load custom CSS with colors defined by the chosen theme."""
@@ -183,7 +184,7 @@ def info_sections():
                 </div>''', unsafe_allow_html=True)
 
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
-    avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)  # Show top 10 job titles
+    avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
 
@@ -238,41 +239,32 @@ def main():
         "header_font": "'Tajawal', sans-serif",
         "recommendation_bg": "#657b83",
     }
-
     theme = pastel_theme
 
     load_css(theme)
     hero_section(theme)
-
     info_sections()
 
-    # Filters
+    # Filters Section
     st.header('تصفية البيانات')
+    
+    # Use cleaned unique job titles and genders
     job_titles = jadarat_data['job_title'].unique()
     job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
+    
     years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
-    gender = st.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
-
-    # Normalize filter inputs
-    job_title = job_title.strip().lower()
-    gender = gender.strip().lower()
+    
+    unique_genders = jadarat_data['gender'].unique()
+    gender = st.selectbox('اختر الجنس', unique_genders)
 
     # Filter data based on user input
     filtered_data = jadarat_data[
-        (jadarat_data['job_title'].str.strip().str.lower() == job_title) &
+        (jadarat_data['job_title'] == job_title) &
         (jadarat_data['exper'] == years_of_experience) &
-        (jadarat_data['gender'].str.strip().str.lower() == gender)
+        (jadarat_data['gender'] == gender)
     ]
 
-    # Debugging: Print filtered data and conditions
-    st.write("Filtered Data:", filtered_data)
-    st.write("Filter Conditions:", {
-        "job_title": job_title,
-        "years_of_experience": years_of_experience,
-        "gender": gender
-    })
-
-    # Display filtered information in an amazing style if there is a match
+    # Display filtered results if any match
     if not filtered_data.empty:
         st.markdown(f'''
         <div class="filter-result-box">
