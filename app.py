@@ -255,7 +255,7 @@ def main():
         (jadarat_data['gender'] == gender)
     ]
 
-    # Display filtered information in an amazing style
+    # Display filtered information in an amazing style if there is a match
     if not filtered_data.empty:
         st.markdown(f'''
         <div class="filter-result-box">
@@ -265,6 +265,13 @@ def main():
             <p><strong>الجنس:</strong> {gender}</p>
             <p><strong>المنطقة:</strong> {filtered_data['region'].values[0]}</p>
             <p><strong>الراتب:</strong> {filtered_data['Salary'].values[0]}</p>
+        </div>
+        ''', unsafe_allow_html=True)
+    else:
+        st.markdown('''
+        <div class="filter-result-box">
+            <h3>لا توجد نتائج مطابقة</h3>
+            <p>لم يتم العثور على وظائف تطابق المعايير المحددة. يرجى التحقق من الفلاتر وإعادة المحاولة.</p>
         </div>
         ''', unsafe_allow_html=True)
 
