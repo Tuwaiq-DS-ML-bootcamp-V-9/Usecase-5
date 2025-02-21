@@ -198,7 +198,7 @@ def info_sections(filtered_data):
     # Prompt to check for specific job details
     st.markdown('''<h3 class="animate-content">🔍 تحقق من تفاصيل وظيفتك</h3>''', unsafe_allow_html=True)
     st.markdown('''<div class="content-container animate-content">
-                    <h4>بعد مراجعة الرسوم البيانية، يمكنك الآن التحقق من تفاصيل وظيفتك المحددة. استخدم الفلاتر في الجانب لاختيار عنوان الوظيفة، سنوات الخبرة، والجنس لعرض المعلومات المتعلقة بالوظيفة التي تهمك.</h4>
+                    <h4>بعد مراجعة الرسوم البيانية، يمكنك الآن التحقق من تفاصيل وظيفتك المحددة. استخدم الفلاتر أدناه لاختيار عنوان الوظيفة، سنوات الخبرة، والجنس لعرض المعلومات المتعلقة بالوظيفة التي تهمك.</h4>
                 </div>''', unsafe_allow_html=True)
 
     # Footer
@@ -225,11 +225,11 @@ def main():
     hero_section(theme)
 
     # Filters
-    st.sidebar.header('تصفية البيانات')
+    st.header('تصفية البيانات')
     job_titles = jadarat_data['job_title'].unique()
-    job_title = st.sidebar.selectbox('اختر عنوان الوظيفة', job_titles)
-    years_of_experience = st.sidebar.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
-    gender = st.sidebar.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
+    job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
+    years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
+    gender = st.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
 
     # Filter data based on user input
     filtered_data = jadarat_data[
