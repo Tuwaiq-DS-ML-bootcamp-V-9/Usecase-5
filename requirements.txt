@@ -7,3 +7,4 @@ arabic-reshaper
 python-bidi
 plotly
 folium
+streamlit-folium
