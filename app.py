@@ -5,10 +5,12 @@ import plotly.express as px
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
 
-# Clean data
+# Display the column names (for debugging purposes)
+st.write("Columns in dataset:", list(jadarat_data.columns))
+
+# Clean data: strip extra spaces and convert 'exper' to numeric
 jadarat_data['job_title'] = jadarat_data['job_title'].str.strip()
 jadarat_data['gender'] = jadarat_data['gender'].str.strip()
-# Convert 'exper' to numeric (if it isn't already)
 jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')
 
 def load_css(theme):
@@ -146,32 +148,24 @@ def hero_section(theme):
     st.markdown(hero_html, unsafe_allow_html=True)
 
 def info_sections():
-    """Show information sections explaining the choices and add interactive graphs."""
+    """Show information sections with interactive graphs based on dataset columns."""
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
     st.markdown('''<div class="content-container animate-content">
                     <h3>قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية،
-                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي في المملكة من خلال تحليلات تتعلق بالرواتب، توزيع الوظائف حسب المناطق،
-                    توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
+                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي من خلال تحليلات تتعلق بالرواتب،
+                    توزيع الوظائف حسب المناطق والمهارات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
-    # Proportion of Job Postings by Region
+    # Job Postings by Region
     st.markdown('''<h3 class="animate-content">🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>من خلال تحليل بيانات الوظائف، نلاحظ أن معظم الإعلانات الوظيفية تأتي من منطقة الرياض،
-                    تليها مكة المكرمة والمنطقة الشرقية. بينما تكون المناطق الأخرى مثل عسير وتبوك وغيرها تساهم بنسب أقل بكثير في الإعلانات.</h4>
-                </div>''', unsafe_allow_html=True)
     region_distribution = jadarat_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
     fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات الوظيفية حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
 
-    # Gender Preference in Job Postings
+    # Job Postings by Gender
     st.markdown('''<h3 class="animate-content">👨‍💻 توزيع الإعلانات الوظيفية حسب الجنس</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>هناك تفضيل واضح في بعض الإعلانات الوظيفية لاستقطاب جميع الأجناس (كلا الجنسين)،
-                    بينما هناك بعض الوظائف المخصصة فقط للذكور أو الإناث. لكن بشكل عام، تهيمن الإعلانات التي تقبل كلا الجنسين.</h4>
-                </div>''', unsafe_allow_html=True)
     gender_distribution = jadarat_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
@@ -179,50 +173,31 @@ def info_sections():
 
     # Average Salary by Job Title
     st.markdown('''<h3 class="animate-content">💼 متوسط الرواتب حسب العناوين الوظيفية</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>نقوم هنا بعرض متوسط الرواتب لكل عنوان وظيفي في المملكة العربية السعودية.</h4>
-                </div>''', unsafe_allow_html=True)
-
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
 
-    # Proportion of Job Postings for Fresh Graduates vs Experienced Candidates
-    st.markdown('''<h3 class="animate-content">👩‍🎓 الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>الوظائف الموجهة للخريجين الجدد هي الأكثر انتشارًا، حيث تشكل أكثر من نصف الإعلانات الوظيفية،
-                    مقارنة بالإعلانات التي تطلب خبرات متعددة التي تشكل نسبة أقل بكثير.</h4>
-                </div>''', unsafe_allow_html=True)
+    # Job Postings by Experience
+    st.markdown('''<h3 class="animate-content">👩‍🎓 الوظائف حسب سنوات الخبرة</h3>''', unsafe_allow_html=True)
     experience_distribution = jadarat_data['exper'].value_counts().reset_index()
     experience_distribution.columns = ['experience', 'count']
-    fig4 = px.bar(experience_distribution, x='experience', y='count', title='الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة')
+    fig4 = px.bar(experience_distribution, x='experience', y='count', title='توزيع الوظائف حسب سنوات الخبرة')
     st.plotly_chart(fig4, use_container_width=True)
 
     # Contract Type Distribution
-    st.markdown('''<h3 class="animate-content">📝 توزيع نوع العقد في الإعلانات الوظيفية</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>فيما يتعلق بنوع العقد، نجد أن غالبية الوظائف المعروضة هي بعقود دوام كامل،
-                    بينما هناك عدد قليل من الوظائف التي تقدم عقودًا للعمل عن بعد.</h4>
-                </div>''', unsafe_allow_html=True)
+    st.markdown('''<h3 class="animate-content">📝 توزيع نوع العقد</h3>''', unsafe_allow_html=True)
     contract_distribution = jadarat_data['contract'].value_counts().reset_index()
     contract_distribution.columns = ['contract_type', 'count']
-    fig5 = px.pie(contract_distribution, values='count', names='contract_type', title='توزيع نوع العقد في الإعلانات الوظيفية')
+    fig5 = px.pie(contract_distribution, values='count', names='contract_type', title='توزيع نوع العقد')
     st.plotly_chart(fig5, use_container_width=True)
 
-    # Conclusion
+    # Conclusion Section
     st.markdown('''<h3 class="animate-content">💬 الخاتمة</h3>''', unsafe_allow_html=True)
     st.markdown('''<div class="content-container animate-content">
-                    <h4>باستخدام هذا التحليل، يمكننا ملاحظة توجهات مهمة مثل التوزيع غير المتكافئ للإعلانات
-                    الوظيفية بين المناطق في المملكة، بالإضافة إلى الرواتب التي تهيمن عليها الرواتب الأقل للخريجين الجدد.
-                    كما أن تحليل الخبرات المطلوبة يبرز التحديات التي يواجهها الباحثون عن وظائف ذوي الخبرة. هذه الرؤية توفر لنا معطيات تساعدنا
-                    في اتخاذ قرارات أكثر استراتيجية حول مستقبلنا المهني أو نوع الوظائف التي نرغب في التقديم لها.</h4>
-                </div>''', unsafe_allow_html=True)
-
-    # Prompt to check for specific job details
-    st.markdown('''<h3 class="animate-content">🔍 تحقق من تفاصيل وظيفتك</h3>''', unsafe_allow_html=True)
-    st.markdown('''<div class="content-container animate-content">
-                    <h4>بعد مراجعة الرسوم البيانية، يمكنك الآن التحقق من تفاصيل وظيفتك المحددة. استخدم الفلاتر أدناه لاختيار عنوان الوظيفة، سنوات الخبرة، والجنس لعرض المعلومات المتعلقة بالوظيفة التي تهمك.</h4>
+                    <h4>من خلال هذا التحليل، يظهر أن هناك تفاوتًا في توزيع الإعلانات الوظيفية بين المناطق،
+                    وتبرز البيانات تحديات معينة مثل اختلاف الرواتب ومستويات الخبرة المطلوبة.
+                    يمكن لهذه الرؤى أن تساعد الباحثين عن عمل وأصحاب العمل على اتخاذ قرارات أفضل.</h4>
                 </div>''', unsafe_allow_html=True)
 
 def main():
@@ -248,7 +223,7 @@ def main():
     # Filters Section
     st.header('تصفية البيانات')
     
-    # Use cleaned unique job titles and genders
+    # Use the cleaned unique values for job titles and genders
     job_titles = jadarat_data['job_title'].unique()
     job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
     
@@ -257,7 +232,7 @@ def main():
     unique_genders = jadarat_data['gender'].unique()
     gender = st.selectbox('اختر الجنس', unique_genders)
 
-    # Filter data based on user input
+    # Filter data based on user input using the exact column names
     filtered_data = jadarat_data[
         (jadarat_data['job_title'] == job_title) &
         (jadarat_data['exper'] == years_of_experience) &
@@ -284,7 +259,7 @@ def main():
         </div>
         ''', unsafe_allow_html=True)
 
-    # Footer
+    # Footer Section
     st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
 
 if __name__ == "__main__":
