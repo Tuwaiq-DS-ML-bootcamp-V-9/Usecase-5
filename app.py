@@ -22,7 +22,7 @@ def load_css(theme):
         /* Hero Section Styling */
         .hero {{
             background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}), 
-                        url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf') center/cover;
+                        url('https://unsplash.com/photos/hallway-between-glass-panel-doors-yWwob8kwOCk') center/cover;
             padding: 4rem 2rem;
             border-radius: 30px;
             margin: 2rem 0;
