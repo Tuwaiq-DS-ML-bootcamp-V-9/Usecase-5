@@ -2,20 +2,18 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
+# Set page configuration before any other Streamlit commands
+st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
+
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
 
-# Display dataset info for debugging (you can remove this in production)
-st.write("Dataset Info:")
-st.write(jadarat_data.info())
-
 # Data Cleaning
-# Strip any extra whitespace from textual columns
 jadarat_data['job_title'] = jadarat_data['job_title'].str.strip()
 jadarat_data['gender'] = jadarat_data['gender'].str.strip()
-
-# Convert 'exper' column to numeric (this is necessary since it's an object type)
 jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')
+
+
 
 def load_css(theme):
     """Load custom CSS with colors defined by the chosen theme."""
@@ -124,8 +122,6 @@ def info_sections():
     st.plotly_chart(fig3, use_container_width=True)
 
 def main():
-    st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
-
     # Pastel theme configuration
     pastel_theme = {
         "background": "#fdf6e3",
