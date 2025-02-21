@@ -2,18 +2,18 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 
-# Set page configuration before any other Streamlit commands
+# Set page configuration
 st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
 
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
 
 # Data Cleaning
-jadarat_data['job_title'] = jadarat_data['job_title'].str.strip()
-jadarat_data['gender'] = jadarat_data['gender'].str.strip()
-jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')
-
-
+jadarat_data['job_title'] = jadarat_data['job_title'].str.lower().str.strip().fillna('Unknown')
+jadarat_data['gender'] = jadarat_data['gender'].str.lower().str.strip().fillna('Unknown')
+jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce').fillna(0).astype(int)
+jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
+jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
     """Load custom CSS with colors defined by the chosen theme."""
@@ -30,7 +30,6 @@ def load_css(theme):
             font-family: {theme['header_font']};
             color: {theme['text_color']};
         }}
-        /* Hero Section Styling */
         .hero {{
             background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}),
                         url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover;
@@ -47,7 +46,6 @@ def load_css(theme):
         .hero h1, .hero h3 {{
             animation: fadeIn 2s;
         }}
-        /* Filter Result Box Styling */
         .filter-result-box {{
             background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent2']} 100%);
             color: white;
@@ -65,7 +63,6 @@ def load_css(theme):
             font-size: 1.8rem;
             margin: 0.5rem 0;
         }}
-        /* Footer Styling */
         .footer {{
             text-align: center;
             padding: 2rem;
@@ -91,7 +88,7 @@ def hero_section(theme):
     st.markdown(hero_html, unsafe_allow_html=True)
 
 def info_sections():
-    """Show information sections with interactive graphs based on dataset columns."""
+    """Show information sections with interactive graphs."""
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
     st.markdown('''<div>
@@ -100,21 +97,21 @@ def info_sections():
                     توزيع الوظائف حسب المناطق ومستويات الخبرة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
-    # Example: Job Postings by Region
+    # Job Postings by Region
     st.markdown('''<h3>🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
     region_distribution = jadarat_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
     fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
 
-    # Example: Job Postings by Gender
+    # Job Postings by Gender
     st.markdown('''<h3>👨‍💻 توزيع الإعلانات حسب الجنس</h3>''', unsafe_allow_html=True)
     gender_distribution = jadarat_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
 
-    # Example: Average Salary by Job Title
+    # Average Salary by Job Title
     st.markdown('''<h3>💼 متوسط الرواتب حسب العناوين الوظيفية</h3>''', unsafe_allow_html=True)
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
@@ -142,23 +139,29 @@ def main():
     # Filters Section
     st.header('تصفية البيانات')
     
-    # Use the cleaned unique values for job titles and genders
     job_titles = jadarat_data['job_title'].unique()
     job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
     
-    years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
+    years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0)
     
     unique_genders = jadarat_data['gender'].unique()
     gender = st.selectbox('اختر الجنس', unique_genders)
 
-    # Filter data based on user input using the exact column names
+    # Filter data
     filtered_data = jadarat_data[
         (jadarat_data['job_title'] == job_title) &
-        (jadarat_data['exper'] == years_of_experience) &
+        (jadarat_data['exper'] == int(years_of_experience)) &
         (jadarat_data['gender'] == gender)
     ]
 
-    # Display filtered results if any match
+    # Debugging Output
+    st.write("### معلومات التصحيح")
+    st.write(f"عنوان الوظيفة المختار: '{job_title}'")
+    st.write(f"سنوات الخبرة المختارة: {years_of_experience}")
+    st.write(f"الجنس المختار: '{gender}'")
+    st.write("عدد النتائج المطابقة:", len(filtered_data))
+
+    # Display filtered results
     if not filtered_data.empty:
         st.markdown(f'''
         <div class="filter-result-box">
@@ -177,8 +180,9 @@ def main():
             <p>لم يتم العثور على وظائف تطابق المعايير المحددة. يرجى التحقق من الفلاتر وإعادة المحاولة.</p>
         </div>
         ''', unsafe_allow_html=True)
+        st.write("البيانات المصفاة (للتصحيح):", filtered_data)
 
-    # Footer Section
+    # Footer
     st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
 
 if __name__ == "__main__":
