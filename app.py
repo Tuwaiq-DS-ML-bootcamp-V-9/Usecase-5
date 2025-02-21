@@ -121,7 +121,7 @@ def hero_section(theme):
     """
     st.markdown(hero_html, unsafe_allow_html=True)
 
-def info_sections(filtered_data):
+def info_sections():
     """Show information sections explaining the choices and add interactive graphs."""
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
@@ -137,7 +137,7 @@ def info_sections(filtered_data):
                     <h4>من خلال تحليل بيانات الوظائف، نلاحظ أن معظم الإعلانات الوظيفية تأتي من منطقة الرياض،
                     تليها مكة المكرمة والمنطقة الشرقية. بينما تكون المناطق الأخرى مثل عسير وتبوك وغيرها تساهم بنسب أقل بكثير في الإعلانات.</h4>
                 </div>''', unsafe_allow_html=True)
-    region_distribution = filtered_data['region'].value_counts().reset_index()
+    region_distribution = jadarat_data['region'].value_counts().reset_index()
     region_distribution.columns = ['region', 'count']
     fig1 = px.bar(region_distribution, x='region', y='count', title='توزيع الإعلانات الوظيفية حسب المناطق')
     st.plotly_chart(fig1, use_container_width=True)
@@ -148,7 +148,7 @@ def info_sections(filtered_data):
                     <h4>هناك تفضيل واضح في بعض الإعلانات الوظيفية لاستقطاب جميع الأجناس (كلا الجنسين)،
                     بينما هناك بعض الوظائف المخصصة فقط للذكور أو الإناث. لكن بشكل عام، تهيمن الإعلانات التي تقبل كلا الجنسين.</h4>
                 </div>''', unsafe_allow_html=True)
-    gender_distribution = filtered_data['gender'].value_counts().reset_index()
+    gender_distribution = jadarat_data['gender'].value_counts().reset_index()
     gender_distribution.columns = ['gender', 'count']
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
@@ -159,7 +159,7 @@ def info_sections(filtered_data):
                     <h4>نقوم هنا بعرض متوسط الرواتب لكل عنوان وظيفي في المملكة العربية السعودية.</h4>
                 </div>''', unsafe_allow_html=True)
 
-    avg_salary_by_job = filtered_data.groupby('job_title')['Salary'].mean().reset_index()
+    avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)  # Show top 10 job titles
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
@@ -170,7 +170,7 @@ def info_sections(filtered_data):
                     <h4>الوظائف الموجهة للخريجين الجدد هي الأكثر انتشارًا، حيث تشكل أكثر من نصف الإعلانات الوظيفية،
                     مقارنة بالإعلانات التي تطلب خبرات متعددة التي تشكل نسبة أقل بكثير.</h4>
                 </div>''', unsafe_allow_html=True)
-    experience_distribution = filtered_data['exper'].value_counts().reset_index()
+    experience_distribution = jadarat_data['exper'].value_counts().reset_index()
     experience_distribution.columns = ['experience', 'count']
     fig4 = px.bar(experience_distribution, x='experience', y='count', title='الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة')
     st.plotly_chart(fig4, use_container_width=True)
@@ -181,7 +181,7 @@ def info_sections(filtered_data):
                     <h4>فيما يتعلق بنوع العقد، نجد أن غالبية الوظائف المعروضة هي بعقود دوام كامل،
                     بينما هناك عدد قليل من الوظائف التي تقدم عقودًا للعمل عن بعد.</h4>
                 </div>''', unsafe_allow_html=True)
-    contract_distribution = filtered_data['contract'].value_counts().reset_index()
+    contract_distribution = jadarat_data['contract'].value_counts().reset_index()
     contract_distribution.columns = ['contract_type', 'count']
     fig5 = px.pie(contract_distribution, values='count', names='contract_type', title='توزيع نوع العقد في الإعلانات الوظيفية')
     st.plotly_chart(fig5, use_container_width=True)
@@ -224,6 +224,8 @@ def main():
     load_css(theme)
     hero_section(theme)
 
+    info_sections()
+
     # Filters
     st.header('تصفية البيانات')
     job_titles = jadarat_data['job_title'].unique()
@@ -250,8 +252,6 @@ def main():
             <p><strong>الراتب:</strong> {filtered_data['Salary'].values[0]}</p>
         </div>
         ''', unsafe_allow_html=True)
-
-    info_sections(filtered_data)
 
 if __name__ == "__main__":
     main()
