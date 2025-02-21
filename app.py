@@ -95,6 +95,15 @@ def load_css(theme):
             color: {theme['text_color']};
             font-size: 1.2rem;
         }}
+        /* Filter Box Styling */
+        .filter-box {{
+            background: {theme['recommendation_bg']};
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     """
@@ -112,7 +121,7 @@ def hero_section(theme):
     """
     st.markdown(hero_html, unsafe_allow_html=True)
 
-def info_sections():
+def info_sections(filtered_data):
     """Show information sections explaining the choices and add interactive graphs."""
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
@@ -121,19 +130,6 @@ def info_sections():
                     وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي في المملكة من خلال تحليلات تتعلق بالرواتب، توزيع الوظائف حسب المناطق،
                     توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
-
-    # Filters
-    st.sidebar.header('تصفية البيانات')
-    job_title = st.sidebar.text_input('ادخل عنوان الوظيفة')
-    years_of_experience = st.sidebar.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
-    gender = st.sidebar.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
-
-    # Filter data based on user input
-    filtered_data = jadarat_data[
-        (jadarat_data['job_title'].str.contains(job_title, case=False)) &
-        (jadarat_data['exper'] == years_of_experience) &
-        (jadarat_data['gender'] == gender)
-    ]
 
     # Proportion of Job Postings by Region
     st.markdown('''<h3 class="animate-content">🌍 توزيع الإعلانات الوظيفية حسب المناطق</h3>''', unsafe_allow_html=True)
@@ -221,7 +217,35 @@ def main():
 
     load_css(theme)
     hero_section(theme)
-    info_sections()
+
+    # Filters
+    st.sidebar.header('تصفية البيانات')
+    job_titles = jadarat_data['job_title'].unique()
+    job_title = st.sidebar.selectbox('اختر عنوان الوظيفة', job_titles)
+    years_of_experience = st.sidebar.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
+    gender = st.sidebar.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
+
+    # Filter data based on user input
+    filtered_data = jadarat_data[
+        (jadarat_data['job_title'] == job_title) &
+        (jadarat_data['exper'] == years_of_experience) &
+        (jadarat_data['gender'] == gender)
+    ]
+
+    # Display filtered information in a modern box
+    if not filtered_data.empty:
+        st.markdown(f'''
+        <div class="filter-box">
+            <h3>معلومات الوظيفة المختارة</h3>
+            <p><strong>عنوان الوظيفة:</strong> {job_title}</p>
+            <p><strong>سنوات الخبرة:</strong> {years_of_experience}</p>
+            <p><strong>الجنس:</strong> {gender}</p>
+            <p><strong>المنطقة:</strong> {filtered_data['region'].values[0]}</p>
+            <p><strong>الراتب:</strong> {filtered_data['Salary'].values[0]}</p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    info_sections(filtered_data)
 
 if __name__ == "__main__":
     main()
