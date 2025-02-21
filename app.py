@@ -1,8 +1,6 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
@@ -16,6 +14,7 @@ def load_css(theme):
             text-align: right;
             direction: rtl;
             color: {theme['text_color']};
+            font-family: 'Tajawal', sans-serif;
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
@@ -23,11 +22,19 @@ def load_css(theme):
         }}
         /* Hero Section Styling */
         .hero {{
-            background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}), 
+            background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}),
                         url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover;
             padding: 4rem 2rem;
             border-radius: 30px;
             margin: 2rem 0;
+            text-align: center;
+        }}
+        .hero h1, .hero h3 {{
+            animation: fadeIn 2s;
+        }}
+        @keyframes fadeIn {{
+            from {{ opacity: 0; }}
+            to {{ opacity: 1; }}
         }}
         /* Price Card Styling */
         .price-card {{
@@ -37,6 +44,10 @@ def load_css(theme):
             margin: 1rem 0;
             border-right: 5px solid;
             color: {theme['text_color']};
+            transition: transform 0.3s;
+        }}
+        .price-card:hover {{
+            transform: scale(1.05);
         }}
         .price-card.apartment {{ border-color: {theme['accent1']}; }}
         .price-card.villa {{ border-color: {theme['accent2']}; }}
@@ -48,6 +59,7 @@ def load_css(theme):
             padding: 2rem;
             margin: 2rem 0;
             border: 1px solid #e9ecef;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }}
         /* Recommendation Box Styling */
         .recommendation-box {{
@@ -56,6 +68,7 @@ def load_css(theme):
             padding: 2rem;
             border-radius: 20px;
             margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }}
         /* Example Section Styling */
         .example-section {{
@@ -72,6 +85,14 @@ def load_css(theme):
             font-weight: bold;
             color: {theme['accent1']};
             font-size: 1.9rem;
+        }}
+        /* Footer Styling */
+        .footer {{
+            text-align: center;
+            padding: 2rem;
+            background: {theme['background']};
+            color: {theme['text_color']};
+            font-size: 1.2rem;
         }}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
@@ -127,7 +148,7 @@ def info_sections():
     st.markdown('''<div class="content-container animate-content">
                     <h4>نقوم هنا بعرض متوسط الرواتب لكل عنوان وظيفي في المملكة العربية السعودية.</h4>
                 </div>''', unsafe_allow_html=True)
-    
+
     avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)  # Show top 10 job titles
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
