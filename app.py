@@ -5,6 +5,11 @@ import plotly.express as px
 # Load data
 jadarat_data = pd.read_csv("cleaned_Jadarat_data.csv")
 
+# Normalize data: trim whitespace and convert to consistent case
+jadarat_data['job_title'] = jadarat_data['job_title'].str.strip().str.lower()
+jadarat_data['gender'] = jadarat_data['gender'].str.strip().str.lower()
+jadarat_data['exper'] = pd.to_numeric(jadarat_data['exper'], errors='coerce')  # Ensure 'exper' is numeric
+
 def load_css(theme):
     """Load custom CSS with colors defined by the chosen theme."""
     custom_css = f"""
@@ -248,20 +253,24 @@ def main():
     years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1)
     gender = st.selectbox('اختر الجنس', ['كلا الجنسين', 'ذكر', 'أنثى'])
 
-    # Debug statements to verify filter values
-    st.write(f"Selected Job Title: {job_title}")
-    st.write(f"Selected Years of Experience: {years_of_experience}")
-    st.write(f"Selected Gender: {gender}")
+    # Normalize filter inputs
+    job_title = job_title.strip().lower()
+    gender = gender.strip().lower()
 
     # Filter data based on user input
     filtered_data = jadarat_data[
-        (jadarat_data['job_title'] == job_title) &
+        (jadarat_data['job_title'].str.strip().str.lower() == job_title) &
         (jadarat_data['exper'] == years_of_experience) &
-        (jadarat_data['gender'] == gender)
+        (jadarat_data['gender'].str.strip().str.lower() == gender)
     ]
 
-    # Debug statement to verify filtered data
-    st.write(f"Filtered Data: {filtered_data}")
+    # Debugging: Print filtered data and conditions
+    st.write("Filtered Data:", filtered_data)
+    st.write("Filter Conditions:", {
+        "job_title": job_title,
+        "years_of_experience": years_of_experience,
+        "gender": gender
+    })
 
     # Display filtered information in an amazing style if there is a match
     if not filtered_data.empty:
