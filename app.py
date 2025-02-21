@@ -16,11 +16,11 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with improved background and filter-result-box."""
+    """Load custom CSS with updated filter-result-box styling."""
     custom_css = f"""
     <style>
         .stApp {{
-            background: {theme['background']};  /* Updated background */
+            background: {theme['background']};
             text-align: right;
             direction: rtl;
             color: {theme['text_color']};
@@ -48,14 +48,14 @@ def load_css(theme):
         }}
         /* Updated Filter Result Box */
         .filter-result-box {{
-            background: linear-gradient(135deg, {theme['accent1']} 0%, {theme['accent3']} 100%);
+            background: linear-gradient(135deg, {theme['accent3']} 0%, rgba(38, 139, 210, 0.8) 100%);  /* Blue gradient */
             color: white;
-            padding: 1.5rem;  /* Slightly smaller padding */
+            padding: 1.5rem;  /* Reduced padding for compactness */
             border-radius: 15px;  /* Softer corners */
             margin: 1.5rem auto;  /* Centered with reduced margin */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);  /* Softer shadow */
             text-align: center;
-            max-width: 500px;  /* Constrain width for elegance */
+            max-width: 450px;  /* Smaller constrained width */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }}
         .filter-result-box:hover {{
@@ -64,11 +64,13 @@ def load_css(theme):
         }}
         .filter-result-box h3 {{
             font-size: 1.8rem;  /* Smaller heading */
-            margin-bottom: 0.8rem;  /* Reduced spacing */
+            margin-bottom: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }}
         .filter-result-box p {{
             font-size: 1.4rem;  /* Smaller text */
-            margin: 0.4rem 0;  /* Tighter spacing */
+            margin: 0.4rem 0;
+            font-weight: 400;
         }}
         .footer {{
             text-align: center;
@@ -126,13 +128,13 @@ def info_sections():
     st.plotly_chart(fig3, use_container_width=True)
 
 def main():
-    # Updated Pastel theme configuration
+    # Pastel theme configuration
     pastel_theme = {
-        "background": "#e6f0fa",  # Soft sky blue for a fresher look
+        "background": "#fdf6e3",
         "text_color": "#657b83",
-        "accent1": "#b58900",    # Golden yellow
-        "accent2": "#cb4b16",    # Warm orange
-        "accent3": "#268bd2",    # Bright blue
+        "accent1": "#b58900",
+        "accent2": "#cb4b16",
+        "accent3": "#268bd2",
         "hero_overlay": "rgba(38, 139, 210, 0.4)",
         "header_font": "'Tajawal', sans-serif",
         "recommendation_bg": "#657b83",
