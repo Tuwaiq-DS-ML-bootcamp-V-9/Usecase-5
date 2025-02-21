@@ -122,28 +122,16 @@ def info_sections():
     fig2 = px.pie(gender_distribution, values='count', names='gender', title='توزيع الإعلانات الوظيفية حسب الجنس')
     st.plotly_chart(fig2, use_container_width=True)
 
-    # Salary Distribution for Fresh Graduates
-    st.markdown('''<h3 class="animate-content">💼 توزيع الرواتب للخريجين الجدد</h3>''', unsafe_allow_html=True)
+    # Average Salary by Job Title
+    st.markdown('''<h3 class="animate-content">💼 متوسط الرواتب حسب العناوين الوظيفية</h3>''', unsafe_allow_html=True)
     st.markdown('''<div class="content-container animate-content">
-                    <h4>توزيع الرواتب يظهر أن الغالبية العظمى من الخريجين الجدد يتقاضون رواتب تتراوح بين 5000 و 10000 ريال،
-                    مع بعض الحالات التي تتجاوز هذا المدى. لكن تظل الرواتب بشكل عام منخفضة مقارنة ببقية الخبرات.</h4>
+                    <h4>نقوم هنا بعرض متوسط الرواتب لكل عنوان وظيفي في المملكة العربية السعودية.</h4>
                 </div>''', unsafe_allow_html=True)
     
-    # Filter fresh graduates and clean salary data
-    fresh_grads = jadarat_data[jadarat_data['exper'] == 'Fresh Graduate'].copy()
-    fresh_grads['Salary'] = pd.to_numeric(fresh_grads['Salary'], errors='coerce')  # Convert to numeric, invalid values will become NaN
-    fresh_grads = fresh_grads.dropna(subset=['Salary'])  # Drop rows with NaN Salary values
-    
-    # Plot using Seaborn and Matplotlib
-    plt.figure(figsize=(10, 6))
-    sns.histplot(fresh_grads['Salary'], bins=30, kde=True, color=theme['accent1'])
-    plt.title('توزيع الرواتب للخريجين الجدد', fontsize=16, fontweight='bold', color=theme['text_color'])
-    plt.xlabel('الراتب (ريال سعودي)', fontsize=14, color=theme['text_color'])
-    plt.ylabel('التكرار', fontsize=14, color=theme['text_color'])
-    plt.xticks(fontsize=12, color=theme['text_color'])
-    plt.yticks(fontsize=12, color=theme['text_color'])
-    st.pyplot(plt)
-
+    avg_salary_by_job = jadarat_data.groupby('job_title')['Salary'].mean().reset_index()
+    avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)  # Show top 10 job titles
+    fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
+    st.plotly_chart(fig3, use_container_width=True)
 
     # Proportion of Job Postings for Fresh Graduates vs Experienced Candidates
     st.markdown('''<h3 class="animate-content">👩‍🎓 الإعلانات الوظيفية للخريجين الجدد مقابل الخبرات المطلوبة</h3>''', unsafe_allow_html=True)
