@@ -102,7 +102,7 @@ def main():
     # قسم عرض قائمة الوظائف الفريدة ونسب توفرها
     
     st.markdown(
-    "<h3 style='text-align: center;'>اختر الوظيفة لمعرفة مدى توفرها في البيانات:</h3>",
+    "<h4 style='text-align: center;'>اختر الوظيفة لمعرفة مدى توفرها في البيانات:</h4>",
     unsafe_allow_html=True
     )
 
