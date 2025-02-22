@@ -246,10 +246,8 @@ def main():
 
         
     st.markdown("""
-    <h1 style='text-align: center;'>توزيع الوظائف على حسب المنطقة</h1>
-    <p style='text-align: center; font-size:18px;'>
-        هذا الرسم البياني يعرض النسبة المئوية للوظائف في كل منطقة.
-    </p>
+    <h2 style='text-align: center;'>توزيع الوظائف على حسب المنطقة</h2>
+    
     """, unsafe_allow_html=True)
 
     # تأكد من وجود عمود 'region'
