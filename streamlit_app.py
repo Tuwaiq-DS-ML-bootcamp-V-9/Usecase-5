@@ -122,8 +122,17 @@ def main():
     total = job_counts.sum()
     ratio = (count / total) * 100
     
-    st.write("**عدد توفر هذه الوظيفة:** {}".format(count))
-    st.write("**نسبة توفرها مقارنة ببقية الوظائف:** {:.2f}%".format(ratio))
+    # عدد توفر الوظيفة
+    st.markdown(
+        "<p style='text-align: center; font-weight: bold;'>عدد توفر هذه الوظيفة: {}</p>".format(count),
+        unsafe_allow_html=True
+    )
+    
+    # نسبة توفر الوظيفة
+    st.markdown(
+        "<p style='text-align: center; font-weight: bold;'>نسبة توفرها مقارنة ببقية الوظائف: {:.2f}%</p>".format(ratio),
+        unsafe_allow_html=True
+    )
 
 if __name__ == "__main__":
     main()
