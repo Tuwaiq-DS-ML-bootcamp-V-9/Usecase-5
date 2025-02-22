@@ -143,22 +143,24 @@ if "job_title" in Jadarat.columns:
 else:
     st.error("❌ لم يتم العثور على عمود 'job_title' في الملف.")
 
-# ✅ التأكد من وجود عمود الوظائف
-if "job_title" in Jadarat.columns:
-    # 🔄 إصلاح النصوص العربية
-    Jadarat["job_title_fixed"] = Jadarat["job_title"].astype(str).apply(lambda x: get_display(arabic_reshaper.reshape(x)))
 
-    # 📊 حساب أكثر الوظائف طلبًا
-    job_counts_fixed = Jadarat["job_title_fixed"].value_counts().head(10)
+
+# ✅ التأكد من وجود عمود المنطقة والوظائف
+if "region" in Jadarat.columns and "job_title" in Jadarat.columns:
+    # 🔄 إصلاح النصوص العربية
+    Jadarat["region_fixed"] = Jadarat["region"].astype(str).apply(lambda x: get_display(arabic_reshaper.reshape(x)))
+
+    # 📊 حساب عدد الوظائف لكل منطقة
+    jobs_by_region = Jadarat["region_fixed"].value_counts()
 
     # 🎨 إعداد النصوص العربية
-    title_text = get_display(arabic_reshaper.reshape("📊 أكثر الوظائف طلبًا في مختلف مناطق السعودية"))
+    title_text = get_display(arabic_reshaper.reshape("📊 عدد الوظائف حسب المنطقة"))
     xlabel_text = get_display(arabic_reshaper.reshape("عدد الوظائف"))
-    ylabel_text = get_display(arabic_reshaper.reshape("المسمى الوظيفي"))
+    ylabel_text = get_display(arabic_reshaper.reshape("المنطقة"))
 
     # 🎨 رسم المخطط البياني مع دعم الخط العربي
     fig, ax = plt.subplots(figsize=(10, 5))
-    bars = ax.barh(job_counts_fixed.index, job_counts_fixed.values, color="steelblue")
+    bars = ax.barh(jobs_by_region.index, jobs_by_region.values, color="steelblue")
 
     # إضافة الأرقام على أشرطة البيانات
     for bar in bars:
@@ -167,13 +169,12 @@ if "job_title" in Jadarat.columns:
     ax.set_xlabel(xlabel_text, fontsize=12, fontweight="bold")
     ax.set_ylabel(ylabel_text, fontsize=12, fontweight="bold")
     ax.set_title(title_text, fontsize=14, fontweight="bold")
-    ax.invert_yaxis()  # جعل أكثر الوظائف طلبًا في الأعلى
+    ax.invert_yaxis()  # جعل المناطق ذات عدد الوظائف الأعلى في الأعلى
 
     # 🚀 عرض المخطط البياني في Streamlit
     st.pyplot(fig)
 else:
-    st.error("❌ لم يتم العثور على عمود 'job_title' في الملف.")
-
+    st.error("❌ لم يتم العثور على عمود 'region' أو 'job_title' في الملف.")
 
 
 # ✅ عنوان التحليل
