@@ -178,8 +178,6 @@ def main():
     st.pyplot(fig)
     plt.clf()
 
-    # فقرة توضيحية أسفل المخطط
-    st.markdown("<p style='text-align: center;'>هذا الرسم يوضح التوزيع النسبي للوظائف بحسب مستوى الخبرة.</p>", unsafe_allow_html=True)
 
     # =============================
     st.markdown(
