@@ -74,7 +74,7 @@ We are interested in understanding the employment landscape within Saudi Arabia.
 
 ## 📌 Storytelling  
 To explore insights visually, visit our **Streamlit Storytelling Dashboard**:  
-👉 **[View the Dashboard Here](your-streamlit-app-link-here)**  
+👉 **[View the Dashboard Here]([your-streamlit-app-link-here](https://usecase-5git-yrtuwp89upbk7rrzqrsbnz.streamlit.app/))**  
 
 ---
 **This project offers valuable insights into hiring trends, helping job seekers and decision-makers understand the Saudi job market better.**  
