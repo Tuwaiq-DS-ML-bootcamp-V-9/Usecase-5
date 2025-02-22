@@ -17,7 +17,7 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with logo, white-off background, and wider filter-result-box."""
+    """Load custom CSS with logo in top-left, white-off background, and wider filter-result-box."""
     custom_css = f"""
     <style>
         .stApp {{
@@ -26,17 +26,25 @@ def load_css(theme):
             direction: rtl;
             color: {theme['text_color']};
             font-family: 'Tajawal', sans-serif;
+            padding: 0;
+            margin: 0;
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
             color: {theme['text_content']};
         }}
-        /* Logo at the top */
+        /* Logo in the top-left */
         .logo {{
-            display: block;
-            margin: 1rem auto;
+            position: absolute;
+            top: 10px;
+            left: 10px;
             max-width: 200px;  /* Adjust size as needed */
             height: auto;
+            z-index: 1000;
+        }}
+        /* Ensure content doesn’t overlap with logo */
+        .content {{
+            margin-top: 60px;  /* Space for logo (adjust based on logo height) */
         }}
         /* Hero Section */
         .hero {{
@@ -97,7 +105,7 @@ def load_css(theme):
 def hero_section(theme):
     """Display the hero section with background image and title."""
     hero_html = f"""
-    <div class="hero">
+    <div class="hero content">
         <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
             📊 تحليل بيانات الوظائف في المملكة العربية السعودية
         </h1>
@@ -108,6 +116,7 @@ def hero_section(theme):
 
 def info_sections():
     """Show information sections with interactive graphs."""
+    st.markdown('<div class="content">', unsafe_allow_html=True)
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
     st.markdown('''<div>
@@ -136,6 +145,7 @@ def info_sections():
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 def main():
     # Pastel theme configuration with updated text color for white-off background
@@ -152,7 +162,7 @@ def main():
     }
     theme = pastel_theme
 
-    # Add logo at the top with proper file path handling
+    # Add logo at the top-left with proper file path handling
     logo_path = "images/logo.png"  # Path to your logo file
     if os.path.exists(logo_path):
         st.markdown(
@@ -167,6 +177,7 @@ def main():
     info_sections()
 
     # Filters Section
+    st.markdown('<div class="content">', unsafe_allow_html=True)
     st.header('تصفية البيانات')
     
     job_titles = jadarat_data['job_title'].unique()
@@ -176,6 +187,7 @@ def main():
     
     unique_genders = jadarat_data['gender'].unique()
     gender = st.selectbox('اختر الجنس', unique_genders)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Filter data
     filtered_data = jadarat_data[
@@ -185,6 +197,7 @@ def main():
     ]
 
     # Display filtered results
+    st.markdown('<div class="content">', unsafe_allow_html=True)
     if not filtered_data.empty:
         st.markdown(f'''
         <div class="filter-result-box">
@@ -204,6 +217,7 @@ def main():
             <p>لم يتم العثور على وظائف تطابق المعايير المحددة. يرجى التحقق من الفلاتر وإعادة المحاولة.</p>
         </div>
         ''', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
     st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
