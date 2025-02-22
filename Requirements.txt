@@ -2,6 +2,5 @@ streamlit
 pandas
 matplotlib
 seaborn
-openpyxl
-arabic_reshaper
+arabic-reshaper
 python-bidi
