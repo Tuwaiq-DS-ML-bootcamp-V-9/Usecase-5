@@ -51,7 +51,7 @@ def main():
         return
 
     # استخراج الوظائف الفريدة من عمود "JobTitle"
-    if "JobTitle" in df.columns:
+    if "job_title" in df.columns:
         unique_jobs = df["job_title"].unique()
 
         st.subheader("الوظائف الفريدة في الداتا سيت:")
@@ -59,7 +59,7 @@ def main():
         for job in unique_jobs:
             st.write(f"- {job}")
     else:
-        st.error("عمود 'JobTitle' غير موجود في الداتا سيت.")
+        st.error("عمود 'job_title' غير موجود في الداتا سيت.")
 
 
 if __name__ == '__main__':
