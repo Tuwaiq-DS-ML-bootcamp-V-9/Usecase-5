@@ -1,12 +1,13 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import arabic_reshaper
+from bidi.algorithm import get_display
 
 def main():
     # ضبط إعدادات الصفحة
-    st.set_page_config(
-        page_title="رحلة التخرج",
-        layout="centered"  # لضبط المحتوى في المنتصف
-    )
+    st.set_page_config(page_title="رحلة التخرج", layout="centered")
     
     # مقدمة التطبيق مع تنسيق HTML
     st.markdown("""
@@ -45,31 +46,81 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # محاولة قراءة الملف "cleaned_jadarat.csv"
+    # قراءة الملف "cleaned_jadarat.csv" واستخدامه في التطبيق
     try:
         df = pd.read_csv("cleaned_jadarat.csv")
+        st.success("تم تحميل ملف cleaned_jadarat.csv بنجاح!")
     except Exception as e:
         st.error(f"حدث خطأ أثناء تحميل الملف: {e}")
         return
 
-    # التأكد من وجود عمود "JobTitle" في الداتا سيت
-    if "job_title" not in df.columns:
-        st.error("عمود 'job_title' غير موجود في الداتا سيت.")
+    # استخدام الداتا سيت باسم jadarat
+    jadarat = df
+    
+    # =============================
+    # قسم عرض الرسم البياني لأعلى 10 وظائف مطلوبة
+    st.subheader("تحليل الوظائف الأكثر طلباً في السوق")
+    
+    # تحديد لوحة ألوان مخصصة
+    custom_palette = sns.color_palette("viridis", n_colors=10)
+    
+    # حساب الوظائف الأكثر طلباً (يفضل أن يكون اسم العمود "job_title" أو "JobTitle")
+    if 'job_title' in jadarat.columns:
+        top_jobs = jadarat['job_title'].value_counts().head(10)
+    elif 'JobTitle' in jadarat.columns:
+        top_jobs = jadarat['JobTitle'].value_counts().head(10)
+    else:
+        st.error("عمود الوظائف غير موجود في الداتا سيت.")
         return
 
-    # إنشاء تكرارات الوظائف وعددها
-    job_counts = df["job_title"].value_counts()
+    # إعادة تشكيل النص العربي للعرض الصحيح
+    reshaped_title = get_display(arabic_reshaper.reshape("أعلى 10 وظائف مطلوبة في السوق حسب تحليل بيانات منصة جدارات ٢٠٢٣"))
+    reshaped_xlabel = get_display(arabic_reshaper.reshape("عدد الوظائف"))
+    reshaped_ylabel = get_display(arabic_reshaper.reshape("المسمى الوظيفي"))
     
-    # عرض قائمة منسدلة بالوظائف الفريدة
+    # إعداد حجم الشكل
+    plt.figure(figsize=(10, 5))
+    
+    # رسم المخطط الشريطي الأفقي باستخدام لوحة الألوان المخصصة
+    sns.barplot(
+        x=top_jobs.values, 
+        y=[get_display(arabic_reshaper.reshape(job)) for job in top_jobs.index],
+        palette=custom_palette[:len(top_jobs)]
+    )
+    
+    # إضافة العنوان والمحاور
+    plt.title(reshaped_title, fontsize=14)
+    plt.xlabel(reshaped_xlabel, fontsize=12)
+    plt.ylabel(reshaped_ylabel, fontsize=12)
+    
+    # عرض المخطط في تطبيق Streamlit
+    st.pyplot(plt.gcf())
+    plt.clf()  # تفريغ الشكل الحالي
+    
+    # عرض الجدول الخاص بأعلى 10 وظائف مطلوبة
+    st.write("### أعلى 10 وظائف مطلوبة في السوق:")
+    st.write(top_jobs)
+    
+    # =============================
+    # قسم عرض قائمة الوظائف الفريدة ونسب توفرها
     st.subheader("اختر الوظيفة لمعرفة مدى توفرها في البيانات:")
+    
+    # حساب تكرارات الوظائف (معتمدًا على نفس العمود المستخدم سابقاً)
+    if 'job_title' in jadarat.columns:
+        job_counts = jadarat["job_title"].value_counts()
+    elif 'JobTitle' in jadarat.columns:
+        job_counts = jadarat["JobTitle"].value_counts()
+    else:
+        st.error("عمود الوظائف غير موجود في الداتا سيت.")
+        return
+    
     selected_job = st.selectbox("الوظائف المتاحة", job_counts.index)
-
-    # عند اختيار وظيفة، يتم حساب عدد تكرارها ونسبتها
+    
     count = job_counts[selected_job]
     total = job_counts.sum()
     ratio = (count / total) * 100
-
-    st.write(f"**عدد توفر هذه الوظيفة:** {count}")
+    
+    st.write("**عدد توفر هذه الوظيفة:** {}".format(count))
     st.write("**نسبة توفرها مقارنة ببقية الوظائف:** {:.2f}%".format(ratio))
 
 if __name__ == "__main__":
