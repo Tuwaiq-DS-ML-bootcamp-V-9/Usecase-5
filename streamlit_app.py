@@ -11,7 +11,7 @@ def main():
     
     # مقدمة التطبيق مع تنسيق HTML
     st.markdown("""
-    <h1 style='text-align: center;'>🎓 رحلة التخرج 🎓</h1>
+    <h1 style='text-align: center;'>🎓✨🎉 رحلة التخرج </h1>
     <div style='text-align: center; font-size:18px; margin-top: 20px;'>
         <p><strong>بداية الرحلة – لحظة التخرج:</strong></p>
         <p>
