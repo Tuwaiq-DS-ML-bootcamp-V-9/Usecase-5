@@ -176,5 +176,46 @@ def main():
     # فقرة توضيحية أسفل المخطط
     st.markdown("<p style='text-align: center;'>هذا الرسم يوضح التوزيع النسبي للوظائف بحسب مستوى الخبرة.</p>", unsafe_allow_html=True)
 
+    # =============================
+    # قسم حساب متوسط الرواتب لحديثي التخرج حسب الوظيفة
+    st.subheader("متوسط الرواتب لحديثي التخرج حسب الوظيفة")
+    
+    # التأكد من وجود عمود "salary" و "experience_categories" و "job_title"
+    if 'salary' not in jadarat.columns:
+        st.error("عمود 'salary' غير موجود في الداتا سيت.")
+        return
+    if 'job_title' not in jadarat.columns and 'JobTitle' not in jadarat.columns:
+        st.error("عمود الوظائف غير موجود في الداتا سيت.")
+        return
+
+    # افترض أن مستوى الخبرة المطلوب هو "حديث تخرج"
+    df_fresh = jadarat[jadarat['experience_categories'] == "خريجون جدد"]
+    
+    # استخدام العمود الصحيح للوظائف (job_title أو JobTitle)
+    if 'job_title' in df_fresh.columns:
+        avg_salary_by_job = df_fresh.groupby('job_title')['salary'].mean()
+    else:
+        avg_salary_by_job = df_fresh.groupby('JobTitle')['salary'].mean()
+    
+    # رسم المخطط الشريطي لعرض متوسط الرواتب
+    plt.figure(figsize=(10,5))
+    sns.barplot(x=avg_salary_by_job.index, y=avg_salary_by_job.values, palette="viridis")
+    plt.xticks(rotation=45)
+    plt.xlabel("المسمى الوظيفي", fontsize=12)
+    plt.ylabel("متوسط الراتب", fontsize=12)
+    plt.title("متوسط الرواتب لحديثي التخرج حسب الوظيفة", fontsize=14)
+    st.pyplot(plt.gcf())
+    plt.clf()
+    
+    # قائمة منسدلة لعرض متوسط الراتب لوظيفة محددة
+    selected_job = st.selectbox("اختر الوظيفة لعرض متوسط الراتب", avg_salary_by_job.index)
+    avg_salary = avg_salary_by_job[selected_job]
+    
+    st.markdown(
+        "<p style='text-align: center; font-size: 18px;'><strong>متوسط الراتب لهذه الوظيفة:</strong> {:.2f}</p>"
+        .format(avg_salary),
+        unsafe_allow_html=True
+    )
+
 if __name__ == "__main__":
     main()
