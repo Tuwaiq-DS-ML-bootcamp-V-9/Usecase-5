@@ -99,6 +99,7 @@ def main():
     plt.clf()  # تفريغ الشكل الحالي
 
     # =============================
+    
     # قسم عرض قائمة الوظائف الفريدة ونسب توفرها
     
     st.markdown(
@@ -133,7 +134,12 @@ def main():
         unsafe_allow_html=True
     )
 
-    
+
+    # =============================
+    st.markdown(
+    "<h2 style='text-align: center;'>التوزيع النسبي للوظائف بحسب مستوى الخبرة</h2>",
+    unsafe_allow_html=True
+    )
     # تأكد من وجود العمود الذي يحدد الخبرة (مثلاً experience_categories)
     if 'experience_categories' not in jadarat.columns:
         st.error("لا يوجد عمود 'experience_categories' في الداتا سيت.")
