@@ -237,7 +237,14 @@ def main():
         unsafe_allow_html=True
     )
 
-
+    st.set_page_config(page_title="توزيع الوظائف حسب المنطقة", layout="centered")
+    
+    st.markdown("""
+    <h1 style='text-align: center;'>توزيع الوظائف على حسب المنطقة</h1>
+    <p style='text-align: center; font-size:18px;'>
+        هذا الرسم البياني يعرض النسبة المئوية للوظائف في كل منطقة.
+    </p>
+    """, unsafe_allow_html=True)
 
     # تأكد من وجود عمود 'region'
     if 'region' not in jadarat.columns:
@@ -271,6 +278,8 @@ def main():
     # عرض الرسم البياني في Streamlit
     st.pyplot(plt.gcf())
     plt.clf()
+
+
 
 if __name__ == "__main__":
     main()
