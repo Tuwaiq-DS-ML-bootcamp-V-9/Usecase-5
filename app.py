@@ -122,7 +122,7 @@ def info_sections():
     st.markdown('''<div>
                     <h3>قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية،
                     وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي من خلال تحليلات تتعلق بالرواتب،
-                    توزيع الوظائف حسب المناطق ومستويات الخبرة، بالإضافة إلى توزيع عقود العمل.</h3>
+                    توزيع الوظائف حسب المناطق، توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
     # Job Postings by Region
@@ -166,7 +166,7 @@ def main():
     logo_path = "images/logo.png"  # Path to your logo file
     if os.path.exists(logo_path):
         st.markdown(
-            f'<img src="file://{os.path.abspath(logo_path)}" class="logo" alt="Jadarat Logo">',
+            f'<img src="data:image/png;base64,{st.image_to_base64(logo_path)}" class="logo" alt="Jadarat Logo">',
             unsafe_allow_html=True
         )
     else:
@@ -179,12 +179,12 @@ def main():
     # Filters Section
     st.markdown('<div class="content">', unsafe_allow_html=True)
     st.header('تصفية البيانات')
-    
+
     job_titles = jadarat_data['job_title'].unique()
     job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
-    
+
     years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0)
-    
+
     unique_genders = jadarat_data['gender'].unique()
     gender = st.selectbox('اختر الجنس', unique_genders)
     st.markdown('</div>', unsafe_allow_html=True)
