@@ -191,7 +191,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-
-
-give me insight for each chart and style it in a good way
