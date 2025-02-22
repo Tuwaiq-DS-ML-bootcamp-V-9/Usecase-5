@@ -182,8 +182,9 @@ def main():
     st.markdown("<p style='text-align: center;'>هذا الرسم يوضح التوزيع النسبي للوظائف بحسب مستوى الخبرة.</p>", unsafe_allow_html=True)
 
     # =============================
-    # قسم حساب متوسط الرواتب لحديثي التخرج حسب الوظيفة
-    st.subheader("متوسط الرواتب لحديثي التخرج حسب الوظيفة")
+    st.markdown(
+    "<h2 style='text-align: center;'>متوسط الرواتب لحديثي التخرج حسب الوظيفة</h2>",
+    unsafe_allow_html=True)
     
     # التأكد من وجود عمود "salary" و "experience_categories" و "job_title"
     if 'salary' not in jadarat.columns:
@@ -211,9 +212,7 @@ def main():
     
     # إعادة تشكيل أسماء الوظائف بالعربية
     reshaped_jobs = [get_display(arabic_reshaper.reshape(str(job))) for job in top_10_jobs.index]
-    
-    st.subheader("أعلى 10 وظائف لحديثي التخرج من حيث متوسط الراتب")
-    
+        
     plt.figure(figsize=(10, 5))
     # استخدمنا القائمة reshaped_jobs بدلًا من top_10_jobs.index
     sns.barplot(x=reshaped_jobs, y=top_10_jobs.values, palette="viridis")
