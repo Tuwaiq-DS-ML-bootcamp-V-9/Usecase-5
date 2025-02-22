@@ -1,0 +1,5 @@
+matplotlib
+seaborn
+arabic_reshaper
+bidi.algorithm
+datetime
