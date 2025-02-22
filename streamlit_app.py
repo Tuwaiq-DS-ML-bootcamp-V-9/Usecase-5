@@ -148,7 +148,7 @@ def main():
     # ====== قسم رسم Pie Chart لبيان نسبة الوظائف لحديثي التخرج مقابل ذوي الخبرة ======
     st.markdown("""
     <div style='text-align: center; font-size:18px; margin-top: 40px;'>
-        <p><strong>نسبة الوظائف بين حديثي التخرج والخبراء:</strong></p>
+        <p><strong>نسبة الوظائف بين حديثي التخرج والخبراء</strong></p>
     </div>
     """, unsafe_allow_html=True)
     
