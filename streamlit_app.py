@@ -188,24 +188,32 @@ def main():
         st.error("عمود الوظائف غير موجود في الداتا سيت.")
         return
 
-    # افترض أن مستوى الخبرة المطلوب هو "حديث تخرج"
-    df_fresh = jadarat[jadarat['experience_categories'] == "خريجون جدد"]
-    
-    # استخدام العمود الصحيح للوظائف (job_title أو JobTitle)
-    if 'job_title' in df_fresh.columns:
+
+        # تصفية البيانات لحديثي التخرج
+        df_fresh = jadarat[jadarat['experience_categories'] == " خريجون جدد"]
+        
+        # حساب متوسط الراتب لحديثي التخرج حسب الوظيفة
         avg_salary_by_job = df_fresh.groupby('job_title')['salary'].mean()
-    else:
-        avg_salary_by_job = df_fresh.groupby('JobTitle')['salary'].mean()
-    
-    # رسم المخطط الشريطي لعرض متوسط الرواتب
-    plt.figure(figsize=(10,5))
-    sns.barplot(x=avg_salary_by_job.index, y=avg_salary_by_job.values, palette="viridis")
-    plt.xticks(rotation=45)
-    plt.xlabel("المسمى الوظيفي", fontsize=12)
-    plt.ylabel("متوسط الراتب", fontsize=12)
-    plt.title("متوسط الرواتب لحديثي التخرج حسب الوظيفة", fontsize=14)
-    st.pyplot(plt.gcf())
-    plt.clf()
+        
+        # ترتيب الوظائف من الأعلى إلى الأدنى
+        avg_salary_by_job_sorted = avg_salary_by_job.sort_values(ascending=False)
+        
+        # اختيار أعلى 10 وظائف
+        top_10_jobs = avg_salary_by_job_sorted.head(10)
+        
+        # رسم المخطط الشريطي لأعلى 10 وظائف فقط
+        st.subheader("أعلى 10 وظائف لحديثي التخرج من حيث متوسط الراتب")
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=top_10_jobs.index, y=top_10_jobs.values, palette="viridis")
+        plt.xticks(rotation=45)
+        plt.xlabel("المسمى الوظيفي", fontsize=12)
+        plt.ylabel("متوسط الراتب", fontsize=12)
+        plt.title("أعلى 10 وظائف لحديثي التخرج من حيث متوسط الراتب", fontsize=14)
+        st.pyplot(plt.gcf())
+        plt.clf()
+
+
+
     
     # قائمة منسدلة لعرض متوسط الراتب لوظيفة محددة
     selected_job = st.selectbox("اختر الوظيفة لعرض متوسط الراتب", avg_salary_by_job.index)
