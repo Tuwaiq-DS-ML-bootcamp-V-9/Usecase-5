@@ -165,7 +165,7 @@ def main():
     # Add even smaller logo at the top-left with proper file path handling
     logo_path = "images/logo.png"  # Path to your logo file
     if os.path.exists(logo_path):
-        st.image(logo_path, use_container_width=False, caption="Jadarat Logo", width=100, output_format="PNG")  # Even smaller width
+        st.image(logo_path, use_container_width=False, width=150, output_format="PNG")  # Even smaller width
     else:
         st.error("Logo file not found. Please check the path or upload the logo to the 'images' folder.")
 
