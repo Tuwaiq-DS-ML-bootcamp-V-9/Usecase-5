@@ -62,26 +62,7 @@ We are interested in understanding the employment landscape within Saudi Arabia.
 6. **What are the top 10 most in-demand jobs in the market according to the analysis of Jadarat platform data?**
 <img width="998" alt="Screenshot 1446-08-23 at 12 09 23 PM" src="https://github.com/user-attachments/assets/03af17da-a773-4450-b793-da255e33e91a" />
 
-   
-   1- Sales Representative
-      
-   2- Accountant
-      
-   3- Marketing Specialist
-      
-   4- Receptionist
-      
-   5- Administrative Assistant
-      
-   6- Sales Consultant
-      
-   7- Cashier
-      
-   8- HR Operations Specialist
-      
-   9- Secretary
-      
-   10- Environmental Specialist
+
 
 
 ## 🔥 Key Insights  
