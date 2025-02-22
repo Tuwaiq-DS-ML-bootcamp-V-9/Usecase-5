@@ -1,4 +1,4 @@
-import streamlit as st
+ذimport streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -49,7 +49,6 @@ def main():
     # قراءة الملف "cleaned_jadarat.csv" واستخدامه في التطبيق
     try:
         df = pd.read_csv("cleaned_jadarat.csv")
-        st.success("تم تحميل ملف cleaned_jadarat.csv بنجاح!")
     except Exception as e:
         st.error(f"حدث خطأ أثناء تحميل الملف: {e}")
         return
@@ -96,11 +95,7 @@ def main():
     # عرض المخطط في تطبيق Streamlit
     st.pyplot(plt.gcf())
     plt.clf()  # تفريغ الشكل الحالي
-    
-    # عرض الجدول الخاص بأعلى 10 وظائف مطلوبة
-    st.write("### أعلى 10 وظائف مطلوبة في السوق:")
-    st.write(top_jobs)
-    
+
     # =============================
     # قسم عرض قائمة الوظائف الفريدة ونسب توفرها
     st.subheader("اختر الوظيفة لمعرفة مدى توفرها في البيانات:")
