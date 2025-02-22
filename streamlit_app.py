@@ -117,10 +117,8 @@ def main():
         return
     
 
-    st.markdown(
-        "<p style='text-align: center; font-weight: bold;'>الوظائف المتاحة</p>",
-        unsafe_allow_html=True
-    )
+    selected_job = st.selectbox("الوظائف المتاحة", job_counts.index)
+
     count = job_counts[selected_job]
     total = job_counts.sum()
     ratio = (count / total) * 100
