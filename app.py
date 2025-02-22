@@ -16,11 +16,11 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with a wider filter-result-box."""
+    """Load custom CSS with logo, white-off background, and wider filter-result-box."""
     custom_css = f"""
     <style>
         .stApp {{
-            background: {theme['background']};
+            background: #f8f9fa;  /* Soft white-off background */
             text-align: right;
             direction: rtl;
             color: {theme['text_color']};
@@ -28,8 +28,16 @@ def load_css(theme):
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
-            color: {theme['text_color']};
+            color: {theme['text_content']};
         }}
+        /* Logo at the top */
+        .logo {{
+            display: block;
+            margin: 1rem auto;
+            max-width: 200px;  /* Adjust size as needed */
+            height: auto;
+        }}
+        /* Hero Section */
         .hero {{
             background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}),
                         url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover;
@@ -76,7 +84,7 @@ def load_css(theme):
         .footer {{
             text-align: center;
             padding: 2rem;
-            background: {theme['background']};
+            background: #f8f9fa;  /* Match background for consistency */
             color: {theme['text_color']};
             font-size: 1.2rem;
         }}
@@ -129,18 +137,25 @@ def info_sections():
     st.plotly_chart(fig3, use_container_width=True)
 
 def main():
-    # Pastel theme configuration
+    # Pastel theme configuration with updated text color for white-off background
     pastel_theme = {
-        "background": "#fdf6e3",
-        "text_color": "#657b83",
+        "background": "#fdf6e3",  # Keeping original background for consistency with logo
+        "text_color": "#333333",  # Darker text for better contrast on white-off
         "accent1": "#b58900",
         "accent2": "#cb4b16",
         "accent3": "#268bd2",
         "hero_overlay": "rgba(38, 139, 210, 0.4)",
         "header_font": "'Tajawal', sans-serif",
+        "text_content": "#333333",  # Updated for headers on white-off
         "recommendation_bg": "#657b83",
     }
     theme = pastel_theme
+
+    # Add logo at the top
+    st.markdown(
+        f'<img src="images/logo.png">',  # Replace with actual URL or file path
+        unsafe_allow_html=True
+    )
 
     load_css(theme)
     hero_section(theme)
