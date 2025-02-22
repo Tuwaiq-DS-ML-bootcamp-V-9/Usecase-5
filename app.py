@@ -17,7 +17,7 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with logo in top-left, white-off background, and wider filter-result-box."""
+    """Load custom CSS with a smaller logo in top-left, white-off background, and wider filter-result-box."""
     custom_css = f"""
     <style>
         .stApp {{
@@ -33,18 +33,18 @@ def load_css(theme):
             font-family: {theme['header_font']};
             color: {theme['text_content']};
         }}
-        /* Logo in the top-left */
-        .logo {{
+        /* Smaller Logo in the top-left */
+        .logo-img {{
             position: absolute;
             top: 10px;
             left: 10px;
-            max-width: 200px;  /* Adjust size as needed */
+            max-width: 120px;  /* Reduced size for a smaller logo */
             height: auto;
             z-index: 1000;
         }}
         /* Ensure content doesn’t overlap with logo */
         .content {{
-            margin-top: 60px;  /* Space for logo (adjust based on logo height) */
+            margin-top: 50px;  /* Reduced space for smaller logo (adjust based on logo height) */
         }}
         /* Hero Section */
         .hero {{
@@ -162,10 +162,10 @@ def main():
     }
     theme = pastel_theme
 
-    # Add logo at the top-left with proper file path handling
+    # Add smaller logo at the top-left with proper file path handling
     logo_path = "images/logo.png"  # Path to your logo file
     if os.path.exists(logo_path):
-        st.image(logo_path, use_column_width=True, caption="Jadarat Logo", width=200)
+        st.image(logo_path, use_column_width=False, caption="Jadarat Logo", width=120, output_format="PNG")  # Smaller width
     else:
         st.error("Logo file not found. Please check the path or upload the logo to the 'images' folder.")
 
