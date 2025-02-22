@@ -6,7 +6,7 @@ import seaborn as sns
 import arabic_reshaper
 from bidi.algorithm import get_display
 import matplotlib.patches as mpatches
-import geopandas as gpd
+
 
 # ✅ تحميل البيانات مباشرة والتحقق من وجود الملف
 try:
