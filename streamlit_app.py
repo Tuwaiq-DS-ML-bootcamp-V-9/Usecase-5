@@ -283,5 +283,30 @@ def main():
 
 
 
+    # ---------------------------
+    # قائمة منسدلة للمناطق: عند اختيار منطقة تظهر عدد الوظائف فيها ونسبة الوظائف من إجمالي الوظائف.
+    st.markdown("<h2 style='text-align: center;'>تفاصيل المنطقة المختارة</h2>", unsafe_allow_html=True)
+    
+    # الحصول على قائمة المناطق الفريدة (يمكنك استخدام ترتيب أبجدي)
+    region_list = sorted(jadarat['region'].unique())
+    selected_region = st.selectbox("اختر المنطقة", region_list)
+    
+    # حساب عدد الوظائف في المنطقة المختارة
+    region_count = jadarat[jadarat['region'] == selected_region].shape[0]
+    total_jobs = jadarat.shape[0]
+    region_percentage = (region_count / total_jobs) * 100
+    
+    # عرض النتائج في منتصف الصفحة باستخدام تنسيق HTML
+    st.markdown(
+        "<p style='text-align: center; font-size:18px; font-weight: bold;'>عدد الوظائف في المنطقة {}: {}</p>"
+        .format(selected_region, region_count),
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        "<p style='text-align: center; font-size:18px; font-weight: bold;'>نسبة الوظائف في هذه المنطقة من إجمالي الوظائف: {:.2f}%</p>"
+        .format(region_percentage),
+        unsafe_allow_html=True
+    )
+
 if __name__ == "__main__":
     main()
