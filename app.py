@@ -17,7 +17,7 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with logo on the left, white-off background, and wider filter-result-box."""
+    """Load custom CSS with a smaller logo in top-left, white-off background, and wider filter-result-box."""
     custom_css = f"""
     <style>
         .stApp {{
@@ -28,26 +28,23 @@ def load_css(theme):
             font-family: 'Tajawal', sans-serif;
             padding: 0;
             margin: 0;
-            position: relative;  /* For logo positioning */
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
             color: {theme['text_content']};
         }}
-        /* Logo on the left (vertical alignment) */
+        /* Even Smaller Logo in the top-left */
         .logo-img {{
             position: absolute;
-            top: 50%;
+            top: 10px;
             left: 10px;
-            transform: translateY(-50%);  /* Center vertically */
-            max-width: 100px;  /* Keep it small */
+            max-width: 100px;  /* Reduced size for an even smaller logo */
             height: auto;
             z-index: 1000;
         }}
         /* Ensure content doesn’t overlap with logo */
         .content {{
-            margin-left: 120px;  /* Space for logo (adjust based on logo width) */
-            margin-top: 0;  /* Removed top margin since logo is on the side */
+            margin-top: 40px;  /* Reduced space for smaller logo (adjust based on logo height) */
         }}
         /* Hero Section */
         .hero {{
@@ -165,10 +162,10 @@ def main():
     }
     theme = pastel_theme
 
-    # Add smaller logo on the left with proper file path handling
+    # Add even smaller logo at the top-left with proper file path handling
     logo_path = "images/logo.png"  # Path to your logo file
     if os.path.exists(logo_path):
-        st.image(logo_path, use_container_width=False, caption="Jadarat Logo", width=100, output_format="PNG")  # Keep small size
+        st.image(logo_path, use_container_width=False, caption="Jadarat Logo", width=100, output_format="PNG")  # Even smaller width
     else:
         st.error("Logo file not found. Please check the path or upload the logo to the 'images' folder.")
 
