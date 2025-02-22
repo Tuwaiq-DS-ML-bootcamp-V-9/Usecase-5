@@ -314,19 +314,10 @@ def main():
 
     
     st.markdown("""
-    <h1 style='text-align: center;'>تحليل وظائف جدارات</h1>
-    <p style='text-align: center; font-size:18px;'>
-        تحليل نوع الشركة (خاص مقابل شبه حكومي) وأكثر الوظائف المعروضة في المنصة.
-    </p>
+    <h2 style='text-align: center;'>تحليل نوع الشركة (خاص مقابل شبه حكومي) وأكثر الوظائف المعروضة في المنصة</h2>
     """, unsafe_allow_html=True)
 
 
-    # القسم الأول: توزيع نوع الشركة (خاص مقابل شبه حكومي)
-    if 'comp_type' not in jadarat.columns:
-        st.error("عمود 'comp_type' غير موجود في الداتا سيت.")
-    else:
-        st.markdown("<h2 style='text-align: center;'>توزيع نوع الشركة</h2>", unsafe_allow_html=True)
-        
     # حساب عدد الشركات حسب النوع
     company_counts = jadarat['comp_type'].value_counts()
     
