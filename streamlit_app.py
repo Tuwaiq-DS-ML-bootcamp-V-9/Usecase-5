@@ -134,5 +134,36 @@ def main():
         unsafe_allow_html=True
     )
 
+    # تأكد من وجود العمود الذي يحدد الخبرة (مثلاً experience_level)
+    if 'experience_level' not in jadarat.columns:
+        st.error("لا يوجد عمود 'experience_level' في الداتا سيت.")
+        return
+    
+    # ====== قسم رسم Pie Chart لبيان نسبة الوظائف لحديثي التخرج مقابل ذوي الخبرة ======
+    st.markdown("""
+    <div style='text-align: center; font-size:18px; margin-top: 40px;'>
+        <p><strong>نسبة الوظائف بين حديثي التخرج وذوي الخبرة:</strong></p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # حساب عدد الوظائف لكل فئة (Fresh Graduate / Expert)
+    experience_counts = jadarat['experience_level'].value_counts()
+    
+    # إنشاء الشكل
+    fig, ax = plt.subplots(figsize=(5,5))
+    # يمكنك إعادة تشكيل النص بالعربية إذا لزم الأمر، مثلاً إذا كانت القيم بالعربية
+    labels = [get_display(arabic_reshaper.reshape(str(x))) for x in experience_counts.index]
+    
+    # رسم المخطط الدائري
+    ax.pie(experience_counts.values, labels=labels, autopct='%1.1f%%', startangle=140)
+    ax.axis('equal')  # لجعل الرسم دائريًا تمامًا
+    
+    # عرض المخطط في ستريمليت
+    st.pyplot(fig)
+    plt.clf()
+
+    # يمكنك عرض بعض المعلومات الإضافية أسفل المخطط
+    st.markdown("<p style='text-align: center;'>هذا الرسم يوضح التوزيع النسبي للوظائف بحسب مستوى الخبرة.</p>", unsafe_allow_html=True)
+    
 if __name__ == "__main__":
     main()
