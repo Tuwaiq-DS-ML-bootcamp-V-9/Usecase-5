@@ -195,10 +195,10 @@ def main():
         
        
     # حساب متوسط الراتب لحديثي التخرج حسب الوظيفة
-        avg_salary_by_job = df_fresh.groupby('job_title')['salary'].mean()
+    avg_salary_by_job = df_fresh.groupby('job_title')['salary'].mean()
         
     # ترتيب الوظائف من الأعلى إلى الأدنى
-        avg_salary_by_job_sorted = avg_salary_by_job.sort_values(ascending=False)
+    avg_salary_by_job_sorted = avg_salary_by_job.sort_values(ascending=False)
         
     # اختيار أعلى 10 وظائف
     top_10_jobs = avg_salary_by_job_sorted.head(10)
