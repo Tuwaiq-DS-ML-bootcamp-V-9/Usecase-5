@@ -73,3 +73,5 @@ def main():
     st.write(f"**عدد توفر هذه الوظيفة:** {count}")
     st.write("**نسبة توفرها مقارنة ببقية الوظائف:** {:.2f}%".format(ratio))
 
+if __name__ == "__main__":
+    main()
