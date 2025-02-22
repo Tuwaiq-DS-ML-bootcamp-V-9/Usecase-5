@@ -50,7 +50,7 @@ We are interested in understanding the employment landscape within Saudi Arabia.
 <img width="686" alt="Screenshot 1446-08-23 at 12 08 46 PM" src="https://github.com/user-attachments/assets/71384b01-32e3-4733-b820-96596e7f1e95" />
 
    
-   - The job market is relatively balanced, but there are slightly more postings for experienced professionals than fresh graduates.
+   - The job market slightly favors fresh graduates, as there are more job postings available for them compared to experienced professionals.
 
 5. **Do fresh graduates receive benefits, or are benefits exclusive to experienced professionals?**
 <img width="568" alt="Screenshot 1446-08-23 at 12 09 09 PM" src="https://github.com/user-attachments/assets/a03289fd-28c5-487e-9651-29414c0ad8f6" />
