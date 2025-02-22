@@ -26,15 +26,63 @@ We are interested in understanding the employment landscape within Saudi Arabia.
 - **Arabic Text Processing**: `arabic_reshaper`, `bidi.algorithm`  
 - **Data Visualization**: Streamlit for storytelling  
 
-## ❓ Key Questions Answered  
-1. **What proportion of job postings is attributed to each region in Saudi Arabia?**  
-   → Understanding job distribution by region.  
-2. **Is there a gender preference in job postings?**  
-   → Examining whether employers prefer males, females, or both.  
-3. **What is the expected salary range for fresh graduates?**  
-   → Identifying realistic salary expectations for entry-level candidates.  
-4. **Are job opportunities primarily for experienced professionals, or is there room for fresh graduates?**  
-   → Analyzing job listings based on required years of experience.  
+## ❓ Key Questions Answered
+
+1. **What proportion of job postings is attributed to each region in Saudi Arabia?**
+<img width="1008" alt="Screenshot 1446-08-23 at 12 06 14 PM" src="https://github.com/user-attachments/assets/52ab841a-e70f-45d1-95c0-5731dbe7f881" />
+
+   - The highest number of job postings are in Riyadh, followed by Makkah and the Eastern Region.
+   - Other regions have significantly fewer job opportunities.
+
+2. **Is there a gender preference in job postings?**
+<img width="479" alt="Screenshot 1446-08-23 at 12 07 25 PM" src="https://github.com/user-attachments/assets/fd232da8-9dfa-4927-80a8-ce4d4670d71d" />
+
+   - Employers predominantly target both genders, but males are slightly favored over females in some cases.
+
+3. **What is the expected salary range for fresh graduates?**
+<img width="640" alt="Screenshot 1446-08-23 at 12 08 27 PM" src="https://github.com/user-attachments/assets/a9a6974d-dc06-4d26-a243-0f7faa2e76d1" />
+
+   
+   - Most fresh graduates receive salaries ranging between 4,000 - 6,000 SAR.
+   - A few outliers offer salaries above 10,000 SAR.
+
+4. **Are job opportunities primarily targeted at experienced professionals, or is there room for fresh graduates?**
+<img width="686" alt="Screenshot 1446-08-23 at 12 08 46 PM" src="https://github.com/user-attachments/assets/71384b01-32e3-4733-b820-96596e7f1e95" />
+
+   
+   - The job market is relatively balanced, but there are slightly more postings for experienced professionals than fresh graduates.
+
+5. **Do fresh graduates receive benefits, or are benefits exclusive to experienced professionals?**
+<img width="568" alt="Screenshot 1446-08-23 at 12 09 09 PM" src="https://github.com/user-attachments/assets/a03289fd-28c5-487e-9651-29414c0ad8f6" />
+
+   
+   - Benefits are more commonly offered to experienced professionals.
+   - However, a significant portion of fresh graduates also receive benefits, contrary to common assumptions.
+
+6. **What are the top 10 most in-demand jobs in the market according to the analysis of Jadarat platform data?**
+<img width="998" alt="Screenshot 1446-08-23 at 12 09 23 PM" src="https://github.com/user-attachments/assets/03af17da-a773-4450-b793-da255e33e91a" />
+
+   
+   1- Sales Representative
+      
+   2- Accountant
+      
+   3- Marketing Specialist
+      
+   4- Receptionist
+      
+   5- Administrative Assistant
+      
+   6- Sales Consultant
+      
+   7- Cashier
+      
+   8- HR Operations Specialist
+      
+   9- Secretary
+      
+   10- Environmental Specialist
+
 
 ## 🔥 Key Insights  
 - **Most job postings are concentrated in Riyadh and Jeddah**, indicating that these cities have the highest demand for employees.  
