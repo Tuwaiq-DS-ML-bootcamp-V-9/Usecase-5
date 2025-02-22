@@ -237,8 +237,10 @@ def main():
         unsafe_allow_html=True
     )
 
-    st.set_page_config(page_title="توزيع الوظائف حسب المنطقة", layout="centered")
-    
+
+
+
+        
     st.markdown("""
     <h1 style='text-align: center;'>توزيع الوظائف على حسب المنطقة</h1>
     <p style='text-align: center; font-size:18px;'>
