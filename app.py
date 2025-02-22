@@ -153,7 +153,7 @@ def main():
 
     # Add logo at the top
     st.markdown(
-        f'<img src="https://example.com/jadarat_logo.png" class="logo" alt="Jadarat Logo">',  # Replace with actual URL or file path
+        f'<img src="images/logo.png">',  # Replace with actual URL or file path
         unsafe_allow_html=True
     )
 
