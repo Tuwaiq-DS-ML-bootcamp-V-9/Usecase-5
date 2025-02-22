@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import dtale
 import arabic_reshaper
 from bidi.algorithm import get_display
 import matplotlib.patches as mpatches
