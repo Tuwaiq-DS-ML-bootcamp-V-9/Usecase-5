@@ -190,7 +190,7 @@ def main():
 
 
     # تصفية البيانات لحديثي التخرج
-    df_fresh = jadarat[jadarat['experience_categories'] == " خريجون جدد"]
+    df_fresh = jadarat[jadarat['experience_categories'] == "خريجون جدد"]
         
         
        
