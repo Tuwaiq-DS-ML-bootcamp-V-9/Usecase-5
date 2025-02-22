@@ -58,7 +58,7 @@ def main():
     
     # =============================
     # قسم عرض الرسم البياني لأعلى 10 وظائف مطلوبة
-    st.subheader("تحليل الوظائف الأكثر طلباً في السوق")
+    st.subheader("تحليل الوظائف الأكثر طلباً في السوق" , layout="centered")
     
     # تحديد لوحة ألوان مخصصة
     custom_palette = sns.color_palette("viridis", n_colors=10)
