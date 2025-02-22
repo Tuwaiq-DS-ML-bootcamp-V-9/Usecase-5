@@ -9,8 +9,7 @@ def main():
     
     # استخدام HTML لتنسيق النص في المنتصف وإضافة الرموز
     st.markdown("""
-    <h1 style='text-align: center;'>🎓 رحلة التخرج 🎓</h1>
-    
+
     <div style='text-align: center; font-size:18px;'>
         <p><strong>:بداية الرحلة – لحظة التخرج</strong></p>
         <p>
