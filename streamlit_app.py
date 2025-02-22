@@ -57,8 +57,11 @@ def main():
     jadarat = df
     
     # =============================
-    # قسم عرض الرسم البياني لأعلى 10 وظائف مطلوبة
-    st.subheader("تحليل الوظائف الأكثر طلباً في السوق" , layout="centered")
+    st.markdown(
+    "<h2 style='text-align: center;'>تحليل الوظائف الأكثر طلباً في السوق</h2>",
+    unsafe_allow_html=True
+    )
+
     
     # تحديد لوحة ألوان مخصصة
     custom_palette = sns.color_palette("viridis", n_colors=10)
