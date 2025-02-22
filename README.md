@@ -10,6 +10,8 @@ We are interested in understanding the employment landscape within Saudi Arabia.
 2. Is there a gender preference indicated in the job postings?
 3. What is the expected salary range for fresh graduates?
 4. Are job opportunities predominantly targeted at individuals with experience, or is there room for fresh graduates as well?
+5. Do fresh graduates receive benefits, or are benefits exclusive to experienced professionals?
+6. What are the top 10 most in-demand jobs in the market according to the analysis of Jadarat platform data?
 
 ## 🏆 Objectives  
 1. Examine job distribution across different regions.  
