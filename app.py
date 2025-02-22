@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
-import os
 
 # Set page configuration
 st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
@@ -17,39 +16,20 @@ jadarat_data['region'] = jadarat_data['region'].fillna('Unknown')
 jadarat_data['Salary'] = pd.to_numeric(jadarat_data['Salary'], errors='coerce').fillna(0)
 
 def load_css(theme):
-    """Load custom CSS with a larger logo on the left, white-off background, and wider filter-result-box."""
+    """Load custom CSS with a wider filter-result-box."""
     custom_css = f"""
     <style>
         .stApp {{
-            background: #f8f9fa;  /* Soft white-off background */
+            background: {theme['background']};
             text-align: right;
             direction: rtl;
             color: {theme['text_color']};
             font-family: 'Tajawal', sans-serif;
-            padding: 0;
-            margin: 0;
-            position: relative;  /* For logo positioning */
         }}
         h1, h2, h3 {{
             font-family: {theme['header_font']};
-            color: {theme['text_content']};
+            color: {theme['text_color']};
         }}
-        /* Larger Logo on the left (vertical alignment) */
-        .logo-img {{
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);  /* Center vertically */
-            max-width: 150px;  /* Increased size for a larger logo */
-            height: auto;
-            z-index: 1000;
-        }}
-        /* Ensure content doesn’t overlap with logo */
-        .content {{
-            margin-left: 170px;  /* Increased space for larger logo (150px + 20px padding) */
-            margin-top: 0;  /* Removed top margin since logo is on the side */
-        }}
-        /* Hero Section */
         .hero {{
             background: linear-gradient({theme['hero_overlay']}, {theme['hero_overlay']}),
                         url('https://images.unsplash.com/photo-1496171367470-9ed9a91ea931') center/cover;
@@ -96,7 +76,7 @@ def load_css(theme):
         .footer {{
             text-align: center;
             padding: 2rem;
-            background: #f8f9fa;  /* Match background for consistency */
+            background: {theme['background']};
             color: {theme['text_color']};
             font-size: 1.2rem;
         }}
@@ -108,7 +88,7 @@ def load_css(theme):
 def hero_section(theme):
     """Display the hero section with background image and title."""
     hero_html = f"""
-    <div class="hero content">
+    <div class="hero">
         <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
             📊 تحليل بيانات الوظائف في المملكة العربية السعودية
         </h1>
@@ -119,13 +99,12 @@ def hero_section(theme):
 
 def info_sections():
     """Show information sections with interactive graphs."""
-    st.markdown('<div class="content">', unsafe_allow_html=True)
     st.title('تحليل بيانات الوظائف في المملكة العربية السعودية')
 
     st.markdown('''<div>
                     <h3>قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية،
-                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي في المملكة من خلال تحليلات تتعلق بالرواتب،
-                    توزيع الوظائف حسب المناطق، توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
+                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي من خلال تحليلات تتعلق بالرواتب،
+                    توزيع الوظائف حسب المناطق ومستويات الخبرة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
     # Job Postings by Region
@@ -148,46 +127,35 @@ def info_sections():
     avg_salary_by_job = avg_salary_by_job.sort_values(by='Salary', ascending=False).head(10)
     fig3 = px.bar(avg_salary_by_job, x='job_title', y='Salary', title='متوسط الرواتب حسب العناوين الوظيفية')
     st.plotly_chart(fig3, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
 def main():
-    # Pastel theme configuration with updated text color for white-off background
+    # Pastel theme configuration
     pastel_theme = {
-        "background": "#fdf6e3",  # Keeping original background for consistency with logo
-        "text_color": "#333333",  # Darker text for better contrast on white-off
+        "background": "#fdf6e3",
+        "text_color": "#657b83",
         "accent1": "#b58900",
         "accent2": "#cb4b16",
         "accent3": "#268bd2",
         "hero_overlay": "rgba(38, 139, 210, 0.4)",
         "header_font": "'Tajawal', sans-serif",
-        "text_content": "#333333",  # Updated for headers on white-off
         "recommendation_bg": "#657b83",
     }
     theme = pastel_theme
-
-    # Add larger logo on the left with proper file path handling
-    logo_path = "images/logo.png"  # Path to your logo file
-    if os.path.exists(logo_path):
-        st.image(logo_path, use_container_width=False, width=150, output_format="PNG")  # Larger width as requested
-    else:
-        st.error("Logo file not found. Please check the path or upload the logo to the 'images' folder.")
 
     load_css(theme)
     hero_section(theme)
     info_sections()
 
     # Filters Section
-    st.markdown('<div class="content">', unsafe_allow_html=True)
     st.header('تصفية البيانات')
-
+    
     job_titles = jadarat_data['job_title'].unique()
     job_title = st.selectbox('اختر عنوان الوظيفة', job_titles)
-
+    
     years_of_experience = st.number_input('ادخل عدد سنوات الخبرة', min_value=0, max_value=50, step=1, value=0)
-
+    
     unique_genders = jadarat_data['gender'].unique()
     gender = st.selectbox('اختر الجنس', unique_genders)
-    st.markdown('</div>', unsafe_allow_html=True)
 
     # Filter data
     filtered_data = jadarat_data[
@@ -197,7 +165,6 @@ def main():
     ]
 
     # Display filtered results
-    st.markdown('<div class="content">', unsafe_allow_html=True)
     if not filtered_data.empty:
         st.markdown(f'''
         <div class="filter-result-box">
@@ -217,7 +184,6 @@ def main():
             <p>لم يتم العثور على وظائف تطابق المعايير المحددة. يرجى التحقق من الفلاتر وإعادة المحاولة.</p>
         </div>
         ''', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
     st.markdown('''<div class="footer">تم التحليل بواسطة مشعل الشقحاء | جميع الحقوق محفوظة 2025</div>''', unsafe_allow_html=True)
