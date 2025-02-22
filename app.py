@@ -121,7 +121,7 @@ def info_sections():
 
     st.markdown('''<div>
                     <h3>قمنا بتحليل البيانات المتعلقة بالإعلانات الوظيفية في السعودية،
-                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي من خلال تحليلات تتعلق بالرواتب،
+                    وهدفنا هو تقديم نظرة شاملة على الوضع الوظيفي في المملكة من خلال تحليلات تتعلق بالرواتب،
                     توزيع الوظائف حسب المناطق، توزيع الوظائف حسب الخبرات المطلوبة، بالإضافة إلى توزيع عقود العمل.</h3>
                 </div>''', unsafe_allow_html=True)
 
@@ -165,10 +165,7 @@ def main():
     # Add logo at the top-left with proper file path handling
     logo_path = "images/logo.png"  # Path to your logo file
     if os.path.exists(logo_path):
-        st.markdown(
-            f'<img src="data:image/png;base64,{st.image_to_base64(logo_path)}" class="logo" alt="Jadarat Logo">',
-            unsafe_allow_html=True
-        )
+        st.image(logo_path, use_column_width=True, caption="Jadarat Logo", width=200)
     else:
         st.error("Logo file not found. Please check the path or upload the logo to the 'images' folder.")
 
