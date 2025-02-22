@@ -6,7 +6,5 @@ seaborn
 scipy
 ydata-profiling
 hijridate
-datetime
-re
 arabic-reshaper
 bidi
