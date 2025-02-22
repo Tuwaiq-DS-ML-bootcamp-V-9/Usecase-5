@@ -116,7 +116,7 @@ def main():
         st.error("عمود الوظائف غير موجود في الداتا سيت.")
         return
     
-
+    selected_job = st.selectbox("الوظائف المتاحة", job_counts.index)
 
     count = job_counts[selected_job]
     total = job_counts.sum()
