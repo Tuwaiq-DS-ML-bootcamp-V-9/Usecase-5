@@ -48,7 +48,6 @@ def main():
     # محاولة قراءة الملف "cleaned_jadarat.csv"
     try:
         df = pd.read_csv("cleaned_jadarat.csv")
-        st.success("تم تحميل ملف cleaned_jadarat.csv بنجاح!")
     except Exception as e:
         st.error(f"حدث خطأ أثناء تحميل الملف: {e}")
         return
