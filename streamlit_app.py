@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 def main():
     # يمكنك ضبط إعدادات الصفحة (اختياري)
@@ -35,6 +36,31 @@ def main():
         </p>
     </div>
     """, unsafe_allow_html=True)
+
+
+
+def main():
+    st.title("عرض الوظائف الفريدة في الداتا سيت")
+    
+    # قراءة الملف "cleaned_jadarat.csv" واستخدامه في التطبيق
+    try:
+        df = pd.read_csv("cleaned_jadarat.csv")
+        st.success("تم تحميل الملف بنجاح!")
+    except Exception as e:
+        st.error(f"حدث خطأ أثناء تحميل الملف: {e}")
+        return
+
+    # استخراج الوظائف الفريدة من عمود "JobTitle"
+    if "JobTitle" in df.columns:
+        unique_jobs = df["JobTitle"].unique()
+
+        st.subheader("الوظائف الفريدة في الداتا سيت:")
+        # عرض كل وظيفة فريدة
+        for job in unique_jobs:
+            st.write(f"- {job}")
+    else:
+        st.error("عمود 'JobTitle' غير موجود في الداتا سيت.")
+
 
 if __name__ == '__main__':
     main()
