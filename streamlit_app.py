@@ -52,7 +52,7 @@ def main():
 
     # استخراج الوظائف الفريدة من عمود "JobTitle"
     if "JobTitle" in df.columns:
-        unique_jobs = df["JobTitle"].unique()
+        unique_jobs = df["job_title"].unique()
 
         st.subheader("الوظائف الفريدة في الداتا سيت:")
         # عرض كل وظيفة فريدة
