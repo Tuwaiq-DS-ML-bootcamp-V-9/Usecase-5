@@ -135,9 +135,9 @@ def main():
     )
 
     
-    # تأكد من وجود العمود الذي يحدد الخبرة (مثلاً experience_level)
-    if 'experience_level' not in jadarat.columns:
-        st.error("لا يوجد عمود 'experience_level' في الداتا سيت.")
+    # تأكد من وجود العمود الذي يحدد الخبرة (مثلاً experience_categories)
+    if 'experience_categories' not in jadarat.columns:
+        st.error("لا يوجد عمود 'experience_categories' في الداتا سيت.")
         return
     
     # ====== قسم رسم Pie Chart لبيان نسبة الوظائف لحديثي التخرج مقابل ذوي الخبرة ======
@@ -148,7 +148,7 @@ def main():
     """, unsafe_allow_html=True)
     
     # حساب عدد الوظائف لكل فئة خبرة (Fresh Graduate / Expert)
-    experience_counts = jadarat['experience_level'].value_counts()
+    experience_counts = jadarat['experience_categories'].value_counts()
     
     # إنشاء لوحة ألوان مخصصة
     custom_palette = sns.color_palette("viridis", n_colors=10)
