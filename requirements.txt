@@ -1,0 +1,6 @@
+streamlit
+pandas
+matplotlib
+seaborn
+arabic-reshaper
+python-bidi
