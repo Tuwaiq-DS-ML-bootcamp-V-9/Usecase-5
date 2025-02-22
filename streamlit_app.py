@@ -237,5 +237,40 @@ def main():
         unsafe_allow_html=True
     )
 
+
+
+    # تأكد من وجود عمود 'region'
+    if 'region' not in jadarat.columns:
+        st.error("عمود 'region' غير موجود في الداتا سيت.")
+        return
+
+    # تحديد لوحة ألوان مخصصة
+    custom_palette = sns.color_palette("viridis", n_colors=10)
+    
+    # حساب توزيع الوظائف (بالنسب المئوية) عبر المناطق
+    region_counts = jadarat['region'].value_counts(normalize=True) * 100
+
+    # إعادة تشكيل النص العربي للعناوين
+    region_labels = [get_display(arabic_reshaper.reshape(str(label))) for label in region_counts.index]
+
+    # إعداد حجم الشكل قبل الرسم
+    plt.figure(figsize=(12, 6))
+
+    # رسم المخطط الشريطي باستخدام لوحة الألوان المخصصة
+    sns.barplot(x=region_labels, y=region_counts.values, palette=custom_palette[:len(region_labels)])
+
+    # إضافة العناوين والتسميات مع إعادة تشكيل النص العربي
+    plt.title(get_display(arabic_reshaper.reshape("توزيع الوظائف على حسب المنطقة")), fontsize=14)
+    plt.xlabel(get_display(arabic_reshaper.reshape("المنطقة")), fontsize=12)
+    plt.ylabel(get_display(arabic_reshaper.reshape("نسبة الوظائف (%)")), fontsize=12)
+
+    # تعديل تدوير الخطوط والمحاذاة لتصحيح عرض النصوص العربية
+    plt.xticks(rotation=45, fontsize=12, fontfamily="DejaVu Sans")
+    plt.yticks(fontsize=12)
+
+    # عرض الرسم البياني في Streamlit
+    st.pyplot(plt.gcf())
+    plt.clf()
+
 if __name__ == "__main__":
     main()
