@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import os
 
 # Set page configuration
 st.set_page_config(layout="wide", page_title="تحليل بيانات الوظائف في المملكة العربية السعودية")
@@ -151,11 +152,15 @@ def main():
     }
     theme = pastel_theme
 
-    # Add logo at the top
-    st.markdown(
-        f'<img src="images/logo.png">',  # Replace with actual URL or file path
-        unsafe_allow_html=True
-    )
+    # Add logo at the top with proper file path handling
+    logo_path = "images/logo.png"  # Path to your logo file
+    if os.path.exists(logo_path):
+        st.markdown(
+            f'<img src="file://{os.path.abspath(logo_path)}" class="logo" alt="Jadarat Logo">',
+            unsafe_allow_html=True
+        )
+    else:
+        st.error("Logo file not found. Please check the path or upload the logo to the 'images' folder.")
 
     load_css(theme)
     hero_section(theme)
