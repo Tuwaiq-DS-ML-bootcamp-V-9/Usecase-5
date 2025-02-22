@@ -134,36 +134,47 @@ def main():
         unsafe_allow_html=True
     )
 
-    # تأكد من وجود العمود الذي يحدد الخبرة (مثلاً experience_categories)
-    if 'experience_categories' not in jadarat.columns:
-        st.error("لا يوجد عمود 'experience_categories' في الداتا سيت.")
+    
+    # تأكد من وجود العمود الذي يحدد الخبرة (مثلاً experience_level)
+    if 'experience_level' not in jadarat.columns:
+        st.error("لا يوجد عمود 'experience_level' في الداتا سيت.")
         return
     
     # ====== قسم رسم Pie Chart لبيان نسبة الوظائف لحديثي التخرج مقابل ذوي الخبرة ======
     st.markdown("""
     <div style='text-align: center; font-size:18px; margin-top: 40px;'>
-        <p><strong>نسبة الوظائف بين حديثي التخرج وذوي الخبرة:</strong></p>
+        <p><strong>نسبة الوظائف بين حديثي التخرج والخبراء:</strong></p>
     </div>
     """, unsafe_allow_html=True)
     
-    # حساب عدد الوظائف لكل فئة (Fresh Graduate / Expert)
-    experience_counts = jadarat['experience_categories'].value_counts()
+    # حساب عدد الوظائف لكل فئة خبرة (Fresh Graduate / Expert)
+    experience_counts = jadarat['experience_level'].value_counts()
+    
+    # إنشاء لوحة ألوان مخصصة
+    custom_palette = sns.color_palette("viridis", n_colors=10)
     
     # إنشاء الشكل
     fig, ax = plt.subplots(figsize=(5,5))
-    # يمكنك إعادة تشكيل النص بالعربية إذا لزم الأمر، مثلاً إذا كانت القيم بالعربية
+    
+    # إعادة تشكيل النص بالعربية إذا لزم الأمر (حسب القيم الموجودة)
     labels = [get_display(arabic_reshaper.reshape(str(x))) for x in experience_counts.index]
     
-    # رسم المخطط الدائري
-    ax.pie(experience_counts.values, labels=labels, autopct='%1.1f%%', startangle=140)
+    # رسم المخطط الدائري باستخدام لوحة الألوان المخصصة
+    ax.pie(
+        experience_counts.values,
+        labels=labels,
+        autopct='%1.1f%%',
+        startangle=140,
+        colors=custom_palette[:len(experience_counts)]  # عدد الألوان يطابق عدد الشرائح
+    )
     ax.axis('equal')  # لجعل الرسم دائريًا تمامًا
     
     # عرض المخطط في ستريمليت
     st.pyplot(fig)
     plt.clf()
 
-    # يمكنك عرض بعض المعلومات الإضافية أسفل المخطط
+    # فقرة توضيحية أسفل المخطط
     st.markdown("<p style='text-align: center;'>هذا الرسم يوضح التوزيع النسبي للوظائف بحسب مستوى الخبرة.</p>", unsafe_allow_html=True)
-    
+
 if __name__ == "__main__":
     main()
