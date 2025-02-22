@@ -8,8 +8,6 @@ from bidi.algorithm import get_display
 def main():
     # ضبط إعدادات الصفحة
     st.set_page_config(page_title="رحلة التخرج", layout="centered")
-
-    
     st.markdown("""
     <h1 style='text-align: center;'>🎓✨🎉 رحلة التخرج </h1>
     
@@ -42,10 +40,9 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
-
-
-
-
+    
+ 
+  
     
     # فقرة "التحديات الأولية – مواجهة سوق العمل"
     st.markdown("""
