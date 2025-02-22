@@ -31,10 +31,6 @@ def main():
         </p>
     </div>
     """, unsafe_allow_html=True)
-
-
-    
- 
     
     # فقرة "التحديات الأولية – مواجهة سوق العمل"
     st.markdown("""
@@ -106,7 +102,7 @@ def main():
     # قسم عرض قائمة الوظائف الفريدة ونسب توفرها
     
     st.markdown(
-    "<h2 style='text-align: center;'>اختر الوظيفة لمعرفة مدى توفرها في البيانات:</h2>",
+    "<h3 style='text-align: center;'>اختر الوظيفة لمعرفة مدى توفرها في البيانات:</h3>",
     unsafe_allow_html=True
     )
 
