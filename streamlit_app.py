@@ -101,8 +101,12 @@ def main():
 
     # =============================
     # قسم عرض قائمة الوظائف الفريدة ونسب توفرها
-    st.subheader("اختر الوظيفة لمعرفة مدى توفرها في البيانات:")
     
+    st.markdown(
+    "<h2 style='text-align: center;'>اختر الوظيفة لمعرفة مدى توفرها في البيانات:</h2>",
+    unsafe_allow_html=True
+    )
+
     # حساب تكرارات الوظائف (معتمدًا على نفس العمود المستخدم سابقاً)
     if 'job_title' in jadarat.columns:
         job_counts = jadarat["job_title"].value_counts()
