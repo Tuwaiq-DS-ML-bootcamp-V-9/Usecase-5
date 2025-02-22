@@ -319,27 +319,35 @@ def main():
     """, unsafe_allow_html=True)
 
 
-    # ----------------------------
     # القسم الأول: توزيع نوع الشركة (خاص مقابل شبه حكومي)
     if 'comp_type' not in jadarat.columns:
         st.error("عمود 'comp_type' غير موجود في الداتا سيت.")
     else:
         st.markdown("<h2 style='text-align: center;'>توزيع نوع الشركة</h2>", unsafe_allow_html=True)
         
-        # حساب عدد الشركات حسب النوع
-        company_counts = jadarat['comp_type'].value_counts()
-        
-        # إعادة تشكيل النصوص العربية لعناوين الشرائح
-        labels = [get_display(arabic_reshaper.reshape(str(label))) for label in company_counts.index]
-        
-        # إعداد الشكل ورسم المخطط الدائري
-        plt.figure(figsize=(6,6))
-        plt.pie(company_counts.values, labels=labels, autopct='%1.1f%%', startangle=140)
-        plt.title(get_display(arabic_reshaper.reshape("توزيع الشركات: خاص مقابل شبه حكومي")), fontsize=14)
-        plt.axis('equal')  # لضمان أن يكون الشكل دائرياً
-        
-        st.pyplot(plt.gcf())
-        plt.clf()
+    # حساب عدد الشركات حسب النوع
+    company_counts = jadarat['comp_type'].value_counts()
+    
+    # إعادة تشكيل النصوص العربية لعناوين الشرائح
+    labels = [get_display(arabic_reshaper.reshape(str(label))) for label in company_counts.index]
+    
+    # تحديد لوحة ألوان مخصصة باستخدام viridis (نفس المستخدمة سابقًا)
+    custom_palette = sns.color_palette("viridis", n_colors=10)
+    
+    # إعداد الشكل ورسم المخطط الدائري مع تمرير الألوان من لوحة الألوان المخصصة
+    plt.figure(figsize=(6,6))
+    plt.pie(
+        company_counts.values, 
+        labels=labels, 
+        autopct='%1.1f%%', 
+        startangle=140,
+        colors=custom_palette[:len(company_counts)]
+    )
+    plt.title(get_display(arabic_reshaper.reshape("توزيع الشركات: خاص مقابل شبه حكومي")), fontsize=14)
+    plt.axis('equal')  # لضمان أن يكون الشكل دائرياً
+    
+    st.pyplot(plt.gcf())
+    plt.clf()
 
 
 
