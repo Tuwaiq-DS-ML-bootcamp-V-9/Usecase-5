@@ -116,7 +116,22 @@ def main():
         st.error("عمود الوظائف غير موجود في الداتا سيت.")
         return
     
-    selected_job = st.selectbox("الوظائف المتاحة", job_counts.index)
+    st.set_page_config(layout="centered")
+
+    st.markdown("<h2 style='text-align: center;'>مثال على توسيط selectbox</h2>", unsafe_allow_html=True)
+    
+    # افتح وسم div مع خاصية CSS تجعل المحتوى في المنتصف
+    st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
+    
+    # عنصر selectbox
+    selected_job = st.selectbox("وظائف لنختار", ["محاسب", "مهندس برمجيات", "مدير مشروع", "مصمم جرافيك"])
+    
+    # أغلق وسم div
+    st.markdown("</div>", unsafe_allow_html=True)
+    
+    # إظهار الوظيفة المختارة
+    st.write("الوظيفة المختارة:", selected_job)
+
     
     count = job_counts[selected_job]
     total = job_counts.sum()
