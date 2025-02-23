@@ -54,7 +54,7 @@ plt.title("أكثر 10 وظائف مطلوبة")
 plt.show()
 ```
 ✅ **Output:**  
-![Most Common Job Titles](sample_output/job_titles.png)
+![image](https://github.com/user-attachments/assets/4fe2b8f3-a040-4f7d-ba9a-2bd6c471397f)
 
 ---
 
