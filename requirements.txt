@@ -1,0 +1,10 @@
+streamlit
+pandas
+seaborn
+matplotlib
+st-pages
+arabic-reshaper
+python-bidi
+plotly
+folium
+streamlit-folium
