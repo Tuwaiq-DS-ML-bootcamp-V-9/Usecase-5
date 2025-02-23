@@ -1,5 +1,0 @@
-plotly
-pandas
-numpy
-arabic-reshaper
-python-bidi
