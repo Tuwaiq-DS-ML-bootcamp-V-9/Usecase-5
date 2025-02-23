@@ -1,11 +1,4 @@
 import streamlit as st
-import pandas as pd
-import plotly.graph_objects as go
-import arabic_reshaper
-from bidi.algorithm import get_display
-
-Jadarat_data = pd.read_csv("cleaned_Jadarat_data")  # Example: loading from CSV
-
 
 # --- Streamlit App ---
 st.title("Jadarat Data Visualization")
