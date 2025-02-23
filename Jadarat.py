@@ -21,7 +21,7 @@ for item in region:
 # Create Plotly chart
 fig = go.Figure(data=[go.Bar(x=reshaped_regions, y=region_counts)])
 # Update layout
- fig.update_layout(
+fig.update_layout(
     xaxis_title=get_display(arabic_reshaper.reshape("المناطق")),
     yaxis_title=get_display(arabic_reshaper.reshape("عدد الوظائف المتاحة")),
     title=get_display(arabic_reshaper.reshape("الوظائف المعروضة حسب المناطق")),
@@ -30,7 +30,7 @@ fig = go.Figure(data=[go.Bar(x=reshaped_regions, y=region_counts)])
     title_x=0.5
     )
 
- # Show the Plotly chart in Streamlit
+# Show the Plotly chart in Streamlit
 st.plotly_chart(fig)
 
 
