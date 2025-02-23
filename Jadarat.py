@@ -53,15 +53,14 @@ st.image("fig_1.png", caption="")
 st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 
 st.markdown('<h5 class="title"> بعدها صرت اقول طيب كيف توزيع الفرص 📊</h5>', unsafe_allow_html=True)
-
 st.image("fig_2.png", caption="")
 st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 
-st.markdown('<h5 class="title">طيب شالوضع مع رواتب حديثي التخرج؟ 📊</h5>', unsafe_allow_html=True
+st.markdown('<h5 class="title">طيب شالوضع مع رواتب حديثي التخرج؟ 📊</h5>', unsafe_allow_html=True)
 st.image("fig_3.png", caption="")
 st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 
-st.markdown('<h5 class="title">من عنده فرص اكثر حديث التخرج او الي عنده خبرة؟📊</h5>', unsafe_allow_html=True
+st.markdown('<h5 class="title">من عنده فرص اكثر حديث التخرج او الي عنده خبرة؟📊</h5>', unsafe_allow_html=True)
 st.image("fig_4.png", caption="")
 st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 
