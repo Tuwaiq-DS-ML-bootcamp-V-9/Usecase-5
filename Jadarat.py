@@ -14,7 +14,7 @@ region_counts = Jadarat_data['region'].value_counts()
 
 # Reshape Arabic text
 reshaped_regions = []  # Initialize an empty list
-for item in region:
+for item in unique_regions:
      reshaped_item = get_display(arabic_reshaper.reshape(item))
      reshaped_regions.append(reshaped_item)
          
