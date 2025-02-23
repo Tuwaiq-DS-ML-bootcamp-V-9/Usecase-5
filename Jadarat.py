@@ -25,7 +25,7 @@ fig.update_layout(
     xaxis_title=get_display(arabic_reshaper.reshape("المناطق")),
     yaxis_title=get_display(arabic_reshaper.reshape("عدد الوظائف المتاحة")),
     title=get_display(arabic_reshaper.reshape("الوظائف المعروضة حسب المناطق")),
-    font=dict(family='Arial', size=12),
+    font=dict(family='Arial Unicode MS', size=12),
     xaxis=dict(tickangle=45),
     title_x=0.5
     )
