@@ -178,18 +178,21 @@ st.markdown(
             <li> وايضاً بشتغل على مهارة الحاسب الالي والتعامل مع البرامج</li>
             </ul>
 
-            <h5> شكرا لك واتمنى اني افدتك في رحلة البحث عن وظيفة اتمنى لك كل التوفيق</h5>
 
 
 
 
-        <footer>
-            <p>Job Analysis App - Powered by Data Science</p>
-        </footer>
 
     """
 ,unsafe_allow_html=True)
+st.markdown(
+    """
+        <h2>والحين بعد ماخذت نظره كافيه عن اكثر منطقة فيها وظائف ووش هي الوظائف المطروحة</h2>
 
+    
+
+     """
+,unsafe_allow_html=True)
 st.markdown(
     """
     <footer>
