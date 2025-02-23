@@ -15,6 +15,7 @@ The following EDA steps are covered in the notebook:
 The key insights are presented through an interactive Streamlit app: [https://yourjob.streamlit.app/](https://yourjob.streamlit.app/)
 
 # 🛠️ Tech Stack
+Used Libraries:
 - pandas
 - numpy
 - scipy
@@ -25,3 +26,4 @@ The key insights are presented through an interactive Streamlit app: [https://yo
 - hijridate
 - arabic-reshaper
 - bidi
+- re
