@@ -2,7 +2,6 @@ import streamlit as st
 
 # --- Streamlit App ---
 
-
 # ضبط اتجاه النص ليكون من اليمين إلى اليسار وتحسين تجربة القراءة
 st.markdown(
     """
@@ -40,23 +39,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# إضافة App Bar مع صورة
-st.markdown(
-    """
-    <div class="app-bar">
-        <img src="https://zameenblog.s3.amazonaws.com/blog/wp-content/uploads/2021/08/1440x625-1-1-1024x447.jpg" alt="Logo">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 # عنوان التطبيق
-st.markdown('<h1 class="title">]الوظائف في جدارات</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="title">الوظائف في جدارات</h1>', unsafe_allow_html=True)
 
 st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 
 # عنوان التطبيق
-st.markdown('<h4 class="title">🚀 تفكر تستثمر في الفلل؟ الرياض هي وجهتك الذكية!</h4>', unsafe_allow_html=True)
+st.markdown('<h4 class="title">u];عندك فضول ؟</h4>', unsafe_allow_html=True)
 
 
 
