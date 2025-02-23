@@ -182,7 +182,6 @@ st.markdown(
 
 
 
-        </div>
 
         <footer>
             <p>Job Analysis App - Powered by Data Science</p>
