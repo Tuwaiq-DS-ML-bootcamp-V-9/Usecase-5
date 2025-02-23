@@ -3,40 +3,68 @@ import streamlit as st
 import pandas as pd
 import os
 
-rtl_css = """
+# Detect theme preference
+theme = st.get_option("theme.base")
+if theme == "dark":
+    bg_color = "#1e1b29"
+    primary_color = "#6c6780"
+else:
+    bg_color = "#d9d4e7"
+    primary_color = "#9692a1"
+
+css = f"""
 <style>
     /* Set right-to-left direction and custom font */
-    html, body {
+    html, body {{
+        background-color: {bg_color};
         direction: rtl;
         text-align: right;
         font-family: 'Tajawal', sans-serif;
-    }
-    
+    }}
+    [data-testid="stAppViewContainer"] {{
+       background-color: {bg_color};
+      
+    }}
+[data-testid="stHeader"] {{
+       background-color: {bg_color};
+
+    }}
+    .stSelectbox select:focus {{
+        border-color: {primary_color} ;  /* Change border color on focus */
+        outline: none !important;  /* Remove default outline */
+    }}
+
+    /* Style for Streamlit buttons */
+    .stButton>button {{
+        background-color: {primary_color};
+        color: white;
+    }}
 
     /* Custom paragraph styles */
-    .custom-paragraph {
+    .custom-paragraph {{
         font-size: 18px !important;
         line-height: 1.6;
         color: #3e3c40;
-    }
+    }}
 
     /* Header colors */
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5, h6 {{
+        background-color: rgba(230, 230, 230, 0.3);
         color: #3e3c40;
-    }
+    }}
 
-    
-    div[data-baseweb="select"] ul li:hover {
-        background-color: #f7b2a5 !important;  /* change to desired bar color */
-        color: white;  /* change to desired text color */
-    }
-}
+    /* Custom hover effect for dropdown options */
+    div[data-baseweb="select"] ul li:hover {{
+        background-color: #f7b2a5 !important;  /* Hover background color */
+        color: white;                        /* Hover text color */
+    }}
 </style>
 """
 
+
 jadarat = pd.read_csv('jadarat_cleaned.csv')
 
-st.markdown(rtl_css, unsafe_allow_html=True)
+st.markdown(css, unsafe_allow_html=True)
 
 st.title("من الجامعة إلى العالم الحقيقي: الخريجون والبحث عن الوظائف👩🏻‍🎓👨🏻‍🎓")
 
@@ -59,7 +87,7 @@ st.markdown('<p class="custom-paragraph">الخبرة من المشاكل الم
 
 st.markdown('<h3>وظائف حديثي التخرج في سوق العمل: يتربع على عرشها الوظائف الإدارية</h3>', unsafe_allow_html=True)
 st.image(os.path.join('imgs','st2.png'))
-st.markdown('<p class="custom-paragraph">على ما يبدو أن التخصصات الإدارية تدير الأعمال وسوق العمل بنفسه! فنلاحظ أن عدد وظائف المحاسبين واخصائي التسويق كانت الأكثر طلبًا في عامي 2022-2023</p>', unsafe_allow_html=True)
+st.markdown('<p class="custom-paragraph">على ما يبدو أن التخصصات الإدارية تدير الأعمال وسوق العمل بنفسه! فنلاحظ أن  المحاسبين واخصائي التسويق هم الأكثر طلبًا في عامي 2022-2023</p>', unsafe_allow_html=True)
 
 st.markdown('<h2> لا تحيزات في سوق العمل!</h2>', unsafe_allow_html=True)
 st.image(os.path.join('imgs','jobposting2.png'))
@@ -71,7 +99,7 @@ st.markdown('<p class="custom-paragraph">تنتهي سنة 2022 مع نوفمب�
 
 st.markdown("""
     <h2 style="font-family: 'Arial', sans-serif; text-align: center;">
-        والآن أيها الخريج، سمِّ بربِّ البداياتِ، وجد وظيفتك، واشحذ سيف مهاراتك واسعَ لها
+        والآن أيها الخريج، سمِّ بربِّ البداياتِ، وابحث عن وظيفتك، واشحذ سيف مهاراتك، واسعَ إليها.
     </h2>
 """, unsafe_allow_html=True)
 
@@ -101,12 +129,35 @@ selected_job = st.selectbox("اختر وظيفتك", unique_jobs)
 experience_label = st.radio("اختر الخبرة المطلوبة:", ('لا تتطلب خبرة', 'تتطلب خبرة'))
 experience_value = 0 if experience_label == 'لا تتطلب خبرة' else 1
 
-st.button('جد وظيفتي')
 
-if experience_value == 0:
-    result = jadarat[(jadarat['job_title'] == selected_job) & (jadarat['experience (Years)'] == 0)]
-else:
-    result = jadarat[(jadarat['job_title'] == selected_job) & (jadarat['experience (Years)'] == 0)]
-    
-if result.empty:
+# Search button
+if st.button('جد وظيفتي', key='search_button'):
+    # Filter jobs based on the user's input
+    if experience_value == 0:
+        result = jadarat[(jadarat['job_title'] == selected_job) & (jadarat['experience (Years)'] == 0)]
+    else:
+        result = jadarat[(jadarat['job_title'] == selected_job) & (jadarat['experience (Years)'] != 0)]
+
+    # Display results
+    if result.empty:
         st.warning("لا توجد وظيفة مطابقة للمتطلبات المختارة")
+    else:
+        st.success(f"عُثِر على {len(result)} وظيفة")
+        # Create dynamic job cards
+        for i, row in result.iterrows():
+            gender_label = 'إناث' if row['gender'] == 'F' else 'ذكور' if row['gender'] == 'M' else 'الاثنان'
+            with st.container():
+                st.markdown(
+                    f"""
+                    <div style="background-color: #eee; padding: 20px; border-radius: 15px; margin-bottom: 15px;">
+                        <h3 style="color: #9692a1;">{row['job_title']}</h3>
+                        <p><b>الشركة:</b> {row['comp_name']}</p>
+                        <p><b>الوصف الوظيفي:</b> {row['job_desc']}</p>
+                        <p><b>المؤهلات:</b> {row['qualifications_corrected']}</p>
+                        <p><b>الخبرة المطلوبة:</b> {'لا تتطلب خبرة' if row['experience (Years)'] == 0 else row['experience (Years)']}</p>
+                        <p><b>الجنس:</b> {gender_label}</p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
