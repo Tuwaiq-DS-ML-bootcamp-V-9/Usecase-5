@@ -1,0 +1,79 @@
+h3,p{
+    text-align: center;
+    }
+h5,h4{
+    text-align: right;
+}
+
+.head-div{
+    margin-top:50px;
+    border: #cbc9c6;
+    border-style: solid;
+    border-width: 2px 0px 0px 0px;
+
+}
+
+
+.con{
+    background-color: #464d70 ;
+    border-radius: 20px;
+}
+.text {
+    color: #f0eeeb;
+    margin: 50px;
+
+
+}
+
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #565d81;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 36px;
+    color: #007BFF;
+}
+
+.result-card {
+    background-color: #464d70;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+.result-card:hover {
+    transform: translateY(-10px); /* Lifts the card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Darker shadow on hover */
+}
+
+.result-card h2 {
+    font-size: 24px;
+    color: aliceblue;
+    margin-bottom: 10px;
+}
+
+.result-card li {
+    font-size: 18px;
+    color: #f0eeeb;
+    margin-bottom: 8px;
+    text-align: right;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+}
