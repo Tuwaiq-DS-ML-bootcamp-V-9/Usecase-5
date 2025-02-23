@@ -48,7 +48,7 @@ st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 st.markdown('<h4 class="title"عندك فضول؟</h4>', unsafe_allow_html=True)
 
 
-st.markdown('<h5 class="title">🔎  هنا كنت ابي اشوف توزيع الوضايف على مناطق المملكة</h5>', unsafe_allow_html=True)
+st.markdown('<h5 class="title">🔎  هنا كنت ابي اشوف توزيع الوظايف على مناطق المملكة</h5>', unsafe_allow_html=True)
 st.image("fig_1.png", caption="")
 st.markdown('<hr class="divider-custom">', unsafe_allow_html=True)
 
