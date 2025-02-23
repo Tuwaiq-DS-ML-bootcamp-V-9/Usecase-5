@@ -14,9 +14,9 @@ region_counts = Jadarat_data['region'].value_counts()
 
 # Reshape Arabic text
 reshaped_regions = []  # Initialize an empty list
-     for item in region:
-        reshaped_item = get_display(arabic_reshaper.reshape(item))
-        reshaped_regions.append(reshaped_item)
+for item in region:
+     reshaped_item = get_display(arabic_reshaper.reshape(item))
+     reshaped_regions.append(reshaped_item)
          
 # Create Plotly chart
 fig = go.Figure(data=[go.Bar(x=reshaped_regions, y=region_counts)])
