@@ -257,7 +257,7 @@ st.markdown("""
       الرياض متصدرة بعدد 587 وظيفة – يعني فرصتك فيها أكبر 🔹
         </p>
      <p style="color: #0B67B7; font-size: 25px;">
-       لو انت مو ساكن باحد المدن الاكثر فرص ارشح تتنقل لهم
+       لو انت مو ساكن بأحد المدن الاكثر فرص ارشح تتنقل لهم
       بس والله اذا تشوفه صعبه وانت في منطقة فرصها قليلة، ممكن تفكر في التقديم عن بعد 🔹
  </p>
 </div>
@@ -274,7 +274,7 @@ st.markdown("""
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
     <p style="color: #0B67B7; font-size: 30px; font-weight: bold; margin-bottom: 20px;">
-  وطبعًا حنا عارفين بعض المجالات فيها فرص اكثر من غيرها  ، بوضح لك اكثر المجالات الي فيها وظايف
+  وطبعًا حنا عارفين بعض المجالات فيها فرص اكثر من غيرها  ، بوضح لك اكثر المسميات الوظيفيه 
 </div>
 """, unsafe_allow_html=True)
 
@@ -324,48 +324,8 @@ st.markdown("""
 st.markdown("""
 <div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
     <p style="color: #0B67B7; font-size: 30px; font-weight: bold; margin-bottom: 20px;">
-    الفرص كثيرة، والشركات متنوعة عندك القطاع الخاص ، وعندك الشبه حكومي
-ومن هنا يجي السؤال مين اللي يعرض وظايف أكثر؟
-</div>
-""", unsafe_allow_html=True)
-
-comp_type_counts = df_cleaned['comp_type'].value_counts().reset_index()
-comp_type_counts.columns = ['نوع الشركة', 'عدد الوظايف']
-
-
-fig = px.bar(
-    comp_type_counts, 
-    x="عدد الوظايف", 
-    y="نوع الشركة", 
-    orientation="h",  
-    text="عدد الوظايف",  
-    color="عدد الوظايف",  
-    color_continuous_scale="Blues"  
-)
-
-
-fig.update_traces(
-    textposition="inside",  
-    textfont_size=14,  
-    marker_line_width=2  
-)
-
-fig.update_layout(
-    title="عدد الوظايف للشركات  الشبه حكومية و الخاصة ",
-    title_x=0.5,  
-    title_font_size=18,  
-    xaxis_title="عدد الوظايف",
-    yaxis_title="نوع الشركة",
-    template="plotly_white",  
-)
-
-
-st.plotly_chart(fig, use_container_width=True)
-
-st.markdown("""
-<div style="text-align: right; padding: 20px; background-color: #f0f8ff; border-radius: 10px;">
-     <p style="color: #0B67B7; font-size: 25px;"> 
-  أغلب الفرص في القطاع الخاص، بالمقابل شبه الحكومية نادره 🔹 
+     الفرص كثيرة، والشركات متنوعة عندك القطاع الخاص ، وعندك الشبه حكومية
+       أغلب الفرص في القطاع الخاص، بالمقابل شبه الحكومية نادره 
 </div>
 """, unsafe_allow_html=True)
 
