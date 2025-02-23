@@ -2,7 +2,7 @@
 This project analyzes data on job postings in Saudi Arabia, focusing on positions for fresh graduates and those requiring no experience.
 
 # 📊 Jadarat Dataset
-The dataset is collected from the Jadarat platform by @Moaxad and published on Kaggle. It includes important information about job postings such as experience, salary, qualifications, etc.
+The dataset is collected from the Jadarat platform by Moayad Alkhozayem and published on Kaggle. It includes important information about job postings such as experience, salary, qualifications, etc.
 
 # 📈 Exploratory Data Analysis
 The following EDA steps are covered in the notebook:
