@@ -196,7 +196,7 @@ st.markdown(
 st.markdown(
     """
     <footer>
-            <p>Job Analysis App - Powered by Data Science</p>
+            <p>Job Analysis App - Powered by Hamad Alrwuays</p>
         </footer>
  """
 ,unsafe_allow_html=True)
