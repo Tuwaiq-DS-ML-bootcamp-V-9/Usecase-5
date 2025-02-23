@@ -190,7 +190,13 @@ st.markdown(
     """
 ,unsafe_allow_html=True)
 
-
+st.markdown(
+    """
+    <footer>
+            <p>Job Analysis App - Powered by Data Science</p>
+        </footer>
+ """
+,unsafe_allow_html=True)
 
 
 #st.write("🚀 **Explore employment trends with interactive visualizations!**")
