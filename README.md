@@ -4,7 +4,8 @@
 This project analyzes job postings to uncover insights into the employment landscape. It explores trends such as **most in-demand jobs, salary distributions, required skills, and language preferences** using data visualization techniques.
 
 ---
-
+## 🔗 Streamlit app
+https://usecase-5-eutgn5gkld728cpcwmdvs9.streamlit.app/
 ## 📊 Key Features
 - 📈 **Job Trends Over Time** – Track job posting patterns.
 - 💼 **Most Common Job Titles** – Identify high-demand roles.
